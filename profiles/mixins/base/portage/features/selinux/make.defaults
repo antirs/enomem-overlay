@@ -1,0 +1,5 @@
+POLICY_TYPES="targeted strict"
+
+PORTAGE_T="portage_t"
+PORTAGE_FETCH_T="portage_fetch_t"
+PORTAGE_SANDBOX_T="portage_sandbox_t"

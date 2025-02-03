@@ -1,0 +1,4 @@
+LLVM_SLOT="18"
+LLVM_TARGETS="ARM AArch64 BPF Mips RISCV Sparc Spirv WebAssembly X86"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} llvm_slot_18"

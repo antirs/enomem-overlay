@@ -1,0 +1,3 @@
+POSTGRES_TARGETS="postgres16"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} postgres_targets_postgres16"

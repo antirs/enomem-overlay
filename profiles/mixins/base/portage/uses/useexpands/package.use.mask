@@ -1,0 +1,12 @@
+*/* -ada_target_gnat_2021
+*/* -alsa_cards_hda-intel
+*/* calligra_features_karbon calligra_features_sheets calligra_features_words -calligra_features_krita 
+*/* curl_quic_openssl curl_ssl_openssl -curl_ssl_gnutls 
+*/* -grub_platforms_efi-32 -grub_platforms_efi-64 -grub_platforms_pc
+*/* -guile_single_target_3-0 -guile_targets_3-0 
+*/* -llvm_slot_18
+*/* lua_single_target_lua5-1 lua_targets_lua5-1 -lua_single_target_luajit -lua_targets_luajit
+*/* -postgres_targets_postgres16 
+*/* -python_targets_python3_12 -python_targets_python2_7 -python_single_target_python3_12
+*/* -ruby_targets_ruby32 
+*/* -video_cards_intel

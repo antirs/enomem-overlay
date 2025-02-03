@@ -1,0 +1,3 @@
+PORTDIR="/var/db/repos/gentoo"
+PKGDIR="/var/cache/binpkgs"
+DISTDIR="/var/cache/distfiles"

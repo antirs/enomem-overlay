@@ -1,0 +1,3 @@
+../../../portage/sets/minimal
+../../../portage/pkgs/dash
+../../../portage/uses/pkgs/dash

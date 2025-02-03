@@ -1,0 +1,6 @@
+../portage/flags/hardened/pie
+../portage/flags/hardened/ssp
+../portage/flags/hardened/znow
+../portage/flags/hardened/zrelro
+../portage/flags/hardened/znoexec
+../portage/uses/enomem/hardened

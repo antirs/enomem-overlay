@@ -1,0 +1,3 @@
+ADA_TARGET="gnat_2021"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} ada_target_gnat_2021"

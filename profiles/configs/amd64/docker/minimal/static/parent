@@ -1,0 +1,8 @@
+../../../../../mixins/base
+../../../../../mixins/base/common
+../../../../../mixins/base/common/o2
+../../../../../mixins/linux/amd64
+../../../../../mixins/linux/amd64/mcx16
+../../../../../mixins/base/virtual/docker
+../../../../../mixins/base/virtual/docker/minimal/static
+../../../../../mixins/base/static

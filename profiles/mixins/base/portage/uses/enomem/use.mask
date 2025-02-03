@@ -1,0 +1,10 @@
+enomem_features_mcx16
+enomem_features_o2
+enomem_features_haswell
+enomem_features_sandybridge
+enomem_features_hardened
+enomem_features_hardened_fortify2
+enomem_features_hardened_fortify3
+enomem_features_virtual
+enomem_features_qemu
+enomem_features_docker

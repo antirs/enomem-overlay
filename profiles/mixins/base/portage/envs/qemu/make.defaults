@@ -1,0 +1,2 @@
+QEMU_SOFTMMU_TARGETS="i386 x86_64 arm aarch64 mips mipsel riscv32 riscv64 sparc xtensa xtensaeb"
+QEMU_USER_TARGETS="i386 x86_64 arm aarch64 mips mipsel riscv32 riscv64 sparc xtensa xtensaeb"

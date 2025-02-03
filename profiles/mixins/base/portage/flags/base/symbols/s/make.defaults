@@ -1,0 +1,8 @@
+# Copyright 2025 Gentoo Authors.
+# Distributed under the terms of the GNU General Public License v2
+
+LDFLAGS_SYMBOLS_S="-s"
+
+LDFLAGS_SYMBOLS="${LDFLAGS_SYMBOLS} ${LDFLAGS_SYMBOLS_S}"
+
+LDFLAGS="${LDFLAGS} ${LDFLAGS_SYMBOLS_S}"

@@ -1,0 +1,2 @@
+#GENTOO_MIRRORS="https://ftp.belnet.be/pub/rsync.gentoo.org/gentoo/"
+GENTOO_MIRRORS="https://mirror.yandex.ru/gentoo-distfiles/"

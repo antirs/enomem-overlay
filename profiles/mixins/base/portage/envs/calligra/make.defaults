@@ -1,0 +1,4 @@
+CALLIGRA_FEATURES="krita"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} calligra calligra_features_krita"
+USE="-calligra_features_karbon -calligra_features_sheets -calligra_features_words"

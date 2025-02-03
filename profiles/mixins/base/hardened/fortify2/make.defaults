@@ -1,0 +1,5 @@
+ENOMEM_FEATURES="hardened_fortify2"
+
+IUSE_IMPLICIT="enomem_features_hardened_fortify2"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_hardened_fortify2"

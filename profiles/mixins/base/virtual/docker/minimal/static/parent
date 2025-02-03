@@ -1,0 +1,4 @@
+../../../../portage/uses/static
+../../../../portage/sets/minimal
+../../../../portage/pkgs/dash/static
+../../../../portage/uses/pkgs/dash/static

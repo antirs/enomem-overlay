@@ -1,0 +1,3 @@
+PKGDIR="/home/portage/storage/gentoo/binpkgs"
+DISTDIR="/home/portage/storage/gentoo/distfiles"
+PORTAGE_RO_DISTDIRS="/home/portage/storage/gentoo/distfiles-ro"

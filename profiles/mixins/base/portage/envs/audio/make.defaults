@@ -1,0 +1,3 @@
+ALSA_CARDS="hda-intel"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} alsa_cards_hda-intel"

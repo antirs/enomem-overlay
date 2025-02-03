@@ -1,0 +1,5 @@
+LUA_SINGLE_TARGET="luajit"
+LUA_TARGETS="luajit"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} lua_single_target_luajit lua_targets_luajit"
+USE="-lua_single_target_lua5-1 -lua_targets_lua5-1"

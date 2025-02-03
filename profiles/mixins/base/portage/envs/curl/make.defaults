@@ -1,0 +1,5 @@
+CURL_QUIC=""
+CURL_SSL="gnutls"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} curl_ssl_gnutls"
+USE="-curl_ssl_openssl -curl_quic_openssl"

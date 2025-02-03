@@ -1,0 +1,5 @@
+ENOMEM_FEATURES="hardened"
+
+IUSE_IMPLICIT="enomem_features_hardened"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_hardened"

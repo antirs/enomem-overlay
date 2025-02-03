@@ -1,0 +1,2 @@
+PORTAGE_ELOG_SYSTEM="mail:warn,error,log,qa"
+PORTAGE_ELOG_MAILURI="portage@localhost mail.sys.nonet:1587"

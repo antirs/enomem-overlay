@@ -1,0 +1,10 @@
+# Copyright 2025 Gentoo Authors.
+# Distributed under the terms of the GNU General Public License v2
+
+CFLAGS_CPU_HASWELL="-march=haswell -mmmx -msse -msse2 -msse3 -mssse3 -msse4 -msse4.1 -msse4.2 -mavx -mavx2 -maes -mfpmath=sse"
+CFLAGS_CPU="${CFLAGS_CPU} ${CFLAGS_CPU_HASWELL}"
+
+CFLAGS="${CFLAGS} ${CFLAGS_CPU_HASWELL}"
+CXXFLAGS="${CFLAGS}"
+FCFLAGS="${CFLAGS}"
+FFLAGS="${CFLAGS}"

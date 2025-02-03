@@ -1,0 +1,10 @@
+# Copyright 2025 Gentoo Authors.
+# Distributed under the terms of the GNU General Public License v2
+
+CFLAGS_COMMON_PIPE="-pipe"
+CFLAGS_COMMON="${CFLAGS_COMMON} ${CFLAGS_COMMON_PIPE}"
+
+CFLAGS="${CFLAGS} ${CFLAGS_COMMON_PIPE}"
+CXXFLAGS="${CFLAGS}"
+FCFLAGS="${CFLAGS}"
+FFLAGS="${CFLAGS}"
