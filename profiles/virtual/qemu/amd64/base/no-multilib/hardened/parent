@@ -1,2 +1,2 @@
-../../../../../../default/amd64/no-multilib/hardened
+../../../../../../default/amd64/no-multilib/hardened/fortify3
 ../../../../../../configs/amd64/qemu/base
