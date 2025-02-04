@@ -4,6 +4,7 @@
 CFLAGS_CPU_SANDYBRIDGE="-march=sandybridge -mmmx -msse -msse2 -msse3 -mssse3 -msse4 -msse4.1 -msse4.2 -mavx -maes -mfpmath=sse"
 CFLAGS_CPU="${CFLAGS_CPU} ${CFLAGS_CPU_SANDYBRIDGE}"
 
+COMMON_FLAGS="${CFLAGS} ${CFLAGS_CPU_SANDYBRIDGE}"
 CFLAGS="${CFLAGS} ${CFLAGS_CPU_SANDYBRIDGE}"
 CXXFLAGS="${CFLAGS}"
 FCFLAGS="${CFLAGS}"
