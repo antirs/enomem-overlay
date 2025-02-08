@@ -1,2 +1,2 @@
-gentoo:default/linux/amd64/23.0
+../../../../../../../../../default/amd64/hardened/static/stage4
 ../../../../../../../../../configs/amd64/notebook/lenovo/thinkpad/t420/hardened/static/stage4

@@ -1,9 +1,1 @@
-../../../../../../../../mixins/base
-../../../../../../../../mixins/base/common
-../../../../../../../../mixins/base/common/o2
-../../../../../../../../mixins/linux/amd64
-../../../../../../../../mixins/linux/amd64/mcx16
 ../../../../../../../../mixins/linux/amd64/intel/haswell
-../../../../../../../../mixins/base/hardened
-../../../../../../../../mixins/base/hardened/fortify2
-../../../../../../../../mixins/base/static
