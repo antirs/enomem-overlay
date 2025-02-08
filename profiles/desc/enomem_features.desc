@@ -1,4 +1,4 @@
-# Copyright 1999-2024 Gentoo Authors
+# Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 # This file contains descriptions of ENOMEM_FEATURES USE_EXPAND flags for net-misc/curl
@@ -13,3 +13,4 @@ o2 - Add o2 flags
 qemu - Add qemu flags
 sandybridge - Add sandybridge flags
 virtual - Add virtual flags
+notebook - Add notebook flags

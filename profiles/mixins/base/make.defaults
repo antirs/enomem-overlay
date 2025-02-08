@@ -3,7 +3,7 @@ MAKEOPTS="-j2"
 USE_EXPAND="ENOMEM_FEATURES"
 USE_EXPAND_HIDDEN="-ENOMEM_FEATURES"
 USE_EXPAND_IMPLICIT="ENOMEM_FEATURES"
-USE_EXPAND_VALUES_ENOMEM_FEATURES="mcx16 o2 haswell sandybridge hardened hardened_fortify2 hardened_fortify3 virtual qemu docker"
+USE_EXPAND_VALUES_ENOMEM_FEATURES="mcx16 o2 haswell sandybridge hardened hardened_fortify2 hardened_fortify3 virtual qemu docker notebook"
 
 ENOMEM_FEATURES=""
 

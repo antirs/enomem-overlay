@@ -8,3 +8,4 @@ enomem_features_hardened_fortify3
 enomem_features_virtual
 enomem_features_qemu
 enomem_features_docker
+enomem_features_notebook
