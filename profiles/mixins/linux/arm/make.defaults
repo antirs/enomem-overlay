@@ -1,0 +1,5 @@
+ENOMEM_FEATURES="arm"
+
+IUSE_IMPLICIT="enomem_features_arm"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_arm"
