@@ -3,14 +3,21 @@
 
 # This file contains descriptions of ENOMEM_FEATURES USE_EXPAND flags for net-misc/curl
 
+arm - Add arm flags
+arm_arm6j - Add arm arm6j flags
+arm_vfp - Add arm vfp flags
 docker - Add docker flags
+fpu_abi_hf - Add fpu hf abi flags
+fpu_abi_sf - Add fpu sf abi flags
 hardened - Add hardened flags
 hardened_fortify2 - Add fortify2 hardened flags
 hardened_fortify3 - Add fortify3 hardened flags
 haswell - Add haswell flags
 mcx16 - Add mcx16 flags
+notebook - Add notebook flags
 o2 - Add o2 flags
 qemu - Add qemu flags
+rapi_zerow - Add rapi zerow flags
 sandybridge - Add sandybridge flags
+soc - Add soc flags
 virtual - Add virtual flags
-notebook - Add notebook flags

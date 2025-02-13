@@ -1,1 +1,5 @@
 ENOMEM_FEATURES="notebook"
+
+IUSE_IMPLICIT="enomem_features_notebook"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_notebook"

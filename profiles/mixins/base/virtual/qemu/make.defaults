@@ -1,1 +1,5 @@
 ENOMEM_FEATURES="qemu"
+
+IUSE_IMPLICIT="enomem_features_qemu"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_qemu"

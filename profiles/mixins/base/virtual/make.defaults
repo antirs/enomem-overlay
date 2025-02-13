@@ -1,1 +1,5 @@
 ENOMEM_FEATURES="virtual"
+
+IUSE_IMPLICIT="enomem_features_virtual"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_virtual"

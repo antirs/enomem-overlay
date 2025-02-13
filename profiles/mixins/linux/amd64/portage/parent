@@ -1,8 +1,10 @@
 ./abis
+./confs
 ./dirs
 ./dirs/home
 ./envs
 ./envs/grub
 ./flags
+./flags/base
 ./keywords
 ./uses

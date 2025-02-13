@@ -1,6 +1,5 @@
 # These are the USE flags that were used in addition to what is provided by the
 # profile used for building.
-CPU_FLAGS_X86=""
 
 USE_CRYPTO="crypt gnutls ssl cracklib"
 USE_GENTOO="bindist verify-sig"

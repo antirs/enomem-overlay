@@ -1,0 +1,5 @@
+ENOMEM_FEATURES="fpu_abi_sf"
+
+IUSE_IMPLICIT="enomem_features_fpu_abi_sf"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_fpu_abi_sf"

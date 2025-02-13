@@ -1,0 +1,11 @@
+# Copyright 2025 Gentoo Authors.
+# Distributed under the terms of the GNU General Public License v2
+
+LDFLAGS_COMMON_NEEDED="-Wl,--as-needed"
+LDFLAGS_COMMON_RELOCS="-Wl,-z,pack-relative-relocs"
+LDFLAGS_HASHSTYLE_GNU="-Wl,--hash-style=gnu"
+
+LDFLAGS_COMMON="${LDFLAGS_COMMON_NEEDED} ${LDFLAGS_COMMON_RELOCS}"
+LDFLAGS_HASHSTYLE="${LDFLAGS_HASHSTYLE_GNU}"
+
+LDFLAGS="${LDFLAGS_COMMON} ${LDFLAGS_HASHSTYLE}"

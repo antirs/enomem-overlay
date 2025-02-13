@@ -3,4 +3,12 @@
 
 # WARNING: Changing your CHOST is not something that should be done lightly.
 # Please consult http://www.gentoo.org/doc/en/change-chost.xml before changing.
-CHOST="x86_64-pc-linux-gnu"
+
+CFLAGS_COMMON_M64="-m64"
+CFLAGS_COMMON="${CFLAGS_COMMON} -m64"
+
+COMMON_FLAGS="${CFLAGS} ${CFLAGS_COMMON_M64}"
+CFLAGS="${CFLAGS} ${CFLAGS_COMMON_M64}"
+CXXFLAGS="${CFLAGS}"
+FCFLAGS="${CFLAGS}"
+FFLAGS="${CFLAGS}"

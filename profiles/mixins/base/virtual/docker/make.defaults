@@ -1,1 +1,5 @@
 ENOMEM_FEATURES="docker"
+
+IUSE_IMPLICIT="enomem_features_docker"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_docker"
