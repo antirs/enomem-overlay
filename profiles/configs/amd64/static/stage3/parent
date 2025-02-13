@@ -2,6 +2,6 @@
 ../../../../mixins/base/common
 ../../../../mixins/base/common/o2
 ../../../../mixins/linux/amd64
-../../../../mixins/linux/amd64/mcx16
+../../../../mixins/linux/amd64/common/mcx16
 ../../../../mixins/base/stage3
 ../../../../mixins/base/static
