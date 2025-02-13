@@ -1,0 +1,14 @@
+# Copyright 2025 Gentoo Authors.
+# Distributed under the terms of the GNU General Public License v2
+
+# WARNING: Changing your CHOST is not something that should be done lightly.
+# Please consult http://www.gentoo.org/doc/en/change-chost.xml before changing.
+
+CFLAGS_COMMON_MARM="-marm"
+CFLAGS_COMMON="${CFLAGS_COMMON} ${CFLAGS_COMMON_MARM}"
+
+COMMON_FLAGS="${CFLAGS} ${CFLAGS_COMMON_MARM}"
+CFLAGS="${CFLAGS} ${CFLAGS_COMMON_MARM}"
+CXXFLAGS="${CFLAGS}"
+FCFLAGS="${CFLAGS}"
+FFLAGS="${CFLAGS}"

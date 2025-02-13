@@ -5,7 +5,7 @@
 #
 # WARNING: Changing your CHOST is not something that should be done lightly.
 # Please consult http://www.gentoo.org/doc/en/change-chost.xml before changing.
-ACCEPT_KEYWORDS="~amd64"
+ACCEPT_KEYWORDS="~arm"
 
 ACCEPT_LICENSE="-* @FREE"
 
@@ -14,31 +14,34 @@ USE_EXPAND_HIDDEN="-ENOMEM_FEATURES"
 USE_EXPAND_IMPLICIT="ENOMEM_FEATURES"
 USE_EXPAND_VALUES_ENOMEM_FEATURES="arm arm_arm6j arm_vfp docker fpu_abi_hf fpu_abi_sf hardened hardened_fortify2 hardened_fortify3 haswell mcx16 notebook o2 rapi_zerow qemu sandybridge soc virtual"
 
-ENOMEM_FEATURES="o2"
+ENOMEM_FEATURES="arm arm_arm6j o2"
 
-IUSE_IMPLICIT="enomem_features_o2"
+IUSE_IMPLICIT="enomem_features_arm enomem_features_arm_arm6j enomem_features_o2"
 
-BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_o2"
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_arm enomem_features_arm_arm6j enomem_features_o2"
 
 PROFILE_ONLY_VARIABLES="${PROFILE_ONLY_VARIABLES} ENOMEM_FEATURES USE_EXPAND_VALUES_ENOMEM_FEATURES"
 
-CHOST="x86_64-pc-linux-gnu"
+CHOST="armv6j-unknown-linux-gnu"
+CHOST_arm="${CHOST}"
 
-ABI_X86="64"
+ABI="arm"
 
 CC="gcc"
 CXX="g++"
 
 CFLAGS_COMMON_PIPE="-pipe"
-CFLAGS_COMMON_M64="-m64"
-CFLAGS_COMPILER_MCX16="-mcx16"
+CFLAGS_COMMON_MARM="-marm"
+CFLAGS_COMMON_MTHUBM="-mthumb"
 CFLAGS_COMPILER_O1="-O1"
 CFLAGS_COMPILER_O2="-O2"
 CFLAGS_COMPILER_O3="-O3"
-CFLAGS_CPU_SANDYBRIDGE="-march=sandybridge -mmmx -msse -msse2 -msse3 -mssse3 -msse4 -msse4.1 -msse4.2 -mavx -maes -mfpmath=sse"
-CFLAGS_CPU_HASWELL="-march=haswell -mmmx -msse -msse2 -msse3 -mssse3 -msse4 -msse4.1 -msse4.2 -mavx -mavx2 -maes -mfpmath=sse"
+CFLAGS_CPU_ARM_ARM="-march=arm"
+CFLAGS_CPU_ARM_ARM6J="-march=arm6j"
+CFLAGS_CPU_ARM_RAPI_ZEROW="-mcpu=arm1176jzf-s"
 CFLAGS_COMPILER_FPU_ABI_HF="-mfloat-abi=hard"
 CFLAGS_COMPILER_FPU_ABI_SF="-mfloat-abi=softfp"
+CFLAGS_COMPILER_FPU_VFP="-mfpu=vfp"
 CFLAGS_HARDENED_SSP="-fstack-protector-strong --param ssp-buffer-size=4"
 CFLAGS_HARDENED_FORTIFY_1="-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=1"
 CFLAGS_HARDENED_FORTIFY_2="-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2"
@@ -46,14 +49,14 @@ CFLAGS_HARDENED_FORTIFY_3="-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3"
 CFLAGS_HARDENED_PIE="-fPIE -pie"
 CFLAGS_DEBUG_GDB="-ggdb"
 
+CFLAGS_CPU_ARM="${CFLAGS_CPU_ARM_ARM6J}"
 CFLAGS_COMPILER_FPU_ABI=""
 CFLAGS_COMPILER_FPU=""
-CFLAGS_CPU_AMD64=""
 CFLAGS_HARDENED_FORTIFY="${CFLAGS_HARDENED_FORTIFY_3}"
 
-CFLAGS_COMMON="${CFLAGS_COMMON_PIPE} ${CFLAGS_COMMON_M64}"
+CFLAGS_COMMON="${CFLAGS_COMMON_PIPE} ${CFLAGS_COMMON_MARM}"
 CFLAGS_COMPILER="${CFLAGS_COMPILER_O2} ${CFLAGS_COMPILER_FPU}"
-CFLAGS_CPU="${CFLAGS_CPU_AMD64}"
+CFLAGS_CPU="${CFLAGS_CPU_ARM}"
 CFLAGS_HARDENED=""
 CFLAGS_DEBUG=""
 
@@ -111,10 +114,9 @@ L10N="en ru"
 
 # These are the USE flags that were used in addition to what is provided by the
 # profile used for building.
-CPU_FLAGS_X86_SANDYBRIDGE="aes avx mmx mmxext pclmul popcnt sse sse2 sse3 ssse3 sse4_1 sse4_2"
-CPU_FLAGS_X86_HASWELL="aes avx avx2 mmx mmxext pclmul popcnt sse sse2 sse3 ssse3 sse4_1 sse4_2"
+CPU_FLAGS_ARM_ARM6J="v4 v5 v6 edsp thumb vfp"
 
-CPU_FLAGS_X86=""
+CPU_FLAGS_ARM=""
 
 USE_CRYPTO="crypt gnutls ssl cracklib"
 USE_GENTOO="bindist verify-sig"
