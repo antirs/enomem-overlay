@@ -1,0 +1,1 @@
+*/* grub_platforms_efi-32 grub_platforms_efi-64 grub_platforms_pc
