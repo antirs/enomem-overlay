@@ -4,3 +4,4 @@
 ../../../../mixins/linux/arm
 ../../../../mixins/linux/arm/arm6j
 ../../../../mixins/base/stage3
+../../../../mixins/linux/arm/no_cpudetection
