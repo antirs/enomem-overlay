@@ -3,5 +3,5 @@
 
 # WARNING: Changing your CHOST is not something that should be done lightly.
 # Please consult http://www.gentoo.org/doc/en/change-chost.xml before changing.
-CHOST="arm6j-softfp-linux-gnueabi"
+CHOST="armv6j-softfp-linux-gnueabi"
 CHOST_arm="${CHOST}"

@@ -22,7 +22,7 @@ BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_arm enomem_features_arm_arm6j en
 
 PROFILE_ONLY_VARIABLES="${PROFILE_ONLY_VARIABLES} ENOMEM_FEATURES USE_EXPAND_VALUES_ENOMEM_FEATURES"
 
-CHOST="arm-unknown-linux-gnueabihf"
+CHOST="armv6j-unknown-linux-gnueabihf"
 CHOST_arm="${CHOST}"
 
 ABI="arm"
