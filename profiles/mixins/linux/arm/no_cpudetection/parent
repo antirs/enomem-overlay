@@ -1,1 +1,2 @@
 ../portage/uses/no_cpudetection
+../portage/uses/no_asm

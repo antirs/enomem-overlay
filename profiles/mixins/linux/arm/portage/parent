@@ -8,3 +8,4 @@
 ./uses
 ./uses/enomem/arm
 ./uses/no_cpudetection
+./uses/no_asm
