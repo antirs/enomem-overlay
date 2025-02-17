@@ -1,0 +1,3 @@
+DISTCC_SSH="ssh"
+
+DISTCC_HOSTS="${DISTCC_HOSTS} user@server"

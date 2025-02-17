@@ -1,2 +1,4 @@
 CCACHE_SIZE="500G"
 CCACHE_DIR="/var/cache/ccache"
+
+FEATURES="${FEATURES_DISTCC}"

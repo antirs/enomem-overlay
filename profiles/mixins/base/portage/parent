@@ -27,9 +27,9 @@
 ./envs/scanner
 ./envs/video
 ./features
-./features/ccache
-./features/distcc
-./features/distcc/hosts
+#./features/ccache
+#./features/distcc
+#./features/distcc/hosts
 #./features/pax
 ./features/selinux
 ./flags
