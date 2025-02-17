@@ -1,0 +1,2 @@
+CC="${CHOST}-gcc"
+CXX="${CHOST}-g++"
