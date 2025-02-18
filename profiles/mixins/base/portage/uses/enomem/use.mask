@@ -1,6 +1,7 @@
 enomem_features_arm
 enomem_features_arm_arm6j
 enomem_features_arm_vfp
+enomem_features_cross
 enomem_features_docker
 enomem_features_fpu_abi_hf
 enomem_features_fpu_abi_sf

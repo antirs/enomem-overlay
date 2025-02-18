@@ -6,6 +6,7 @@
 arm - Add arm flags
 arm_arm6j - Add arm arm6j flags
 arm_vfp - Add arm vfp flags
+cross - Add cross flags
 docker - Add docker flags
 fpu_abi_hf - Add fpu hf abi flags
 fpu_abi_sf - Add fpu sf abi flags
