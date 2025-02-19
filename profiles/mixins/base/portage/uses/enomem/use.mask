@@ -1,5 +1,5 @@
 enomem_features_arm
-enomem_features_arm_arm6j
+enomem_features_arm_armv6j
 enomem_features_arm_vfp
 enomem_features_cross
 enomem_features_docker

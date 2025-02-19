@@ -4,7 +4,7 @@
 # This file contains descriptions of ENOMEM_FEATURES USE_EXPAND flags for net-misc/curl
 
 arm - Add arm flags
-arm_arm6j - Add arm arm6j flags
+arm_armv6j - Add arm armv6j flags
 arm_vfp - Add arm vfp flags
 cross - Add cross flags
 docker - Add docker flags

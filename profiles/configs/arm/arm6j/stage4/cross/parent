@@ -1,9 +1,0 @@
-../../../../../mixins/base
-../../../../../mixins/base/common
-../../../../../mixins/base/common/o2
-../../../../../mixins/linux/arm
-../../../../../mixins/linux/arm/arm6j
-../../../../../mixins/base/stage4
-../../../../../mixins/linux/arm/no_cpudetection
-../../../../../mixins/linux/arm/no_asm
-../../../../../mixins/base/cross

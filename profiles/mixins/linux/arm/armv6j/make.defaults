@@ -1,0 +1,5 @@
+ENOMEM_FEATURES="arm_armv6j"
+
+IUSE_IMPLICIT="enomem_features_arm_armv6j"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_arm_armv6j"
