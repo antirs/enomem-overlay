@@ -1,1 +1,3 @@
 ../portage/compilers/gcc/cross
+../portage/dirs/crossdev
+../portage/flags/crossdev

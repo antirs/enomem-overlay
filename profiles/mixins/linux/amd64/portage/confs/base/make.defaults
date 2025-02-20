@@ -86,6 +86,7 @@ LDFLAGS="${LDFLAGS_COMPILER} ${LDFLAGS_COMMON} ${LDFLAGS_SYMBOLS} ${LDFLAGS_HASH
 # NOTE: This stage was built with the bindist Use flag enabled
 PORTDIR="/var/db/repos/gentoo"
 PORTDIR_OVERLAY="/var/db/repos/enomem"
+CROSSDEV_OVERLAY="/var/db/repos/enomem"
 DISTDIR="/var/cache/distfiles"
 PKGDIR="/var/cache/binpkgs"
 PORTAGE_RO_DISTDIRS="/var/cache/distfiles-ro"
