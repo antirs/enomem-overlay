@@ -1,2 +1,3 @@
 ../../portage/dirs/home/rv64/lp64d
+../../portage/flags/base/rv64/lp64d
 ../../portage/uses/enomem/riscv/rv64/lp64d
