@@ -19,6 +19,10 @@ notebook - Add notebook flags
 o2 - Add o2 flags
 qemu - Add qemu flags
 rapi_zerow - Add rapi zerow flags
+riscv - Add riscv flags
+riscv_rv64 - Add riscv rv64 flags
+riscv_rv64_lp64d - Add riscv rv64 lp64d flags
 sandybridge - Add sandybridge flags
 soc - Add soc flags
+soc_sipeed_licheervnano - Add sipeed licheervnano flags
 virtual - Add virtual flags

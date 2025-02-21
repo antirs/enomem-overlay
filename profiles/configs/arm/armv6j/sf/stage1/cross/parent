@@ -6,6 +6,6 @@
 ../../../../../../mixins/linux/arm/armv6j
 ../../../../../../mixins/linux/arm/armv6j/sf
 ../../../../../../mixins/base/stage1
-../../../../../../mixins/linux/arm/no_cpudetection
-../../../../../../mixins/linux/arm/no_asm
+../../../../../../mixins/base/uses/no_cpudetection
+../../../../../../mixins/base/uses/no_asm
 ../../../../../../mixins/base/cross

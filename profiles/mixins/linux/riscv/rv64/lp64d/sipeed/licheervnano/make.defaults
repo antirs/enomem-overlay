@@ -1,0 +1,5 @@
+ENOMEM_FEATURES="soc_sipeed_licheervnano"
+
+IUSE_IMPLICIT="enomem_features_soc_sipeed_licheervnano"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_soc_sipeed_licheervnano"

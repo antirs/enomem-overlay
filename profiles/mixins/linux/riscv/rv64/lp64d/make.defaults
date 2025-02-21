@@ -1,0 +1,5 @@
+ENOMEM_FEATURES="riscv_rv64_lp64d"
+
+IUSE_IMPLICIT="enomem_features_riscv_rv64_lp64d"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_riscv_rv64_lp64d"
