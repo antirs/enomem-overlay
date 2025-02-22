@@ -2,6 +2,7 @@
 ./confs
 ./dirs
 ./dirs/home
+./envs
 ./flags
 ./flags/base
 ./keywords

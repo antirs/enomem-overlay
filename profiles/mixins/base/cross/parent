@@ -1,4 +1,4 @@
 ../portage/compilers/gcc/cross
-../portage/dirs/crossdev
-../portage/flags/crossdev
+../portage/dirs/cross
+../portage/flags/cross
 ../portage/uses/enomem/cross
