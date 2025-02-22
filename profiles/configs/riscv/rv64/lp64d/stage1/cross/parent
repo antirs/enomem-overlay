@@ -1,9 +1,9 @@
 ../../../../../../mixins/base
 ../../../../../../mixins/base/common
 ../../../../../../mixins/base/common/o2
-../../../../../../mixins/linux/arm
-../../../../../../mixins/linux/arm/armv6j
-../../../../../../mixins/linux/arm/armv6j/hf
+../../../../../../mixins/linux/riscv
+../../../../../../mixins/linux/riscv/rv64
+../../../../../../mixins/linux/riscv/rv64/lp64d
 ../../../../../../mixins/base/stage1
 ../../../../../../mixins/base/uses/no_cpudetection
 ../../../../../../mixins/base/uses/no_asm
