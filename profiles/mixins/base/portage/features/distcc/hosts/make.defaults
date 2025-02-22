@@ -1,1 +1,1 @@
-DISTCC_HOSTS="--randomize --localslots=4 --localslots_cpp=4"
+DISTCC_HOSTS="--randomize --localslots=4 --localslots_cpp=12"
