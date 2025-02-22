@@ -1,7 +1,7 @@
 # Copyright 2025 Gentoo Authors.
 # Distributed under the terms of the GNU General Public License v2
 
-BUILD_CFLAGS="${CFLAGS} ${CFLAGS_COMMON_PIPE} ${CFLAGS_COMPILER_O2}"
+BUILD_CFLAGS="${CFLAGS_COMMON_PIPE} ${CFLAGS_COMPILER_O2}"
 BUILD_CPPFLAGS=""
 BUILD_CXXFLAGS="${BUILD_CFLAGS}"
 
