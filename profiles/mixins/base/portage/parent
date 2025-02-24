@@ -3,7 +3,7 @@
 ./compilers/gcc
 ./confs
 ./dirs
-./dirs/home
+#./dirs/home
 ./envs
 ./envs/ada
 ./envs/audio
