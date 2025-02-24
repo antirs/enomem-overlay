@@ -32,6 +32,7 @@
 ./envs/scanner
 ./envs/video
 ./features
+./features/binpkg/signature
 #./features/ccache
 #./features/distcc
 #./features/distcc/hosts
