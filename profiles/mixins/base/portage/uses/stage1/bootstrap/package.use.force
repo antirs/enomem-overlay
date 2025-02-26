@@ -321,7 +321,7 @@ sys-fs/udev-init-scripts
 sys-kernel/linux-headers 
 sys-libs/db:6.0 
 sys-libs/gdbm:0  berkdb nls readline verify-sig
-sys-libs/glibc:2.2  audit caps cet multiarch selinux ssp      
+sys-libs/glibc:2.2  audit caps cet multiarch ssp      
 sys-libs/libcap  pam
 sys-libs/libcap-ng 
 sys-libs/libseccomp  

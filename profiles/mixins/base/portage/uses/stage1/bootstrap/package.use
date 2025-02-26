@@ -321,7 +321,7 @@ sys-fs/udev-init-scripts
 sys-kernel/linux-headers  -headers-only
 sys-libs/db:6.0  -cxx -doc -examples -tcl -test
 sys-libs/gdbm:0  berkdb nls readline verify-sig -static-libs -test
-sys-libs/glibc:2.2  audit caps cet multiarch selinux ssp  -compile-locales  -doc -gd -hash-sysv-compat -headers-only  -multilib-bootstrap -nscd -perl -profile  -suid  -systemtap -test 
+sys-libs/glibc:2.2  audit caps cet multiarch ssp  -compile-locales  -doc -gd -hash-sysv-compat -headers-only  -multilib-bootstrap -nscd -perl -profile  -selinux -suid  -systemtap -test 
 sys-libs/libcap  pam -static-libs -tools
 sys-libs/libcap-ng  -python -static-libs
 sys-libs/libseccomp  -debug  -python -static-libs -test
