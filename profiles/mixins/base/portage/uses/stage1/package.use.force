@@ -301,7 +301,7 @@ sys-apps/shadow:0  acl audit nls pam verify-sig xattr
 sys-apps/systemd-utils  acl kmod tmpfiles udev 
 sys-apps/sysvinit  nls verify-sig 
 sys-apps/texinfo  nls standalone
-sys-apps/util-linux  audit build caps cramfs hardlink logger ncurses nls pam python readline verify-sig  
+sys-apps/util-linux  audit build caps cramfs hardlink logger ncurses nls python readline verify-sig  
 sys-apps/which  
 sys-auth/pambase  caps nullok passwdqc sha512  
 sys-auth/passwdqc  

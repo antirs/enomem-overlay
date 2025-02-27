@@ -301,7 +301,7 @@ sys-apps/shadow:0  acl audit nls pam verify-sig xattr -cracklib -selinux -skey  
 sys-apps/systemd-utils  acl kmod tmpfiles udev -boot -kernel-install -secureboot -selinux  -sysusers -test -ukify
 sys-apps/sysvinit  nls verify-sig  -selinux -static
 sys-apps/texinfo  nls standalone -static
-sys-apps/util-linux  audit build caps cramfs hardlink logger ncurses nls pam python readline verify-sig -cryptsetup -fdformat -kill -magic  -selinux -slang -static-libs -su -suid  -test -tty-helpers -udev -uuidd
+sys-apps/util-linux  audit build caps cramfs hardlink logger ncurses nls python readline verify-sig -cryptsetup -fdformat -kill -magic  -pam -selinux -slang -static-libs -su -suid  -test -tty-helpers -udev -uuidd
 sys-apps/which  
 sys-auth/pambase  caps nullok passwdqc sha512 -debug -elogind -gnome-keyring -homed -minimal -mktemp -pam_krb5  -pwhistory -pwquality -securetty -selinux -sssd  -yescrypt
 sys-auth/passwdqc  
