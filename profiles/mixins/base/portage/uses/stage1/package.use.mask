@@ -36,11 +36,11 @@ app-arch/bzip2:0  -verify-sig static static-libs
 app-arch/gzip  -verify-sig pic static
 app-arch/libarchive:0  -acl -bzip2 -e2fsprogs -iconv -lz4 -lzma -lzo -verify-sig -xattr -zstd blake2 expat nettle static-libs test
 app-arch/lz4:0  static-libs test
-app-arch/tar  -acl -nls -selinux -verify-sig -xattr minimal
+app-arch/tar  -acl -nls -verify-sig -xattr minimal selinux
 app-arch/unzip  -bzip2  natspec
 app-arch/xz-utils  -extra-filters -nls -verify-sig doc pgo static-libs
 app-arch/zstd:0  -lz4 -lzma -zlib static-libs test
-app-crypt/gnupg  -bzip2 -nls -readline -selinux -smartcard -ssl -tofu -verify-sig doc ldap test tools tpm usb user-socket wks-server
+app-crypt/gnupg  -bzip2 -nls -readline -smartcard -ssl -tofu -verify-sig doc ldap selinux test tools tpm usb user-socket wks-server
 app-crypt/gpgme:1  -cxx -verify-sig common-lisp debug python qt5 qt6 static-libs test
 app-crypt/libb2  -openmp native-cflags static-libs
 app-crypt/libmd  
@@ -207,7 +207,7 @@ net-misc/curl  -ftp -gnutls -hsts -http2 -imap -pop3 -progress-meter -smtp -ssl 
 net-misc/dhcpcd  -embedded -ipv6 -udev debug privsep
 net-misc/iputils  -arping -caps -filecaps -nls clockdiff doc idn test tracepath
 net-misc/netifrc  -dhcp
-net-misc/openssh  -audit -pam -pie -selinux -ssl -verify-sig  kerberos ldns legacy-ciphers libedit livecd security-key static test 
+net-misc/openssh  -audit -pam -pie -ssl -verify-sig  kerberos ldns legacy-ciphers libedit livecd security-key selinux static test 
 net-misc/rsync  -acl -iconv -ssl -verify-sig -xattr examples lz4 rrsync stunnel system-zlib xxhash zstd
 net-misc/wget  -gnutls -ipv6 -nls -pcre  -verify-sig -zlib cookie-check debug idn libproxy metalink ntlm static test uuid
 perl-core/File-Temp  
@@ -272,38 +272,38 @@ sys-apps/acl  -nls static-libs
 sys-apps/attr  -nls debug static-libs
 sys-apps/baselayout  -build 
 sys-apps/checkpolicy  debug
-sys-apps/coreutils  -acl -caps -nls -selinux -verify-sig -xattr gmp hostname kill multicall openssl  static test vanilla
+sys-apps/coreutils  -acl -caps -nls -verify-sig -xattr gmp hostname kill multicall openssl  selinux static test vanilla
 sys-apps/diffutils  -nls -verify-sig
 sys-apps/file  -bzip2 -lzma -seccomp -verify-sig -zlib lzip python static-libs zstd
-sys-apps/findutils  -nls -selinux -verify-sig static test
+sys-apps/findutils  -nls -verify-sig selinux static test
 sys-apps/gawk  -nls -readline -verify-sig mpfr pma
 sys-apps/gentoo-functions  test
 sys-apps/grep  -egrep-fgrep -nls -pcre -verify-sig static
 sys-apps/groff  X examples uchardet
 sys-apps/help2man  -nls
 sys-apps/install-xattr  
-sys-apps/iproute2  -caps -iptables -selinux atm berkdb bpf elf minimal nfs
-sys-apps/kbd  -nls -pam -selinux test
+sys-apps/iproute2  -caps -iptables atm berkdb bpf elf minimal nfs selinux
+sys-apps/kbd  -nls -pam selinux test
 sys-apps/kmod  -lzma  -zlib -zstd debug doc pkcs7 static-libs
 sys-apps/less  -pcre test
 sys-apps/locale-gen  
-sys-apps/man-db  -manpager -nls -seccomp -selinux -zlib static-libs
+sys-apps/man-db  -manpager -nls -seccomp -zlib selinux static-libs
 sys-apps/man-pages  -verify-sig
-sys-apps/net-tools  -arp -hostname -ipv6 -nls -selinux nis plipconfig slattach static
-sys-apps/openrc  -audit -caps -netifrc -pam -selinux -sysvinit -unicode bash debug newnet s6 sysv-utils
+sys-apps/net-tools  -arp -hostname -ipv6 -nls nis plipconfig selinux slattach static
+sys-apps/openrc  -audit -caps -netifrc -pam -sysvinit -unicode bash debug newnet s6 selinux sysv-utils
 sys-apps/policycoreutils  -audit -pam 
-sys-apps/portage  -build -gentoo-dev  -native-extensions -rsync-verify -selinux -xattr apidoc doc test
+sys-apps/portage  -build -gentoo-dev  -native-extensions -rsync-verify -xattr apidoc doc selinux test
 sys-apps/sandbox  -nnp
-sys-apps/sed  -acl -nls -selinux -verify-sig static
+sys-apps/sed  -acl -nls -verify-sig selinux static
 sys-apps/selinux-python  test
 sys-apps/semodule-utils  
-sys-apps/shadow:0  -acl -audit -nls -pam -selinux -verify-sig -xattr cracklib skey  su 
-sys-apps/systemd-utils  -acl -kmod -selinux -tmpfiles -udev boot kernel-install secureboot  sysusers test ukify
-sys-apps/sysvinit  -nls -selinux -verify-sig  static
+sys-apps/shadow:0  -acl -audit -nls -pam -verify-sig -xattr cracklib selinux skey  su 
+sys-apps/systemd-utils  -acl -kmod -tmpfiles -udev boot kernel-install secureboot selinux  sysusers test ukify
+sys-apps/sysvinit  -nls -verify-sig  selinux static
 sys-apps/texinfo  -nls -standalone static
-sys-apps/util-linux  -audit -build -caps -cramfs -hardlink -logger -ncurses -nls -pam -python -readline -selinux  -verify-sig cryptsetup fdformat kill magic  slang static-libs su suid  test tty-helpers udev uuidd
+sys-apps/util-linux  -audit -build -caps -cramfs -hardlink -logger -ncurses -nls -pam -python -readline -verify-sig cryptsetup fdformat kill magic  selinux slang static-libs su suid  test tty-helpers udev uuidd
 sys-apps/which  
-sys-auth/pambase  -caps -nullok -passwdqc -selinux -sha512 debug elogind gnome-keyring homed minimal mktemp pam_krb5  pwhistory pwquality securetty sssd  yescrypt
+sys-auth/pambase  -caps -nullok -passwdqc -sha512 debug elogind gnome-keyring homed minimal mktemp pam_krb5  pwhistory pwquality securetty selinux sssd  yescrypt
 sys-auth/passwdqc  
 sys-devel/bc  -readline libedit static
 sys-devel/binutils-config  
@@ -330,13 +330,13 @@ sys-libs/libsemanage:0
 sys-libs/libsepol:0  -static-libs
 sys-libs/libxcrypt:0    headers-only static-libs test
 sys-libs/ncurses:0   -verify-sig ada  debug doc gpm minimal profile   static-libs test trace
-sys-libs/pam  -audit -filecaps -selinux berkdb debug examples nis
+sys-libs/pam  -audit -filecaps berkdb debug examples nis selinux
 sys-libs/readline:0   -verify-sig static-libs utils
 sys-libs/timezone-data  -nls leaps-timezone zic-slim
 sys-libs/zlib:0  -verify-sig minizip static-libs
 sys-process/audit  -python gssapi io-uring ldap  static-libs test
-sys-process/procps:0  -kill -ncurses -nls -selinux  elogind modern-top skill static-libs  test
-sys-process/psmisc  -nls -selinux X apparmor test
+sys-process/procps:0  -kill -ncurses -nls elogind modern-top skill selinux  static-libs  test
+sys-process/psmisc  -nls X apparmor selinux test
 virtual/acl  static-libs
 virtual/dev-manager  
 virtual/editor  

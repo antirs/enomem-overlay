@@ -36,11 +36,11 @@ app-arch/bzip2:0  verify-sig
 app-arch/gzip  verify-sig
 app-arch/libarchive:0  acl bzip2 e2fsprogs iconv lz4 lzma lzo verify-sig xattr zstd
 app-arch/lz4:0  
-app-arch/tar  acl nls selinux verify-sig xattr
+app-arch/tar  acl nls verify-sig xattr
 app-arch/unzip  bzip2 
 app-arch/xz-utils  extra-filters nls verify-sig
 app-arch/zstd:0  lz4 lzma zlib
-app-crypt/gnupg  bzip2 nls readline selinux smartcard ssl tofu verify-sig
+app-crypt/gnupg  bzip2 nls readline smartcard ssl tofu verify-sig
 app-crypt/gpgme:1  cxx verify-sig
 app-crypt/libb2  openmp
 app-crypt/libmd  
@@ -207,7 +207,7 @@ net-misc/curl  ftp gnutls hsts http2 imap pop3 progress-meter smtp ssl tftp veri
 net-misc/dhcpcd  embedded ipv6 udev
 net-misc/iputils  arping caps filecaps nls
 net-misc/netifrc  dhcp
-net-misc/openssh  audit pam pie selinux ssl verify-sig  
+net-misc/openssh  audit pam pie ssl verify-sig  
 net-misc/rsync  acl iconv ssl verify-sig xattr
 net-misc/wget  gnutls ipv6 nls pcre  verify-sig zlib
 perl-core/File-Temp  
@@ -272,38 +272,38 @@ sys-apps/acl  nls
 sys-apps/attr  nls
 sys-apps/baselayout  build 
 sys-apps/checkpolicy 
-sys-apps/coreutils  acl caps nls selinux verify-sig xattr 
+sys-apps/coreutils  acl caps nls verify-sig xattr 
 sys-apps/diffutils  nls verify-sig
 sys-apps/file  bzip2 lzma seccomp verify-sig zlib
-sys-apps/findutils  nls selinux verify-sig
+sys-apps/findutils  nls verify-sig
 sys-apps/gawk  nls readline verify-sig
 sys-apps/gentoo-functions 
 sys-apps/grep  egrep-fgrep nls pcre verify-sig
 sys-apps/groff 
 sys-apps/help2man  nls
 sys-apps/install-xattr  
-sys-apps/iproute2  caps iptables selinux
-sys-apps/kbd  nls pam selinux
+sys-apps/iproute2  caps iptables
+sys-apps/kbd  nls pam
 sys-apps/kmod  lzma  zlib zstd
 sys-apps/less  pcre
 sys-apps/locale-gen  
-sys-apps/man-db  manpager nls seccomp selinux zlib
+sys-apps/man-db  manpager nls seccomp zlib
 sys-apps/man-pages  verify-sig
-sys-apps/net-tools  arp hostname ipv6 nls selinux
-sys-apps/openrc  audit caps netifrc pam selinux sysvinit unicode
+sys-apps/net-tools  arp hostname ipv6 nls
+sys-apps/openrc  audit caps netifrc pam sysvinit unicode
 sys-apps/policycoreutils  audit pam 
-sys-apps/portage  build gentoo-dev  native-extensions rsync-verify selinux xattr
+sys-apps/portage  build gentoo-dev  native-extensions rsync-verify xattr
 sys-apps/sandbox  nnp
-sys-apps/sed  acl nls selinux verify-sig
+sys-apps/sed  acl nls verify-sig
 sys-apps/selinux-python 
 sys-apps/semodule-utils  
-sys-apps/shadow:0  acl audit nls pam selinux verify-sig xattr  
-sys-apps/systemd-utils  acl kmod selinux tmpfiles udev 
-sys-apps/sysvinit  nls selinux verify-sig 
+sys-apps/shadow:0  acl audit nls pam verify-sig xattr  
+sys-apps/systemd-utils  acl kmod tmpfiles udev 
+sys-apps/sysvinit  nls verify-sig 
 sys-apps/texinfo  nls standalone
-sys-apps/util-linux  audit build caps cramfs hardlink logger ncurses nls pam python readline selinux  verify-sig  
+sys-apps/util-linux  audit build caps cramfs hardlink logger ncurses nls pam python readline verify-sig  
 sys-apps/which  
-sys-auth/pambase  caps nullok passwdqc selinux sha512  
+sys-auth/pambase  caps nullok passwdqc sha512  
 sys-auth/passwdqc  
 sys-devel/bc  readline
 sys-devel/binutils-config  
@@ -330,13 +330,13 @@ sys-libs/libsemanage:0
 sys-libs/libsepol:0  static-libs
 sys-libs/libxcrypt:0   
 sys-libs/ncurses:0   verify-sig   
-sys-libs/pam  audit filecaps selinux
+sys-libs/pam  audit filecaps
 sys-libs/readline:0   verify-sig
 sys-libs/timezone-data  nls
 sys-libs/zlib:0  verify-sig
 sys-process/audit  python 
-sys-process/procps:0  kill ncurses nls selinux  
-sys-process/psmisc  nls selinux
+sys-process/procps:0  kill ncurses nls
+sys-process/psmisc  nls
 virtual/acl 
 virtual/dev-manager  
 virtual/editor  
