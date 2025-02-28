@@ -3,6 +3,7 @@
 
 # This file contains descriptions of ENOMEM_FEATURES USE_EXPAND flags for net-misc/curl
 
+amd64 - Add amd64 flags
 arm - Add arm flags
 arm_armv6j - Add arm armv6j flags
 arm_vfp - Add arm vfp flags

@@ -1,3 +1,4 @@
+enomem_features_amd64
 enomem_features_arm
 enomem_features_arm_armv6j
 enomem_features_arm_vfp
