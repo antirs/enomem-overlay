@@ -1,4 +1,3 @@
-../portage/dirs/home/rv64
 ../portage/flags/rv64
 ../portage/flags/base/rv64
 ../portage/uses/enomem/riscv/rv64

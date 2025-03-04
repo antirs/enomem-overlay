@@ -5,7 +5,6 @@
 ./dirs
 ./dirs/cross
 ./dirs/features/binpkg
-./dirs/features/binpkg/buildpkg
 ./dirs/features/ccache
 ./dirs/features/sign
 #./dirs/home
