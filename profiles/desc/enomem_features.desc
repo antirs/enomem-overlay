@@ -1,7 +1,7 @@
 # Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# This file contains descriptions of ENOMEM_FEATURES USE_EXPAND flags for net-misc/curl
+# This file contains descriptions of ENOMEM_FEATURES USE_EXPAND flags
 
 amd64 - Add amd64 flags
 arm - Add arm flags
