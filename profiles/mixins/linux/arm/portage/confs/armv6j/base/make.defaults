@@ -1,0 +1,35 @@
+# These settings were set by the catalyst build script that automatically
+# built this stage.
+# Please consult /usr/share/portage/config/make.conf.example for a more
+# detailed example.
+#
+# WARNING: Changing your CHOST is not something that should be done lightly.
+# Please consult http://www.gentoo.org/doc/en/change-chost.xml before changing.
+
+ACCEPT_KEYWORDS="~arm"
+
+ENOMEM_FEATURES="arm arm_armv6j o2"
+
+IUSE_IMPLICIT="enomem_features_arm enomem_features_arm_armv6j enomem_features_o2"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_arm enomem_features_arm_armv6j enomem_features_o2"
+
+CHOST="armv6j-unknown-linux-gnu"
+CHOST_arm="${CHOST}"
+
+ABI="arm"
+
+CPU_FLAGS_ARM="-*"
+
+EN_CFLAGS_COMMON_ARCH_ARM_MARM="-marm"
+EN_CFLAGS_COMMON_ARCH_ARM_MTHUBM="-mthumb"
+EN_CFLAGS_COMPILER_FPU_ABI_ARM_HF="-mfloat-abi=hard"
+EN_CFLAGS_COMPILER_FPU_ABI_ARM_SF="-mfloat-abi=softfp"
+EN_CFLAGS_COMPILER_FPU_ARM_VFP="-mfpu=vfp"
+EN_CFLAGS_CPU_ARCH_ARM_ARM="-march=arm"
+EN_CFLAGS_CPU_ARCH_ARM_ARMV6J="-march=armv6j"
+EN_CFLAGS_CPU_ARCH_ARM_RAPI_ZEROW="-mcpu=arm1176jzf-s"
+
+EN_CPU_FLAGS_ARM_ARMV6J="v4 v5 v6 edsp thumb vfp"
+
+CPU_FLAGS_ARM="${EN_CPU_FLAGS_ARM_ARMV6J}

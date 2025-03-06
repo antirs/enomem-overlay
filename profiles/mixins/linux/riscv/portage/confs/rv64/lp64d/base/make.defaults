@@ -1,0 +1,30 @@
+# These settings were set by the catalyst build script that automatically
+# built this stage.
+# Please consult /usr/share/portage/config/make.conf.example for a more
+# detailed example.
+#
+# WARNING: Changing your CHOST is not something that should be done lightly.
+# Please consult http://www.gentoo.org/doc/en/change-chost.xml before changing.
+
+ACCEPT_KEYWORDS="~riscv"
+
+ENOMEM_FEATURES="riscv riscv_rv64 riscv_rv64_lp64d o2"
+
+IUSE_IMPLICIT="enomem_features_riscv enomem_features_riscv_rv64 enomem_features_riscv_rv64_lp64d enomem_features_o2"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_riscv enomem_features_riscv_rv64 enomem_features_riscv_rv64_lp64d enomem_features_o2"
+
+CHOST="riscv64-unknown-linux-gnu"
+CHOST_riscv="${CHOST}"
+
+ABI="lp64d"
+
+CPU_FLAGS_RISCV="-*"
+
+EN_CFLAGS_COMMON_ARCH_ABI_RISCV_LP64D="-mabi=lp64d"
+EN_CFLAGS_CPU_ARCH_RISCV_RV64GC="-march=rv64gc"
+EN_CFLAGS_CPU_ARCH_RISCV_SIPEED_LICHEERVNANO="-mcpu=thead-c906"
+
+EN_LDFLAGS_COMMON_ARCH_MELF_RISCV_RV64_LP64D="-Wl,-melf64lriscv"
+
+EN_CPU_FLAGS_RISCV_SIPEED_LICHEERVNANO=""
