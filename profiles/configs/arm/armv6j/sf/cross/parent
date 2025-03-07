@@ -6,3 +6,4 @@
 ../../../../../mixins/linux/arm/armv6j
 ../../../../../mixins/linux/arm/armv6j/sf
 ../../../../../mixins/base/cross
+../../../../../mixins/base/compile

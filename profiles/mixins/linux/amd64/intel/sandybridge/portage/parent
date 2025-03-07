@@ -1,3 +1,4 @@
 ./flags
+./flags/default
 ./uses
 ./uses/enomem/sandybridge

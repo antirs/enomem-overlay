@@ -27,3 +27,6 @@ sandybridge - Add sandybridge flags
 soc - Add soc flags
 soc_sipeed_licheervnano - Add sipeed licheervnano flags
 virtual - Add virtual flags
+x86_fpu_sse - Add x86 fpmath sse flags
+x86_isa_v2 - Add some x86-64-v2 flags
+x86_isa_v3 - Add some x86-64-v3 flags

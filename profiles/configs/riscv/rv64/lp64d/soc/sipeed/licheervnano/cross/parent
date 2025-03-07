@@ -1,1 +1,3 @@
 ../../../../../../../mixins/linux/riscv/rv64/lp64d/sipeed/licheervnano
+../../../../../../../mixins/base/common/mcmodel/medany
+../../../../../../../mixins/base/compile

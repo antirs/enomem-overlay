@@ -6,3 +6,4 @@
 ../../../../../mixins/base/hardened
 ../../../../../mixins/base/hardened/fortify3
 ../../../../../mixins/base/stage3
+../../../../../mixins/base/compile

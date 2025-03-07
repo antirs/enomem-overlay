@@ -2,3 +2,4 @@
 ../../mixins/base/common
 ../../mixins/base/common/o2
 ../../mixins/linux/riscv
+../../mixins/base/compile

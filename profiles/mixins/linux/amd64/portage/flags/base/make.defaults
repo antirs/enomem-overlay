@@ -1,14 +1,5 @@
-# Copyright 2025 Gentoo Authors.
-# Distributed under the terms of the GNU General Public License v2
+EN_CFLAGS_COMMON_ARCH_X86_M64="-m64"
 
-# WARNING: Changing your CHOST is not something that should be done lightly.
-# Please consult http://www.gentoo.org/doc/en/change-chost.xml before changing.
+EN_CFLAGS_COMMON_ARCH_X86="${EN_CFLAGS_COMMON_ARCH_X86} ${EN_CFLAGS_COMMON_ARCH_X86_M64}"
 
-CFLAGS_COMMON_M64="-m64"
-CFLAGS_COMMON="${CFLAGS_COMMON} -m64"
-
-COMMON_FLAGS="${CFLAGS} ${CFLAGS_COMMON_M64}"
-CFLAGS="${CFLAGS} ${CFLAGS_COMMON_M64}"
-CXXFLAGS="${CFLAGS}"
-FCFLAGS="${CFLAGS}"
-FFLAGS="${CFLAGS}"
+EN_CFLAGS_COMMON_ARCH="${EN_CFLAGS_COMMON_ARCH} ${EN_CFLAGS_COMMON_ARCH_X86_M64}"

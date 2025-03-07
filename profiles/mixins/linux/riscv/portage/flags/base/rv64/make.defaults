@@ -1,16 +1,5 @@
-# Copyright 2025 Gentoo Authors.
-# Distributed under the terms of the GNU General Public License v2
+EN_CFLAGS_CPU_ARCH_RISCV_RV64GC="-march=rv64gc"
 
-# WARNING: Changing your CHOST is not something that should be done lightly.
-# Please consult http://www.gentoo.org/doc/en/change-chost.xml before changing.
+EN_CFLAGS_CPU_ARCH_RISCV="${EN_CFLAGS_CPU_ARCH_RISCV} ${EN_CFLAGS_CPU_ARCH_RISCV_RV64GC}"
 
-CFLAGS_CPU_RISCV_RV64GC="-march=rv64gc"
-CFLAGS_CPU_RISCV="${CFLAGS_CPU_RISCV_RV64GC}"
-
-CFLAGS_CPU="${CFLAGS_CPU} ${CFLAGS_CPU_RISCV_RV64GC}"
-
-COMMON_FLAGS="${CFLAGS} ${CFLAGS_CPU_RISCV_RV64GC}"
-CFLAGS="${CFLAGS} ${CFLAGS_CPU_RISCV_RV64GC}"
-CXXFLAGS="${CFLAGS}"
-FCFLAGS="${CFLAGS}"
-FFLAGS="${CFLAGS}"
+EN_CFLAGS_CPU_ARCH="${EN_CFLAGS_CPU_ARCH} ${EN_CFLAGS_CPU_ARCH_RISCV_RV64GC}"

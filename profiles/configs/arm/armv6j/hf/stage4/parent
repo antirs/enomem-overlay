@@ -8,3 +8,4 @@
 ../../../../../mixins/base/stage4
 ../../../../../mixins/base/uses/no_cpudetection
 ../../../../../mixins/base/uses/no_asm
+../../../../../mixins/base/compile

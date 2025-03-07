@@ -38,6 +38,7 @@
 #./features/pax
 ./features/selinux
 ./flags
+./flags/default
 ./keywords
 ./languages
 ./languages/en-ru

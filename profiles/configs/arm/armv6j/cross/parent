@@ -4,3 +4,4 @@
 ../../../../mixins/linux/arm
 ../../../../mixins/linux/arm/armv6j
 ../../../../mixins/base/cross
+../../../../mixins/base/compile

@@ -1,0 +1,5 @@
+ENOMEM_FEATURES="x86_fpu_sse"
+
+IUSE_IMPLICIT="enomem_features_x86_fpu_sse"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_x86_fpu_sse"

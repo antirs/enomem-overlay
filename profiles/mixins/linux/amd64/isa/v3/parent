@@ -1,0 +1,12 @@
+../../portage/flags/isa
+../../portage/flags/isa/maes
+../../portage/flags/isa/mavx
+../../portage/flags/isa/mavx2
+../../portage/flags/isa/msse
+../../portage/flags/isa/msse2
+../../portage/flags/isa/msse3
+../../portage/flags/isa/msse4
+../../portage/flags/isa/msse4_1
+../../portage/flags/isa/msse4_2
+../../portage/flags/isa/mssse3
+../../portage/uses/enomem/isa/v3

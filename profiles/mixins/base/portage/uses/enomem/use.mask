@@ -22,3 +22,6 @@ enomem_features_sandybridge
 enomem_features_soc
 enomem_features_soc_sipeed_licheervnano
 enomem_features_virtual
+enomem_features_x86_fpu_sse
+enomem_features_x86_isa_v2
+enomem_features_x86_isa_v3

@@ -1,0 +1,5 @@
+ENOMEM_FEATURES="x86_isa_v3"
+
+IUSE_IMPLICIT="enomem_features_x86_isa_v3"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_x86_isa_v3"

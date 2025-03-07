@@ -3,3 +3,4 @@
 ../../../mixins/base/common/o2
 ../../../mixins/linux/riscv
 ../../../mixins/base/cross
+../../../mixins/base/compile

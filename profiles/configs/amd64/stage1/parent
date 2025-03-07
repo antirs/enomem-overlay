@@ -4,3 +4,4 @@
 ../../../mixins/linux/amd64
 ../../../mixins/linux/amd64/common/mcx16
 ../../../mixins/base/stage1
+../../../mixins/base/compile

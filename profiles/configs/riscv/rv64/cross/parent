@@ -4,3 +4,4 @@
 ../../../../mixins/linux/riscv
 ../../../../mixins/linux/riscv/rv64
 ../../../../mixins/base/cross
+../../../../mixins/base/compile
