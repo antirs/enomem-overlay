@@ -1,6 +1,3 @@
-# Copyright 2025 Gentoo Authors.
-# Distributed under the terms of the GNU General Public License v2
-
 EN_CFLAGS_CPU_ARCH_RISCV_SIPEED_LICHEERVNANO="-mcpu=thead-c906"
 
 EN_CFLAGS_CPU_ARCH_RISCV="${EN_CFLAGS_CPU_ARCH_RISCV} ${EN_CFLAGS_CPU_ARCH_RISCV_SIPEED_LICHEERVNANO}"
