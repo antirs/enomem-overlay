@@ -8,3 +8,4 @@
 ./flags/base
 ./keywords
 ./uses
+./uses/enomem/amd64
