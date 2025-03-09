@@ -1,5 +1,5 @@
-ENOMEM_FEATURES="rapi_zerow"
+ENOMEM_FEATURES="soc_rapi_zerow"
 
-IUSE_IMPLICIT="enomem_features_rapi_zerow"
+IUSE_IMPLICIT="enomem_features_soc_rapi_zerow"
 
-BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_rapi_zerow"
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_soc_rapi_zerow"

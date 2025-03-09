@@ -1,8 +1,8 @@
-ENOMEM_FEATURES="amd64 haswell mcx16 o2"
+ENOMEM_FEATURES="amd64 amd64_haswell common_o2 x86_cas_mcx16"
 
-IUSE_IMPLICIT="enomem_features_amd64 enomem_features_haswell enomem_features_mcx16 enomem_features_o2"
+IUSE_IMPLICIT="enomem_features_amd64 enomem_features_amd64_haswell enomem_features_common_o2 enomem_features_x86_cas_mcx16"
 
-BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_amd64 enomem_features_haswell enomem_features_mcx16 enomem_features_o2"
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_amd64 enomem_features_amd64_haswell enomem_features_common_o2 enomem_features_x86_cas_mcx16"
 
 CHOST="x86_64-pc-linux-gnu"
 

@@ -1,5 +1,5 @@
-ENOMEM_FEATURES="haswell"
+ENOMEM_FEATURES="amd64_haswell"
 
-IUSE_IMPLICIT="enomem_features_haswell"
+IUSE_IMPLICIT="enomem_features_amd64_haswell"
 
-BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_haswell"
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_amd64_haswell"

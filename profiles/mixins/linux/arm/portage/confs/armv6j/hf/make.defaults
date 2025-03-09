@@ -1,10 +1,10 @@
 CHOST="armv6j-unknown-linux-gnueabihf"
 CHOST_arm="${CHOST}"
 
-ENOMEM_FEATURES="arm arm_armv6j arm_vfp fpu_abi_hf o2"
+ENOMEM_FEATURES="arm arm_armv6j arm_vfp common_o2 fpu_abi_hf"
 
-IUSE_IMPLICIT="enomem_features_arm enomem_features_arm_armv6j enomem_features_arm_vfp enomem_features_fpu_abi_hf enomem_features_o2"
+IUSE_IMPLICIT="enomem_features_arm enomem_features_arm_armv6j enomem_features_arm_vfp enomem_features_common_o2 enomem_features_fpu_abi_hf"
 
-BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_arm enomem_features_arm_armv6j enomem_features_arm_vfp enomem_features_fpu_abi_hf enomem_features_o2"
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_arm enomem_features_arm_armv6j enomem_features_arm_vfp enomem_features_common_o2 enomem_features_fpu_abi_hf"
 
 CPU_FLAGS_ARM="${EN_CPU_FLAGS_ARM_ARMV6J}"

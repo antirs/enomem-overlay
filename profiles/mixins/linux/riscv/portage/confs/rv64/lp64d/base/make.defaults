@@ -8,11 +8,11 @@
 
 ACCEPT_KEYWORDS="~riscv"
 
-ENOMEM_FEATURES="riscv riscv_rv64 riscv_rv64_lp64d o2"
+ENOMEM_FEATURES="common_o2 riscv riscv_rv64 riscv_rv64_lp64d"
 
-IUSE_IMPLICIT="enomem_features_riscv enomem_features_riscv_rv64 enomem_features_riscv_rv64_lp64d enomem_features_o2"
+IUSE_IMPLICIT="enomem_features_common_o2 enomem_features_riscv enomem_features_riscv_rv64 enomem_features_riscv_rv64_lp64d"
 
-BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_riscv enomem_features_riscv_rv64 enomem_features_riscv_rv64_lp64d enomem_features_o2"
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_common_o2 enomem_features_riscv enomem_features_riscv_rv64 enomem_features_riscv_rv64_lp64d"
 
 CHOST="riscv64-unknown-linux-gnu"
 CHOST_riscv="${CHOST}"

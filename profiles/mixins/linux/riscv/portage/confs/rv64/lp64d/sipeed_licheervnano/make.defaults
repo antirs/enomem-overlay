@@ -1,8 +1,8 @@
-ENOMEM_FEATURES="riscv riscv_rv64 riscv_rv64_lp64d o2 soc soc_sipeed_licheervnano"
+ENOMEM_FEATURES="common_o2 riscv riscv_rv64 riscv_rv64_lp64d soc soc_sipeed_licheervnano"
 
-IUSE_IMPLICIT="enomem_features_riscv enomem_features_riscv_rv64 enomem_features_riscv_rv64_lp64d enomem_features_o2 enomem_features_soc enomem_features_soc_sipeed_licheervnano"
+IUSE_IMPLICIT="enomem_features_common_o2 enomem_features_riscv enomem_features_riscv_rv64 enomem_features_riscv_rv64_lp64d enomem_features_soc enomem_features_soc_sipeed_licheervnano"
 
-BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_riscv enomem_features_riscv_rv64 enomem_features_riscv_rv64_lp64d enomem_features_o2 enomem_features_soc enomem_features_soc_sipeed_licheervnano"
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_common_o2 enomem_features_riscv enomem_features_riscv_rv64 enomem_features_riscv_rv64_lp64d enomem_features_soc enomem_features_soc_sipeed_licheervnano"
 
 CHOST="riscv64-unknown-linux-gnu"
 CHOST_riscv="${CHOST}"

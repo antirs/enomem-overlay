@@ -8,11 +8,11 @@
 
 ACCEPT_KEYWORDS="~arm"
 
-ENOMEM_FEATURES="arm arm_armv6j o2"
+ENOMEM_FEATURES="arm arm_armv6j common_o2"
 
-IUSE_IMPLICIT="enomem_features_arm enomem_features_arm_armv6j enomem_features_o2"
+IUSE_IMPLICIT="enomem_features_arm enomem_features_arm_armv6j enomem_features_common_o2"
 
-BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_arm enomem_features_arm_armv6j enomem_features_o2"
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_arm enomem_features_arm_armv6j enomem_features_common_o2"
 
 CHOST="armv6j-unknown-linux-gnu"
 CHOST_arm="${CHOST}"

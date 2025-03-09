@@ -1,5 +1,5 @@
-ENOMEM_FEATURES="sandybridge"
+ENOMEM_FEATURES="amd64_sandybridge"
 
-IUSE_IMPLICIT="enomem_features_sandybridge"
+IUSE_IMPLICIT="enomem_features_amd64_sandybridge"
 
-BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_sandybridge"
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_amd64_sandybridge"
