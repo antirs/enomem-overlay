@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit autotools
+inherit autotools flag-o-matic
 
 if [[ ${PV} == "9999" ]] ; then
 	ESVN_REPO_URI="https://svn.code.sf.net/p/sdcc/code/trunk/sdcc"
@@ -45,21 +45,30 @@ SDCC_PORTS="
 "
 IUSE="
 	${SDCC_PORTS}
-	+boehm-gc device-lib doc non-free packihx sdcdb +sdcpp ucsim
+	+boehm-gc device-lib doc non-free packihx sdbinutils sdcdb +sdcpp static ucsim
 "
 
+REQUIRED_USE="
+		pic14? ( !static )
+		pic16? ( !static )
+		sdbinutils? ( !static )
+"
 RDEPEND="
 	dev-libs/boost:=
-	sys-libs/zlib:=
-	pic14? ( >=dev-embedded/gputils-0.13.7 )
-	pic16? ( >=dev-embedded/gputils-0.13.7 )
-	boehm-gc? ( dev-libs/boehm-gc:= )
-	sdcdb? ( sys-libs/readline:0= )
-	ucsim? ( sys-libs/ncurses:= )
+	!static? ( sys-libs/zlib:= )
+	!static? ( pic14? ( >=dev-embedded/gputils-0.13.7 ) )
+	!static? ( pic16? ( >=dev-embedded/gputils-0.13.7 ) )
+	!static? ( boehm-gc? ( dev-libs/boehm-gc:= ) )
+	!static? ( sdcdb? ( sys-libs/readline:0= ) )
+	!static? ( ucsim? ( sys-libs/ncurses:= ) )
 "
 DEPEND="
 	${RDEPEND}
 	dev-util/gperf
+	static? ( sys-libs/zlib:=[static-libs] )
+	boehm-gc? ( static? ( dev-libs/boehm-gc:=[static-libs] ) )
+	sdcdb? ( static? ( sys-libs/readline:0=[static-libs] ) )
+	ucsim? ( static? ( sys-libs/ncurses:=[static-libs] ) )
 "
 PATCHES=(
 	"${FILESDIR}"/sdcc-3.8.0-override-override.patch
@@ -97,8 +106,8 @@ src_configure() {
 	local myeconfargs=(
 		ac_cv_prog_STRIP=true
 		--without-ccache
-		--enable-sdbinutils
 
+		$(use_enable sdbinutils)
 		$(use_enable ucsim)
 		$(use_enable device-lib)
 		$(use_enable packihx)
@@ -131,6 +140,11 @@ src_configure() {
 		$(use_enable mos6502 mos6502-port)
 		$(use_enable mos65c02 mos65c02-port)
 	)
+
+	use static && append-cflags -static
+	use static && append-cxxflags -static
+	use static && append-ldflags -static
+
 	econf "${myeconfargs[@]}"
 }
 
