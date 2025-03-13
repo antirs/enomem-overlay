@@ -114,10 +114,13 @@ amd64 devices/notebook/amd64/lenovo/thinkpad/t440p/static/stage1 dev
 amd64 devices/notebook/amd64/lenovo/thinkpad/t440p/static/stage3 dev
 amd64 devices/notebook/amd64/lenovo/thinkpad/t440p/static/stage4 dev
 amd64 virtual/docker/amd64/minimal dev
+amd64 virtual/docker/amd64/minimal/sdcc dev
 amd64 virtual/docker/amd64/minimal/stage1 dev
 amd64 virtual/docker/amd64/minimal/stage3 dev
 amd64 virtual/docker/amd64/minimal/stage4 dev
 amd64 virtual/docker/amd64/no-multilib/minimal dev
+amd64 virtual/docker/amd64/no-multilib/minimal/sdcc dev
+amd64 virtual/docker/amd64/no-multilib/minimal/sdcc/static dev
 amd64 virtual/docker/amd64/no-multilib/minimal/stage1 dev
 amd64 virtual/docker/amd64/no-multilib/minimal/stage3 dev
 amd64 virtual/docker/amd64/no-multilib/minimal/stage4 dev
