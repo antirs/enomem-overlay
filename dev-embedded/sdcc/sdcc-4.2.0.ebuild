@@ -53,8 +53,10 @@ REQUIRED_USE="
 		pic16? ( !static )
 		sdbinutils? ( !static )
 "
-RDEPEND="
+BDEPEND="
 	dev-libs/boost:=
+"
+RDEPEND="
 	!static? ( sys-libs/zlib:= )
 	!static? ( pic14? ( >=dev-embedded/gputils-0.13.7 ) )
 	!static? ( pic16? ( >=dev-embedded/gputils-0.13.7 ) )
@@ -106,8 +108,8 @@ src_configure() {
 	local myeconfargs=(
 		ac_cv_prog_STRIP=true
 		--without-ccache
+		--enable-sdbinutils
 
-		$(use_enable sdbinutils)
 		$(use_enable ucsim)
 		$(use_enable device-lib)
 		$(use_enable packihx)
