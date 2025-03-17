@@ -45,13 +45,12 @@ SDCC_PORTS="
 "
 IUSE="
 	${SDCC_PORTS}
-	+boehm-gc device-lib doc non-free packihx sdbinutils sdcdb +sdcpp static ucsim
+	+boehm-gc device-lib doc non-free packihx sdcdb +sdcpp static ucsim
 "
 
 REQUIRED_USE="
 		pic14? ( !static )
 		pic16? ( !static )
-		sdbinutils? ( !static )
 "
 BDEPEND="
 	dev-libs/boost:=
@@ -145,7 +144,7 @@ src_configure() {
 
 	use static && append-cflags -static
 	use static && append-cxxflags -static
-	use static && append-ldflags -static
+	use static && append-ldflags -static --static
 
 	econf "${myeconfargs[@]}"
 }
