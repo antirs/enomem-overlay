@@ -203,7 +203,7 @@ net-libs/libmnl:0  verify-sig -examples
 net-libs/libnsl:0  -static-libs
 net-libs/libtirpc:0  -kerberos -static-libs
 net-libs/nghttp2:0  -debug -hpack-tools -jemalloc -static-libs  -test -utils -xml
-net-misc/curl  ftp gnutls hsts http2 imap pop3 progress-meter smtp ssl tftp verify-sig websockets -adns -alt-svc -brotli -debug -gopher -http3 -idn -kerberos -ldap -mbedtls -openssl -psl -quic -rtmp -rustls -samba -ssh  -static-libs -telnet -test -zstd
+net-misc/curl  ftp gnutls hsts imap pop3 progress-meter smtp ssl tftp verify-sig websockets -adns -alt-svc -brotli -debug -gopher -http2 -http3 -idn -kerberos -ldap -mbedtls -openssl -psl -quic -rtmp -rustls -samba -ssh  -static-libs -telnet -test -zstd
 net-misc/dhcpcd  embedded ipv6 udev -debug -privsep
 net-misc/iputils  arping caps filecaps nls -clockdiff -doc -idn -test -tracepath
 net-misc/netifrc  dhcp
