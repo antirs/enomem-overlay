@@ -1,0 +1,3 @@
+../../../../../../mixins/base/musl
+../../../../../../mixins/linux/amd64/musl
+../../../../../../mixins/base/virtual/docker/minimal/musl

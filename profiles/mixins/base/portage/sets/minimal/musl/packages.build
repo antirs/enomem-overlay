@@ -1,0 +1,4 @@
+-dev-python/pyxattr
+-dev-util/pkgconf
+-sys-apps/attr
+-sys-apps/sandbox
