@@ -14,6 +14,7 @@ fpu_abi_sf - Add fpu sf abi flags
 hardened - Add hardened flags
 hardened_fortify2 - Add fortify2 hardened flags
 hardened_fortify3 - Add fortify3 hardened flags
+lib_musl - Add musl flags
 notebook - Add notebook flags
 qemu - Add qemu flags
 riscv - Add riscv flags

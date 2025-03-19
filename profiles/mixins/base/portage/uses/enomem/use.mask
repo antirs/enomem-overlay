@@ -12,6 +12,7 @@ enomem_features_fpu_abi_sf
 enomem_features_hardened
 enomem_features_hardened_fortify2
 enomem_features_hardened_fortify3
+enomem_features_lib_musl
 enomem_features_notebook
 enomem_features_qemu
 enomem_features_riscv

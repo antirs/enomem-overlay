@@ -1,0 +1,5 @@
+ENOMEM_FEATURES="lib_musl"
+
+IUSE_IMPLICIT="enomem_features_lib_musl"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_lib_musl"
