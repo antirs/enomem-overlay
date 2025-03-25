@@ -1,4 +1,4 @@
-dev-embedded/sdcc  boehm-gc mcs51 sdcdb sdcpp ucsim
+dev-embedded/sdcc  boehm-gc mcs51 sdcdb sdcpp stm8 ucsim
 dev-libs/boehm-gc
 sys-libs/ncurses
 sys-libs/readline
