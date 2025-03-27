@@ -1,0 +1,7 @@
+# Marsha Melova <marsha.melova@grrlz.net>
+# openrc profile
+sys-apps/openrc-navi
+sys-apps/s6-rc
+sys-apps/systemd
+sys-process/runit
+sys-process/daemontools

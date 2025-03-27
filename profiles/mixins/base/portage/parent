@@ -54,6 +54,7 @@
 ./perms
 ./pkgs
 ./sets
+./sets/service-manager/openrc
 ./uses
 ./uses/base
 ./uses/enomem
