@@ -1,1 +1,2 @@
 dev-lang/python:3.12  ensurepip gdbm ncurses readline sqlite ssl verify-sig -bluetooth -build -debug -examples -libedit -pgo -test -tk -valgrind
+app-crypt/libb2  -openmp
