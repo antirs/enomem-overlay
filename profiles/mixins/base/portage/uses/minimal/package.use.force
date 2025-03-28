@@ -1,0 +1,386 @@
+acct-group/audio
+acct-group/cdrom
+acct-group/dialout
+acct-group/disk
+acct-group/floppy
+acct-group/input
+acct-group/kmem
+acct-group/kvm
+acct-group/lp
+acct-group/man
+acct-group/portage
+acct-group/render
+acct-group/root
+acct-group/sgx
+acct-group/sshd
+acct-group/tape
+acct-group/tty
+acct-group/usb
+acct-group/video
+acct-user/man
+acct-user/portage
+acct-user/sshd
+app-admin/eselect
+app-admin/perl-cleaner
+app-admin/setools
+app-alternatives/awk  gawk
+app-alternatives/bc  gnu
+app-alternatives/bzip2  reference
+app-alternatives/gzip  reference
+app-alternatives/lex  flex
+app-alternatives/ninja  reference
+app-alternatives/sh  bash
+app-alternatives/tar  gnu
+app-alternatives/yacc  bison
+app-arch/bzip2:0  verify-sig
+app-arch/gzip  verify-sig
+app-arch/libarchive:0  acl bzip2 e2fsprogs iconv lz4 lzma lzo verify-sig xattr zstd
+app-arch/lz4:0
+app-arch/tar  acl nls verify-sig xattr
+app-arch/unzip  bzip2
+app-arch/xz-utils  extra-filters nls verify-sig
+app-arch/zstd:0  lz4 lzma zlib
+app-crypt/gnupg  bzip2 nls readline smartcard ssl tofu verify-sig
+app-crypt/gpgme:1  cxx verify-sig
+app-crypt/libb2
+app-crypt/libmd
+app-crypt/pinentry  caps ncurses verify-sig
+app-crypt/rhash:0  nls ssl
+app-editors/nano  ncurses nls spell
+app-eselect/eselect-iptables
+app-eselect/eselect-lib-bin-symlink
+app-eselect/eselect-pinentry
+app-i18n/man-pages-l10n
+app-misc/ca-certificates
+app-misc/editor-wrapper
+app-misc/mime-types
+app-misc/pax-utils  caps
+app-portage/elt-patches
+app-portage/gemato  gpg
+app-portage/getuto
+app-portage/portage-utils  qmanifest
+app-shells/bash  nls  verify-sig
+app-text/build-docbook-catalog
+app-text/docbook-xml-dtd:4.1.2
+app-text/docbook-xml-dtd:4.2
+app-text/docbook-xml-dtd:4.5
+app-text/docbook-xsl-stylesheets
+app-text/manpager
+app-text/opensp  nls
+app-text/po4a
+app-text/sgml-common
+dev-build/autoconf-archive
+dev-build/autoconf-wrapper
+dev-build/autoconf:2.72  verify-sig
+dev-build/automake-wrapper
+dev-build/automake:1.17  verify-sig
+dev-build/cmake  ncurses verify-sig
+dev-build/gtk-doc-am
+dev-build/libtool:2
+dev-build/make  nls verify-sig
+dev-build/meson  verify-sig
+dev-build/meson-format-array
+dev-build/ninja
+dev-db/sqlite:3  icu readline
+dev-lang/perl:0  berkdb gdbm
+dev-lang/python-exec-conf:2
+dev-lang/python-exec:2
+dev-lang/python:3.12  build ensurepip gdbm ncurses readline sqlite ssl verify-sig
+dev-lang/python:3.13  build ensurepip gdbm ncurses readline sqlite ssl verify-sig
+dev-lang/swig  pcre
+dev-lang/tcl:0  threads
+dev-libs/expat  unicode
+dev-libs/gmp:0  asm cpudetection cxx
+dev-libs/icu:0  verify-sig
+dev-libs/isl:0
+dev-libs/jsoncpp:0
+dev-libs/libassuan:0  verify-sig
+dev-libs/libffi:0
+dev-libs/libgcrypt:0  asm getentropy verify-sig
+dev-libs/libgpg-error  nls verify-sig
+dev-libs/libksba  verify-sig
+dev-libs/libpcre2:0  bzip2 jit pcre16 pcre32 readline unicode verify-sig zlib
+dev-libs/libpipeline
+dev-libs/libtasn1:0  verify-sig
+dev-libs/libunistring:0
+dev-libs/libuv:0  verify-sig
+dev-libs/libxml2:2  icu python readline
+dev-libs/libxslt  crypt
+dev-libs/lzo:2
+dev-libs/mpc:0
+dev-libs/mpdecimal:4
+dev-libs/mpfr:0  verify-sig
+dev-libs/nettle:0  asm gmp verify-sig
+dev-libs/npth
+dev-libs/openssl:0  asm verify-sig
+dev-libs/popt  nls
+dev-perl/Capture-Tiny
+dev-perl/Class-Inspector
+dev-perl/Config-AutoConf
+dev-perl/Exporter-Tiny
+dev-perl/ExtUtils-CChecker
+dev-perl/File-ShareDir
+dev-perl/File-ShareDir-Install
+dev-perl/File-Slurper
+dev-perl/List-MoreUtils  xs
+dev-perl/List-MoreUtils-XS
+dev-perl/Locale-gettext
+dev-perl/MIME-Charset
+dev-perl/Module-Build
+dev-perl/Params-Util
+dev-perl/PerlIO-utf8_strict
+dev-perl/Pod-Parser
+dev-perl/SGMLSpm
+dev-perl/Syntax-Keyword-Try
+dev-perl/TermReadKey
+dev-perl/Text-CharWidth
+dev-perl/Text-WrapI18N
+dev-perl/Unicode-LineBreak
+dev-perl/XS-Parse-Keyword
+dev-perl/YAML-Tiny
+dev-python/cachecontrol
+dev-python/certifi
+dev-python/charset-normalizer
+dev-python/colorama
+dev-python/cython
+dev-python/distlib
+dev-python/distro
+dev-python/editables
+dev-python/ensurepip-pip
+dev-python/fastjsonschema
+dev-python/flit-core
+dev-python/gentoo-common
+dev-python/gpep517
+dev-python/h2
+dev-python/hatch-vcs
+dev-python/hatchling
+dev-python/hpack
+dev-python/hyperframe
+dev-python/idna
+dev-python/installer
+dev-python/jaraco-collections
+dev-python/jaraco-context
+dev-python/jaraco-functools
+dev-python/jaraco-text
+dev-python/jinja2
+dev-python/lark
+dev-python/linkify-it-py
+dev-python/lxml  threads
+dev-python/markdown-it-py
+dev-python/markupsafe  native-extensions
+dev-python/mdurl
+dev-python/more-itertools
+dev-python/msgpack  native-extensions
+dev-python/networkx
+dev-python/packaging
+dev-python/pathspec
+dev-python/pip
+dev-python/platformdirs
+dev-python/pluggy
+dev-python/poetry-core
+dev-python/pygments
+dev-python/pyproject-hooks
+dev-python/pysocks
+dev-python/requests
+dev-python/resolvelib
+dev-python/rich
+dev-python/setuptools
+dev-python/setuptools-scm
+dev-python/trove-classifiers
+dev-python/truststore
+dev-python/typing-extensions
+dev-python/uc-micro-py
+dev-python/urllib3  http2
+dev-python/wheel
+dev-util/gperf
+dev-util/patchelf
+dev-util/pkgconf:0
+dev-util/re2c
+net-dns/libidn2:0  nls verify-sig
+net-firewall/iptables:0
+net-libs/gnutls:0  cxx idn nls tools verify-sig zlib
+net-libs/libmnl:0  verify-sig
+net-libs/libnsl:0
+net-libs/libtirpc:0
+net-libs/nghttp2:0
+net-misc/curl  ftp gnutls hsts imap pop3 progress-meter smtp ssl tftp verify-sig websockets
+net-misc/dhcpcd  embedded ipv6 udev
+net-misc/iputils  arping caps filecaps nls
+net-misc/netifrc  dhcp
+net-misc/openssh    pie ssl verify-sig
+net-misc/rsync  acl iconv ssl verify-sig xattr
+net-misc/wget  gnutls ipv6 nls pcre  verify-sig zlib
+perl-core/File-Temp
+perl-core/Getopt-Long
+perl-core/Scalar-List-Utils
+perl-core/Test-Harness
+sec-keys/openpgp-keys-alejandro-colomar
+sec-keys/openpgp-keys-bison
+sec-keys/openpgp-keys-bradking
+sec-keys/openpgp-keys-bzip2
+sec-keys/openpgp-keys-chetramey
+sec-keys/openpgp-keys-coreutils
+sec-keys/openpgp-keys-danielstenberg
+sec-keys/openpgp-keys-diffutils
+sec-keys/openpgp-keys-file
+sec-keys/openpgp-keys-findutils
+sec-keys/openpgp-keys-gawk
+sec-keys/openpgp-keys-gdbm
+sec-keys/openpgp-keys-gentoo-release
+sec-keys/openpgp-keys-gettext
+sec-keys/openpgp-keys-gnupg
+sec-keys/openpgp-keys-gnutls
+sec-keys/openpgp-keys-grep
+sec-keys/openpgp-keys-gzip
+sec-keys/openpgp-keys-icu
+sec-keys/openpgp-keys-jimmeyering
+sec-keys/openpgp-keys-jpakkane
+sec-keys/openpgp-keys-karelzak
+sec-keys/openpgp-keys-lassecollin
+sec-keys/openpgp-keys-libarchive
+sec-keys/openpgp-keys-libidn
+sec-keys/openpgp-keys-libtasn1
+sec-keys/openpgp-keys-libuv
+sec-keys/openpgp-keys-m4
+sec-keys/openpgp-keys-madler
+sec-keys/openpgp-keys-make
+sec-keys/openpgp-keys-netfilter
+sec-keys/openpgp-keys-nettle
+sec-keys/openpgp-keys-openssh
+sec-keys/openpgp-keys-openssl
+sec-keys/openpgp-keys-patch
+sec-keys/openpgp-keys-philiphazel
+sec-keys/openpgp-keys-python
+sec-keys/openpgp-keys-sed
+sec-keys/openpgp-keys-sysvinit
+sec-keys/openpgp-keys-tar
+sec-keys/openpgp-keys-thomasdickey
+sec-keys/openpgp-keys-vincentlefevre
+sec-keys/openpgp-keys-waynedavison
+sec-keys/openpgp-keys-wget
+sec-keys/openpgp-keys-zackweinberg
+sec-policy/selinux-base  ubac unconfined unknown-perms
+sec-policy/selinux-base-policy  unconfined
+sec-policy/selinux-dirmngr
+sec-policy/selinux-gpg
+sec-policy/selinux-loadkeys
+sec-policy/selinux-mandb
+sec-policy/selinux-openrc
+sec-policy/selinux-shutdown
+sec-policy/selinux-unconfined
+sys-apps/acl  nls
+sys-apps/attr  nls
+sys-apps/baselayout  build
+sys-apps/checkpolicy
+sys-apps/coreutils  acl caps nls verify-sig xattr
+sys-apps/diffutils  nls verify-sig
+sys-apps/file  bzip2 lzma seccomp verify-sig zlib
+sys-apps/findutils  nls verify-sig
+sys-apps/gawk  nls readline verify-sig
+sys-apps/gentoo-functions
+sys-apps/grep  egrep-fgrep nls pcre verify-sig
+sys-apps/groff
+sys-apps/help2man  nls
+sys-apps/install-xattr
+sys-apps/iproute2  caps iptables
+sys-apps/kbd  nls
+sys-apps/kmod  lzma  zlib zstd
+sys-apps/less  pcre
+sys-apps/locale-gen
+sys-apps/man-db  manpager nls seccomp zlib
+sys-apps/man-pages  verify-sig
+sys-apps/net-tools  arp hostname ipv6 nls
+sys-apps/openrc   caps netifrc  sysvinit unicode
+sys-apps/policycoreutils
+sys-apps/portage  build gentoo-dev  native-extensions rsync-verify xattr
+sys-apps/sandbox  nnp
+sys-apps/sed  acl nls verify-sig
+sys-apps/selinux-python
+sys-apps/semodule-utils
+sys-apps/shadow:0  acl  nls  verify-sig xattr
+sys-apps/systemd-utils  acl kmod tmpfiles udev
+sys-apps/sysvinit  nls verify-sig
+sys-apps/texinfo  nls standalone
+sys-apps/util-linux   build caps cramfs hardlink logger ncurses nls python readline verify-sig
+sys-apps/which
+sys-auth/pambase  caps nullok passwdqc sha512
+sys-auth/passwdqc
+sys-devel/bc  readline
+sys-devel/binutils-config
+sys-devel/binutils:2.43   nls plugins zstd
+sys-devel/bison  nls verify-sig
+sys-devel/flex  nls
+sys-devel/gcc-config
+sys-devel/gcc:14  cet    fortran graphite nls openmp  sanitize ssp zstd
+sys-devel/gettext  acl cxx ncurses nls verify-sig
+sys-devel/gnuconfig
+sys-devel/m4  nls verify-sig
+sys-devel/patch  verify-sig xattr
+sys-fs/e2fsprogs  nls tools
+sys-fs/udev-init-scripts
+sys-kernel/linux-headers
+sys-libs/db:6.0
+sys-libs/gdbm:0  berkdb nls readline verify-sig
+sys-libs/glibc:2.2   caps cet multiarch ssp
+sys-libs/libcap
+sys-libs/libcap-ng
+sys-libs/libseccomp
+sys-libs/libselinux  python
+sys-libs/libsemanage:0
+sys-libs/libsepol:0  static-libs
+sys-libs/libxcrypt:0
+sys-libs/ncurses:0   verify-sig
+sys-libs/pam   filecaps
+sys-libs/readline:0   verify-sig
+sys-libs/timezone-data  nls
+sys-libs/zlib:0  verify-sig
+sys-process/audit  python
+sys-process/procps:0  kill ncurses nls
+sys-process/psmisc  nls
+virtual/acl
+virtual/dev-manager
+virtual/editor
+virtual/libc
+virtual/libcrypt:0
+virtual/libiconv
+virtual/libintl
+virtual/man
+virtual/openssh  ssl
+virtual/os-headers
+virtual/package-manager
+virtual/pager
+virtual/perl-CPAN
+virtual/perl-CPAN-Meta
+virtual/perl-CPAN-Meta-YAML
+virtual/perl-Carp
+virtual/perl-Data-Dumper
+virtual/perl-Encode
+virtual/perl-Exporter
+virtual/perl-ExtUtils-CBuilder
+virtual/perl-ExtUtils-Install
+virtual/perl-ExtUtils-MakeMaker
+virtual/perl-ExtUtils-Manifest
+virtual/perl-ExtUtils-ParseXS
+virtual/perl-File-Path
+virtual/perl-File-Spec
+virtual/perl-File-Temp
+virtual/perl-Getopt-Long
+virtual/perl-IO
+virtual/perl-IPC-Cmd
+virtual/perl-JSON-PP
+virtual/perl-Math-BigInt
+virtual/perl-Module-Metadata
+virtual/perl-Parse-CPAN-Meta
+virtual/perl-Perl-OSType
+virtual/perl-Scalar-List-Utils
+virtual/perl-Test-Harness
+virtual/perl-Text-ParseWords
+virtual/perl-Unicode-Collate
+virtual/perl-XSLoader
+virtual/perl-podlators
+virtual/perl-version
+virtual/pkgconfig
+virtual/service-manager
+virtual/ssh
+virtual/tmpfiles
+virtual/udev

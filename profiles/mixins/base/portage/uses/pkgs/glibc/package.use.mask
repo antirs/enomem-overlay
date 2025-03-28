@@ -1,0 +1,1 @@
+sys-libs/glibc:2.2  audit -caps -cet -multiarch -ssp  compile-locales  doc gd hash-sysv-compat headers-only  multilib-bootstrap nscd perl profile  selinux suid  systemtap test

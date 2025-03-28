@@ -4,6 +4,7 @@
 ../../../../../mixins/linux/amd64
 ../../../../../mixins/linux/amd64/common/mcx16
 ../../../../../mixins/base/virtual/docker
-../../../../../mixins/base/virtual/docker/minimal/static
-../../../../../mixins/base/static
+../../../../../mixins/base/stage1
+../../../../../mixins/base/virtual/docker/minimal
+../../../../../mixins/base/virtual/docker/minimal/glibc
 ../../../../../mixins/base/compile

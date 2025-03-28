@@ -1,1 +1,2 @@
-../../../../portage/sets/minimal/musl
+../../../../portage/pkgs/musl
+../../../../portage/uses/pkgs/musl
