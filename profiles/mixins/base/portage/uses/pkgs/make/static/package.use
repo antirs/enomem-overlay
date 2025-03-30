@@ -1,0 +1,1 @@
+dev-build/make  static -doc -guile -test
