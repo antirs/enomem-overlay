@@ -1,0 +1,1 @@
+dev-vcs/git  -blksha1 -curl -gpg -iconv -nls -pcre -safe-directory cgi cvs doc highlight keyring mediawiki perforce perl selinux subversion test tk webdav xinetd
