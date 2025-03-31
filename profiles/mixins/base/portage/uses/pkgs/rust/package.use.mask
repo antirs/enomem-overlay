@@ -1,2 +1,0 @@
-dev-lang/rust-bin:1.83.0  -rust-analyzer -rust-src -rustfmt -verify-sig big-endian clippy doc prefix
-dev-lang/rust:1.83.0  -llvm-libunwind -rust-analyzer -rust-src -rustfmt -system-llvm -verify-sig -wasm big-endian clippy debug dist doc lto miri nightly parallel-compiler test

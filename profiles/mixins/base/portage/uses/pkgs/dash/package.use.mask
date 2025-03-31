@@ -1,3 +1,0 @@
-app-shells/dash static -libedit
-dev-libs/libedit static-libs
-sys-libs/ncurses static-libs

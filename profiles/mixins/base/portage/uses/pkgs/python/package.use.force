@@ -1,2 +1,0 @@
-dev-lang/python:3.12  ensurepip gdbm ncurses readline sqlite ssl verify-sig
-app-crypt/libb2

@@ -1,5 +1,0 @@
-dev-embedded/sdcc  -boehm-gc -mcs51 -sdcdb -sdcpp -stm8 -ucsim static
-dev-libs/boehm-gc  static-libs
-sys-libs/ncurses  static-libs
-sys-libs/readline  static-libs
-sys-libs/zlib  static-libs

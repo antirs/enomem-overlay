@@ -1,0 +1,4 @@
+app-shells/dash  static
+dev-build/make  static
+dev-embedded/sdcc  static
+sys-apps/busybox  static

@@ -1,4 +1,5 @@
 gentoo:default/linux/amd64/23.0/musl
-../../../../../../configs/amd64/docker/minimal/sdcc
+../../../../../../configs/amd64/docker/minimal
+../../../../../../rewrites/virtual/docker/minimal/sdcc
+../../../../../../rewrites/virtual/docker/minimal/musl
 ../../../../../../rewrites/virtual/docker/amd64/musl/minimal
-../../../../../../rewrites/virtual/docker/amd64/musl/minimal/sdcc
