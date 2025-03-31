@@ -1,2 +1,3 @@
 ../../../../portage/pkgs/clang
 ../../../../portage/uses/pkgs/clang
+../../../../portage/envs/utils/catalyst/limited/memory/16g
