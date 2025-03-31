@@ -1,0 +1,1 @@
+app-editors/vim  acl crypt minimal nls terminal -X -cscope -debug -gpm -lua -perl -python -racket -ruby -selinux -sound -tcl -vim-pager

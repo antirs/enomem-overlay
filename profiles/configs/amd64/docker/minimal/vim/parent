@@ -1,0 +1,10 @@
+../../../../../mixins/base
+../../../../../mixins/base/common
+../../../../../mixins/base/common/o2
+../../../../../mixins/linux/amd64
+../../../../../mixins/linux/amd64/common/mcx16
+../../../../../mixins/base/virtual/docker
+../../../../../mixins/base/stage1
+../../../../../mixins/base/virtual/docker/minimal
+../../../../../mixins/base/virtual/docker/minimal/vim
+../../../../../mixins/base/compile
