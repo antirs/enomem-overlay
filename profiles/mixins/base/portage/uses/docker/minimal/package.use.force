@@ -388,8 +388,8 @@ virtual/udev
 app-shells/bash  nls readline verify-sig -afs -bashlogger -examples -mem-scramble -net -pgo -plugins
 sys-apps/busybox
 llvm-core/clang:19  extra pie static-analyzer verify-sig
-llvm-core/clang-common  cet default-compiler-rt default-libcxx default-lld llvm-libunwind verify-sig
-llvm-core/clang-runtime:19  compiler-rt libcxx openmp sanitize
+llvm-core/clang-common  cet default-compiler-rt default-lld verify-sig
+llvm-core/clang-runtime:19  compiler-rt openmp sanitize
 llvm-core/clang-toolchain-symlinks:19  native-symlinks
 llvm-core/lld:19  verify-sig zstd
 llvm-core/lld-toolchain-symlinks:19  native-symlinks
@@ -425,3 +425,4 @@ sys-libs/ncurses
 sys-libs/readline
 sys-libs/zlib
 app-editors/vim  acl crypt minimal nls terminal
+sys-libs/libunwind static-libs
