@@ -1,0 +1,18 @@
+llvm-core/clang:19  extra pie static-analyzer verify-sig -debug -doc -ieee-long-double -test -xml
+llvm-core/clang-common  cet default-compiler-rt default-libcxx default-lld llvm-libunwind verify-sig -bootstrap-prefix -hardened
+llvm-core/clang-runtime:19  compiler-rt libcxx openmp sanitize -offload
+llvm-core/clang-toolchain-symlinks:19  native-symlinks -gcc-symlinks -multilib-symlinks
+llvm-core/lld:19  verify-sig zstd -debug -test
+llvm-core/lld-toolchain-symlinks:19  native-symlinks -multilib-symlinks
+llvm-core/llvm:19  libffi verify-sig zstd -binutils-plugin -debug -debuginfod -doc -exegesis -libedit -test -xml -z3
+llvm-core/llvm-common  verify-sig -emacs
+llvm-core/llvm-toolchain-symlinks:19  native-symlinks -multilib-symlinks
+llvm-core/llvmgold
+llvm-runtimes/compiler-rt:19  atomic-builtins clang verify-sig -debug -test
+llvm-runtimes/compiler-rt-sanitizers:19  asan cfi clang ctx-profile dfsan gwp-asan hwasan libfuzzer lsan memprof msan orc profile safestack scudo tsan ubsan verify-sig xray -debug -shadowcallstack -test
+llvm-runtimes/libcxx  clang libcxxabi static-libs verify-sig -test
+llvm-runtimes/libcxxabi  clang static-libs verify-sig -test
+llvm-runtimes/libunwind  clang static-libs verify-sig -debug -test
+llvm-runtimes/openmp:0  verify-sig -debug -gdb-plugin -hwloc -ompt -test
+sys-libs/binutils-libs:0  cet nls static-libs -64-bit-bfd -multitarget -test
+sys-libs/libunwind static-libs

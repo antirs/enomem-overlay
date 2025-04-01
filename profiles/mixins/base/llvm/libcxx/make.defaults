@@ -1,0 +1,5 @@
+ENOMEM_FEATURES="lib_libcxx"
+
+IUSE_IMPLICIT="enomem_features_lib_libcxx"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_lib_libcxx"

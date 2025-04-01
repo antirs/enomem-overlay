@@ -1,0 +1,5 @@
+ENOMEM_FEATURES="nomultilib"
+
+IUSE_IMPLICIT="enomem_features_nomultilib"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_nomultilib -multilib"

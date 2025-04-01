@@ -3,7 +3,7 @@ MAKEOPTS="-j2"
 USE_EXPAND="ENOMEM_FEATURES"
 USE_EXPAND_HIDDEN="-ENOMEM_FEATURES"
 USE_EXPAND_IMPLICIT="ENOMEM_FEATURES"
-USE_EXPAND_VALUES_ENOMEM_FEATURES="amd64 amd64_haswell amd64_sandybridge arm arm_armv6j arm_vfp common_o2 cross docker fpu_abi_hf fpu_abi_sf hardened hardened_fortify2 hardened_fortify3 lib_musl notebook qemu riscv riscv_rv64 riscv_rv64_lp64d soc soc_rapi_zerow soc_sipeed_licheervnano virtual x86_cas_mcx16 x86_fpu_sse x86_isa_v2 x86_isa_v3"
+USE_EXPAND_VALUES_ENOMEM_FEATURES="amd64 amd64_haswell amd64_sandybridge arm arm_armv6j arm_vfp common_o2 cross docker fpu_abi_hf fpu_abi_sf hardened hardened_fortify2 hardened_fortify3 lib_libcxx lib_musl nomultilib notebook qemu riscv riscv_rv64 riscv_rv64_lp64d soc soc_rapi_zerow soc_sipeed_licheervnano toolchain_llvm virtual x86_cas_mcx16 x86_fpu_sse x86_isa_v2 x86_isa_v3"
 
 ENOMEM_FEATURES=""
 

@@ -1,0 +1,4 @@
+llvm-core/clang-common  -cet -default-compiler-rt -default-libcxx -default-lld -llvm-libunwind -verify-sig bootstrap-prefix hardened
+llvm-core/clang-runtime:19  -compiler-rt -libcxx -openmp -sanitize offload
+llvm-runtimes/libcxx  -clang -libcxxabi -static-libs -verify-sig test
+llvm-runtimes/libcxxabi  -clang -static-libs -verify-sig test

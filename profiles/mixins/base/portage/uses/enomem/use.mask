@@ -12,7 +12,9 @@ enomem_features_fpu_abi_sf
 enomem_features_hardened
 enomem_features_hardened_fortify2
 enomem_features_hardened_fortify3
+enomem_features_lib_libcxx
 enomem_features_lib_musl
+enomem_features_nomultilib
 enomem_features_notebook
 enomem_features_qemu
 enomem_features_riscv
@@ -21,6 +23,7 @@ enomem_features_riscv_rv64_lp64d
 enomem_features_soc
 enomem_features_soc_rapi_zerow
 enomem_features_soc_sipeed_licheervnano
+enomem_features_toolchain_llvm
 enomem_features_virtual
 enomem_features_x86_cas_mcx16
 enomem_features_x86_fpu_sse

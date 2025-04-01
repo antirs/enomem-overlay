@@ -1,0 +1,2 @@
+CHOST="x86_64-pc-linux-gnu"
+CHOST_amd64="${CHOST}"

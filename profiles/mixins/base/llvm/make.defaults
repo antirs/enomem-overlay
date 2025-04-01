@@ -1,0 +1,5 @@
+ENOMEM_FEATURES="toolchain_llvm"
+
+IUSE_IMPLICIT="enomem_features_toolchain_llvm"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_toolchain_llvm"

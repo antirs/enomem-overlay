@@ -1,0 +1,18 @@
+llvm-core/clang:19  extra pie static-analyzer verify-sig
+llvm-core/clang-common  cet default-compiler-rt default-libcxx default-lld llvm-libunwind verify-sig
+llvm-core/clang-runtime:19  compiler-rt libcxx openmp sanitize
+llvm-core/clang-toolchain-symlinks:19  native-symlinks
+llvm-core/lld:19  verify-sig zstd
+llvm-core/lld-toolchain-symlinks:19  native-symlinks
+llvm-core/llvm:19  libffi verify-sig zstd
+llvm-core/llvm-common  verify-sig
+llvm-core/llvm-toolchain-symlinks:19  native-symlinks
+llvm-core/llvmgold
+llvm-runtimes/compiler-rt:19  atomic-builtins clang verify-sig
+llvm-runtimes/compiler-rt-sanitizers:19  asan cfi clang ctx-profile dfsan gwp-asan hwasan libfuzzer lsan memprof msan orc profile safestack scudo tsan ubsan verify-sig xray
+llvm-runtimes/libcxx  clang libcxxabi static-libs verify-sig
+llvm-runtimes/libcxxabi  clang static-libs verify-sig
+llvm-runtimes/libunwind  clang static-libs verify-sig
+llvm-runtimes/openmp:0  verify-sig
+sys-libs/binutils-libs:0  cet nls static-libs
+sys-libs/libunwind static-libs
