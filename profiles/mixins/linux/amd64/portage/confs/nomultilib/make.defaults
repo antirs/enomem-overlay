@@ -3,3 +3,5 @@ ENOMEM_FEATURES="nomultilib"
 IUSE_IMPLICIT="enomem_features_nomultilib"
 
 BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_nomultilib -abi_x86_32 -abi_x86_x32 -multilib"
+
+MULTILIB_ABIS="amd64"
