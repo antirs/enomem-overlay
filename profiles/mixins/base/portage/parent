@@ -4,10 +4,9 @@
 ./confs
 ./dirs
 ./dirs/cross
+./dirs/features
 ./dirs/features/binpkg
-./dirs/features/ccache
 ./dirs/features/sign
-#./dirs/home
 ./envs
 ./envs/ada
 ./envs/audio
@@ -25,17 +24,13 @@
 ./envs/postgres
 ./envs/python
 ./envs/qemu
-#./envs/qt
 ./envs/ros
 ./envs/ruby
 ./envs/scanner
 ./envs/video
 ./features
+./features/binpkg
 ./features/binpkg/signature
-#./features/ccache
-#./features/distcc
-#./features/distcc/hosts
-#./features/pax
 ./features/selinux
 ./flags
 ./flags/default
@@ -60,4 +55,3 @@
 ./uses/enomem
 ./utils
 ./utils/emerge
-#./utils/layman
