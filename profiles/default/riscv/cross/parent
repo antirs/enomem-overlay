@@ -1,2 +1,3 @@
 gentoo:default/linux/riscv/23.0
-../../../configs/riscv/cross
+../../../configs/riscv
+../../../rewrites/default/base/cross

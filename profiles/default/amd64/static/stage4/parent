@@ -1,3 +1,4 @@
 gentoo:default/linux/amd64/23.0
-../../../../configs/amd64/stage4
+../../../../configs/amd64
+../../../../rewrites/default/base/stage4
 ../../../../rewrites/default/amd64/static

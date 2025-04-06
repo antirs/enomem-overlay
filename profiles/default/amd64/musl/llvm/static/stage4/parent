@@ -1,5 +1,6 @@
 gentoo:default/linux/amd64/23.0/musl/llvm
-../../../../../../configs/amd64/stage4
+../../../../../../configs/amd64
+../../../../../../rewrites/default/base/stage4
 ../../../../../../rewrites/default/amd64/static
 ../../../../../../rewrites/default/amd64/musl
 ../../../../../../rewrites/default/amd64/llvm/libcxx

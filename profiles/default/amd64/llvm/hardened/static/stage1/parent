@@ -1,5 +1,6 @@
 gentoo:default/linux/amd64/23.0/llvm
-../../../../../../configs/amd64/hardened/stage1
+../../../../../../configs/amd64/hardened
+../../../../../../rewrites/default/base/stage1
 ../../../../../../rewrites/default/amd64/static
 ../../../../../../rewrites/default/amd64/llvm/libcxx
 ../../../../../../rewrites/default/amd64/nomultilib

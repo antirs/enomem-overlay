@@ -1,2 +1,3 @@
 gentoo:default/linux/riscv/23.0/rv64/lp64d
-../../../../../configs/riscv/rv64/lp64d/stage3
+../../../../../configs/riscv/rv64/lp64d
+../../../../../rewrites/default/riscv/stage3

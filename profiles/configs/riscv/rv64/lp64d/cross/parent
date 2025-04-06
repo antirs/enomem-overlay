@@ -1,8 +1,0 @@
-../../../../../mixins/base
-../../../../../mixins/base/common
-../../../../../mixins/base/common/o2
-../../../../../mixins/linux/riscv
-../../../../../mixins/linux/riscv/rv64
-../../../../../mixins/linux/riscv/rv64/lp64d
-../../../../../mixins/base/cross
-../../../../../mixins/base/compile

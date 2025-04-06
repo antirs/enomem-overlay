@@ -1,3 +1,1 @@
-../portage/dirs
-../portage/features/noccache
-../portage/features/nodistcc
+../portage/uses/stage4

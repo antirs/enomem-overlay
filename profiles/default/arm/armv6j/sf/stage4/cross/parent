@@ -1,2 +1,4 @@
 gentoo:default/linux/arm/23.0/armv6j_sf
-../../../../../../configs/arm/armv6j/sf/stage4/cross
+../../../../../../configs/arm/armv6j/sf
+../../../../../../rewrites/default/arm/stage4
+../../../../../../rewrites/default/base/cross
