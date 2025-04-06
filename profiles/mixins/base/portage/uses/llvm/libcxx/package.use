@@ -2,3 +2,6 @@ llvm-core/clang-common  cet default-compiler-rt default-libcxx default-lld llvm-
 llvm-core/clang-runtime:19  compiler-rt libcxx openmp sanitize -offload
 llvm-runtimes/libcxx  clang libcxxabi static-libs verify-sig -test
 llvm-runtimes/libcxxabi  clang static-libs verify-sig -test
+sys-devel/gettext  -openmp
+app-crypt/libb2  -openmp
+app-portage/portage-utils  -openmp
