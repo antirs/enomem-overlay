@@ -127,7 +127,7 @@ EN_USE_PLUS="${USE_CRYPTO} ${USE_GENTOO} ${USE_LANG} ${USE_NET} ${USE_SYSTEM} ${
 
 USE="${EN_USE_MINUS} ${EN_USE_PLUS}"
 
-BOOTSTRAP_USE="${BOOTSTRAP_USE} ada_target_gnat_2021 alsa_cards_hda-intel calligra_features_krita curl_ssl_gnutls guile_single_target_3-0 guile_targets_3-0 llvm_slot_19 lua_single_target_luajit lua_targets_luajit postgres_targets_postgres16 python_targets_python3_12 python_targets_python2_7 python_single_target_python3_12 ruby_targets_ruby32 video_cards_intel"
+BOOTSTRAP_USE="${BOOTSTRAP_USE} ada_target_gnat_2021 alsa_cards_hda-intel calligra_features_krita curl_ssl_gnutls guile_single_target_3-0 guile_targets_3-0 llvm_slot_19 lua_single_target_luajit lua_targets_luajit postgres_targets_postgres16 python_targets_python3_12 python_targets_python2_7 python_single_target_python3_12 ruby_targets_ruby32 video_cards_intel -curl_ssl_openssl -curl_quic_openssl"
 
 MAKEOPTS="-j5"
 
