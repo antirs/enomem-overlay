@@ -1,0 +1,7 @@
+-*llvm-core/lld
+-*llvm-core/llvm
+-*llvm-core/clang
+-*llvm-runtimes/libcxx
+-*llvm-runtimes/libcxxabi
+-*llvm-runtimes/compiler-rt
+-*llvm-runtimes/libunwind
