@@ -385,45 +385,48 @@ virtual/ssh  minimal
 virtual/tmpfiles
 virtual/udev
 
+app-crypt/libb2  openmp
+app-editors/emacs  -acl -gmp -inotify -json -libxml2 -ssl -threads -zlib X Xaw3d alsa aqua athena cairo dbus dynamic-loading games gfile gif gpm gsettings gtk gui gzip-el harfbuzz imagemagick jit jpeg kerberos lcms livecd m17n-lib mailutils motif png selinux sound source sqlite svg systemd tiff toolkit-scroll-bars tree-sitter valgrind webp wide-int xft xpm
+app-editors/vim  -acl -crypt -minimal -nls -terminal X cscope debug gpm lua perl python racket ruby selinux sound tcl vim-pager
 app-shells/bash  -nls -readline -verify-sig afs bashlogger examples mem-scramble net pgo plugins
-sys-apps/busybox  static
-llvm-core/clang:19  -extra -pie -static-analyzer -verify-sig debug doc ieee-long-double test xml
+app-shells/dash static -libedit
+dev-build/make  doc guile static test
+dev-embedded/sdcc  -boehm-gc -mcs51 -sdcdb -sdcpp -stm8 -ucsim static
+dev-lang/go
+dev-lang/perl  -berkdb -gdbm doc minimal
+dev-lang/python:3.12  -ensurepip -gdbm -ncurses -readline -sqlite -ssl -verify-sig bluetooth build debug examples libedit pgo test tk valgrind
+dev-lang/rust-bin:1.83.0  -rust-analyzer -rust-src -rustfmt -verify-sig big-endian clippy doc prefix
+dev-lang/rust:1.83.0  -llvm-libunwind -rust-analyzer -rust-src -rustfmt -system-llvm -verify-sig -wasm big-endian clippy debug dist doc lto miri nightly parallel-compiler test
+dev-libs/boehm-gc  static-libs
+dev-libs/libedit static-libs
+dev-vcs/git  -blksha1 -curl -gpg -iconv -nls -pcre -safe-directory cgi cvs doc highlight keyring mediawiki perforce perl selinux subversion test tk webdav xinetd
 llvm-core/clang-common  -cet -default-compiler-rt -default-lld -verify-sig bootstrap-prefix default-libcxx hardened llvm-libunwind
 llvm-core/clang-runtime:19  -compiler-rt -openmp -sanitize libcxx offload
 llvm-core/clang-toolchain-symlinks:19  -native-symlinks gcc-symlinks multilib-symlinks
-llvm-core/lld:19  -verify-sig -zstd debug test
+llvm-core/clang:19  -extra -pie -static-analyzer -verify-sig debug doc ieee-long-double test xml
 llvm-core/lld-toolchain-symlinks:19  -native-symlinks multilib-symlinks
-llvm-core/llvm:19  -binutils-plugin -libffi -verify-sig -zstd debug debuginfod doc exegesis libedit test xml z3
+llvm-core/lld:19  -verify-sig -zstd debug test
 llvm-core/llvm-common  -verify-sig emacs
 llvm-core/llvm-toolchain-symlinks:19  -native-symlinks multilib-symlinks
+llvm-core/llvm:19  -binutils-plugin -libffi -verify-sig -zstd debug debuginfod doc exegesis libedit test xml z3
 llvm-core/llvmgold
-llvm-runtimes/compiler-rt:19  -atomic-builtins -clang -verify-sig debug test
 llvm-runtimes/compiler-rt-sanitizers:19  -asan -cfi -clang -ctx-profile -dfsan -gwp-asan -hwasan -libfuzzer -lsan -memprof -msan -orc -profile -safestack -scudo -tsan -ubsan -verify-sig -xray debug shadowcallstack test
+llvm-runtimes/compiler-rt:19  -atomic-builtins -clang -verify-sig debug test
 llvm-runtimes/libcxx  -clang -libcxxabi -static-libs -verify-sig test
 llvm-runtimes/libcxxabi  -clang -static-libs -verify-sig test
 llvm-runtimes/libunwind  -clang -static-libs -verify-sig debug test
 llvm-runtimes/openmp:0  -verify-sig debug gdb-plugin hwloc ompt test
-sys-libs/binutils-libs:0  -cet -nls -static-libs 64-bit-bfd multitarget test
-app-shells/dash static -libedit
-dev-libs/libedit static-libs
-sys-libs/ncurses static-libs
-app-editors/emacs  -acl -gmp -inotify -json -libxml2 -ssl -threads -zlib X Xaw3d alsa aqua athena cairo dbus dynamic-loading games gfile gif gpm gsettings gtk gui gzip-el harfbuzz imagemagick jit jpeg kerberos lcms livecd m17n-lib mailutils motif png selinux sound source sqlite svg systemd tiff toolkit-scroll-bars tree-sitter valgrind webp wide-int xft xpm
-sys-devel/gcc:14  -cet    -fortran -graphite -nls -openmp  -sanitize -ssp -zstd ada  d debug doc  go hardened  jit  lto modula2  objc objc++ objc-gc  pgo rust systemtap test  valgrind vanilla vtv
-dev-vcs/git  -blksha1 -curl -gpg -iconv -nls -pcre -safe-directory cgi cvs doc highlight keyring mediawiki perforce perl selinux subversion test tk webdav xinetd
-sys-libs/glibc:2.2  audit -caps -cet -multiarch -ssp  compile-locales  doc gd hash-sysv-compat headers-only  multilib-bootstrap nscd perl profile  selinux suid  systemtap test
-dev-lang/go
-dev-build/make  doc guile static test
-sys-libs/musl  crypt
-dev-lang/perl  -berkdb -gdbm doc minimal
+sys-apps/acl  -nls static-libs
+sys-apps/attr  -nls debug static-libs
+sys-apps/busybox  static
+sys-apps/coreutils  -acl -nls -xattr caps gmp hostname kill multicall openssl selinux split-usr static test vanilla verify-sig
 sys-apps/portage  -build -gentoo-dev -ipc -native-extensions -rsync-verify -xattr apidoc debug doc selinux test
-dev-lang/python:3.12  -ensurepip -gdbm -ncurses -readline -sqlite -ssl -verify-sig bluetooth build debug examples libedit pgo test tk valgrind
-app-crypt/libb2  openmp
-dev-lang/rust-bin:1.83.0  -rust-analyzer -rust-src -rustfmt -verify-sig big-endian clippy doc prefix
-dev-lang/rust:1.83.0  -llvm-libunwind -rust-analyzer -rust-src -rustfmt -system-llvm -verify-sig -wasm big-endian clippy debug dist doc lto miri nightly parallel-compiler test
-dev-embedded/sdcc  -boehm-gc -mcs51 -sdcdb -sdcpp -stm8 -ucsim static
-dev-libs/boehm-gc  static-libs
+sys-devel/gcc:14  -cet    -fortran -graphite -nls -openmp  -sanitize -ssp -zstd ada  d debug doc  go hardened  jit  lto modula2  objc objc++ objc-gc  pgo rust systemtap test  valgrind vanilla vtv
+sys-libs/binutils-libs:0  -cet -nls -static-libs 64-bit-bfd multitarget test
+sys-libs/glibc:2.2  audit -caps -cet -multiarch -ssp  compile-locales  doc gd hash-sysv-compat headers-only  multilib-bootstrap nscd perl profile  selinux suid  systemtap test
+sys-libs/libunwind -static-libs
+sys-libs/musl  crypt
 sys-libs/ncurses  static-libs
 sys-libs/readline  static-libs
 sys-libs/zlib  static-libs
-app-editors/vim  -acl -crypt -minimal -nls -terminal X cscope debug gpm lua perl python racket ruby selinux sound tcl vim-pager
-sys-libs/libunwind -static-libs
+virtual/libintl
