@@ -392,6 +392,7 @@ app-editors/vim  -acl -crypt -minimal -nls -terminal X cscope debug gpm lua perl
 app-shells/bash  -nls -readline -verify-sig afs bashlogger examples mem-scramble net pgo plugins
 app-shells/dash static -libedit
 dev-build/make  doc guile static test
+dev-debug/gdb  -cet -nls -python -server debuginfod guile lzma multitarget rocm sim source-highlight test vanilla xml xxhash zstd
 dev-embedded/sdcc  -boehm-gc -mcs51 -sdcdb -sdcpp -stm8 -ucsim static
 dev-lang/go
 dev-lang/perl  -berkdb -gdbm doc minimal

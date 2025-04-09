@@ -393,6 +393,7 @@ app-shells/bash  nls readline verify-sig -afs -bashlogger -examples -mem-scrambl
 app-shells/dash -static libedit
 dev-build/make  -doc -guile -static -test
 dev-embedded/sdcc  -static boehm-gc mcs51 sdcdb sdcpp stm8 ucsim
+dev-debug/gdb  cet nls python server -debuginfod -guile -lzma -multitarget -rocm -sim -source-highlight -test -vanilla -xml -xxhash -zstd
 dev-lang/go
 dev-lang/perl  berkdb gdbm -doc -minimal
 dev-lang/python:3.12  ensurepip gdbm ncurses readline sqlite ssl verify-sig -bluetooth -build -debug -examples -libedit -pgo -test -tk -valgrind

@@ -392,6 +392,7 @@ app-editors/vim  acl crypt minimal nls terminal
 app-shells/bash  nls readline verify-sig
 app-shells/dash libedit
 dev-build/make
+dev-debug/gdb  cet nls python server
 dev-embedded/sdcc  boehm-gc mcs51 sdcdb sdcpp stm8 ucsim
 dev-lang/go
 dev-lang/perl  berkdb gdbm
