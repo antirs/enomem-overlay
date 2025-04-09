@@ -385,6 +385,7 @@ virtual/ssh
 virtual/tmpfiles
 virtual/udev
 
+app-admin/sudo  nls secure-path ssl
 app-crypt/libb2
 app-editors/emacs  acl gmp inotify json libxml2 ssl threads zlib
 app-editors/vim  acl crypt minimal nls terminal
