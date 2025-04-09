@@ -1,3 +1,4 @@
+app-arch/gzip  static
 app-shells/dash  static
 dev-build/make  static
 dev-embedded/sdcc  static -ucsim
