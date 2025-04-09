@@ -1,6 +1,6 @@
-dev-build/autoconf
-dev-build/automake
-dev-build/libtool
-dev-build/make
-sys-devel/gnuconfig
-sys-devel/m4
+*dev-build/autoconf
+*dev-build/automake
+*dev-build/libtool
+*dev-build/make
+*sys-devel/gnuconfig
+*sys-devel/m4
