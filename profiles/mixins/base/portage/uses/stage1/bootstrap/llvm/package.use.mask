@@ -1,0 +1,6 @@
+llvm-core/clang-common  -cet default-compiler-rt default-libcxx default-lld llvm-libunwind -verify-sig bootstrap-prefix hardened
+llvm-core/clang-runtime  -compiler-rt -libcxx -openmp -sanitize default-compiler-rt default-libcxx default-lld llvm-libunwind offload polly
+llvm-core/llvm  -bootstrap-gcc -libffi -verify-sig -zstd binutils-plugin debug debuginfod doc exegesis libedit test xml z3
+sys-devel/gettext  openmp
+app-crypt/libb2  openmp
+app-portage/portage-utils  openmp

@@ -311,7 +311,7 @@ sys-devel/binutils:2.43   -nls -plugins -zstd debuginfod doc  gprofng hardened m
 sys-devel/bison  -nls -verify-sig examples static test
 sys-devel/flex  -nls static test
 sys-devel/gcc-config
-sys-devel/gcc:14  -cet    -fortran -graphite -nls -openmp  -sanitize -ssp -zstd ada  d debug doc  go hardened  jit  lto modula2  objc objc++ objc-gc  pgo rust systemtap test  valgrind vanilla vtv
+sys-devel/gcc  -cet -cxx -fortran -graphite -nls -openmp -pch -sanitize -zstd ada custom-cflags d debug default-stack-clash-protection default-znow doc fixed-point go hardened ieee-long-double jit libssp lto modula2 multilib objc objc++ objc-gc pgo pie rust ssp systemtap test time64 valgrind vanilla vtv
 sys-devel/gettext  -acl -cxx -ncurses -nls -openmp -verify-sig  doc emacs git java static-libs
 sys-devel/gnuconfig
 sys-devel/m4  -nls -verify-sig examples

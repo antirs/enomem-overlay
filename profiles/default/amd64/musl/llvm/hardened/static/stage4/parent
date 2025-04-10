@@ -4,4 +4,5 @@ gentoo:default/linux/amd64/23.0/musl/llvm
 ../../../../../../../rewrites/default/amd64/static
 ../../../../../../../rewrites/default/amd64/musl
 ../../../../../../../rewrites/default/amd64/llvm/libcxx
+../../../../../../../rewrites/default/amd64/musl/llvm
 ../../../../../../../rewrites/default/amd64/nomultilib

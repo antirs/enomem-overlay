@@ -1,0 +1,3 @@
+../../../portage/compilers/tools/linkers/ld
+../../../portage/envs/utils/catalyst/stage1/bootstrap/llvm
+../../../portage/uses/stage1/bootstrap/llvm

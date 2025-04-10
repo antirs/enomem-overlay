@@ -1,0 +1,8 @@
+gentoo:default/linux/amd64/23.0/musl/llvm
+../../../../../../configs/amd64
+../../../../../../rewrites/default/base/stage3
+../../../../../../rewrites/default/amd64/musl
+../../../../../../rewrites/default/amd64/llvm
+../../../../../../rewrites/default/amd64/musl/llvm
+../../../../../../rewrites/default/base/stage3/bootstrap/musl/llvm
+../../../../../../rewrites/default/amd64/nomultilib

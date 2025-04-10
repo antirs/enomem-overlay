@@ -3,4 +3,6 @@ gentoo:default/linux/amd64/23.0/musl/llvm
 ../../../../../../rewrites/default/base/stage1
 ../../../../../../rewrites/default/amd64/musl
 ../../../../../../rewrites/default/amd64/llvm/libcxx
+../../../../../../rewrites/default/amd64/musl/llvm
+../../../../../../rewrites/default/base/stage1/llvm/libcxx
 ../../../../../../rewrites/default/amd64/nomultilib

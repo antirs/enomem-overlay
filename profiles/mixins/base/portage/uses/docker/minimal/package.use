@@ -23,43 +23,55 @@ acct-user/sshd
 app-admin/eselect  -doc -emacs -vim-syntax
 app-admin/perl-cleaner  -pkgcore
 app-admin/setools  -X -debug -test
+app-admin/sudo  nls secure-path ssl -gcrypt -ldap -offensive -pam -sasl -selinux -sendmail -skey -sssd -verify-sig
 app-alternatives/awk  gawk -busybox -mawk -nawk
 app-alternatives/bc  gnu -gh
 app-alternatives/bzip2  reference -lbzip2 -pbzip2
+app-alternatives/cpio  gnu -libarchive
 app-alternatives/gzip  reference -pigz
 app-alternatives/lex  flex -reflex
 app-alternatives/ninja  reference -samurai
 app-alternatives/sh  bash -busybox -dash -ksh -lksh -mksh
 app-alternatives/tar  gnu -libarchive
 app-alternatives/yacc  bison -byacc
+app-arch/alien  bzip2 -test
 app-arch/bzip2:0  verify-sig -static -static-libs
+app-arch/dpkg  bzip2 lzma nls update-alternatives zlib zstd -selinux -static-libs -test
 app-arch/gzip  verify-sig -pic -static
 app-arch/libarchive:0  acl bzip2 e2fsprogs iconv lz4 lzma lzo verify-sig xattr zstd -blake2 -expat -nettle -static-libs -test
 app-arch/lz4:0  -static-libs -test
+app-arch/rpm  acl bzip2 iconv nls openmp readline sqlite zstd -audit -berkdb -caps -dbus -doc -lzma -python -selinux -sequoia
 app-arch/tar  acl nls verify-sig xattr -minimal -selinux
 app-arch/unzip  bzip2  -natspec
 app-arch/xz-utils  extra-filters nls verify-sig -doc -pgo -static-libs
 app-arch/zstd:0  lz4 lzma zlib -static-libs -test
 app-crypt/gnupg  bzip2 nls readline smartcard ssl tofu verify-sig -doc -ldap -selinux -test -tools -tpm -usb -user-socket -wks-server
 app-crypt/gpgme:1  cxx verify-sig -common-lisp -debug -python -qt5 -qt6 -static-libs -test
+app-crypt/libb2  -openmp
 app-crypt/libb2  -openmp -native-cflags -static-libs
 app-crypt/libmd
 app-crypt/pinentry  caps ncurses verify-sig -X -efl -emacs -gtk -keyring -qt5 -qt6 -wayland
 app-crypt/rhash:0  nls ssl -debug -static-libs
+app-editors/emacs  acl gmp inotify json libxml2 ssl threads zlib -X -Xaw3d -alsa -aqua -athena -cairo -dbus -dynamic-loading -games -gfile -gif -gpm -gsettings -gtk -gui -gzip-el -harfbuzz -imagemagick -jit -jpeg -kerberos -lcms -livecd -m17n-lib -mailutils -motif -png -selinux -sound -source -sqlite -svg -systemd -tiff -toolkit-scroll-bars -tree-sitter -valgrind -webp -wide-int -xft -xpm
 app-editors/nano  ncurses nls spell  -debug -justify -magic -minimal
+app-editors/vim  acl crypt minimal nls terminal -X -cscope -debug -gpm -lua -perl -python -racket -ruby -selinux -sound -tcl -vim-pager
 app-eselect/eselect-iptables
 app-eselect/eselect-lib-bin-symlink
+app-eselect/eselect-lua
 app-eselect/eselect-pinentry
 app-i18n/man-pages-l10n
 app-misc/ca-certificates  -cacert
 app-misc/editor-wrapper
 app-misc/mime-types  -nginx
 app-misc/pax-utils  caps -man -python  -test
+app-misc/tmux  -debug -jemalloc -selinux -sixel -systemd -utempter -vim-syntax
 app-portage/elt-patches
 app-portage/gemato  gpg -pretty-log -test -tools
 app-portage/getuto  -test
 app-portage/portage-utils  -openmp qmanifest -static
 app-shells/bash  nls  verify-sig -afs -bashlogger -examples -mem-scramble -net -pgo -plugins
+app-shells/bash  nls readline verify-sig -afs -bashlogger -examples -mem-scramble -net -pgo -plugins
+app-shells/dash -static libedit
 app-text/build-docbook-catalog
 app-text/docbook-xml-dtd:4.1.2
 app-text/docbook-xml-dtd:4.2
@@ -69,6 +81,7 @@ app-text/manpager
 app-text/opensp  nls -doc -static-libs -test
 app-text/po4a  -test
 app-text/sgml-common
+app-text/xmlto  text
 dev-build/autoconf-archive
 dev-build/autoconf-wrapper
 dev-build/autoconf:2.72  verify-sig -emacs
@@ -77,24 +90,36 @@ dev-build/automake:1.17  verify-sig -test
 dev-build/cmake  ncurses verify-sig -dap -doc -gui -qt6 -test
 dev-build/gtk-doc-am
 dev-build/libtool:2  -vanilla
+dev-build/make  -doc -guile -static -test
 dev-build/make  nls verify-sig -doc -guile -static -test
 dev-build/meson  verify-sig -test
 dev-build/meson-format-array
 dev-build/ninja  -doc -test
 dev-db/sqlite:3  icu readline -debug -doc -secure-delete -static-libs -tcl -test -tools
+dev-debug/gdb  cet nls python server -debuginfod -guile -lzma -multitarget -rocm -sim -source-highlight -test -vanilla -xml -xxhash -zstd
+dev-debug/strace  elfutils verify-sig -aio -perl -selinux -static -test -unwind
+dev-embedded/sdcc  -static boehm-gc mcs51 sdcdb sdcpp stm8 ucsim
+dev-lang/go
+dev-lang/lua  deprecated readline
+dev-lang/perl  berkdb gdbm -doc -minimal
 dev-lang/perl:0  berkdb gdbm -doc -minimal
 dev-lang/python-exec-conf:2
 dev-lang/python-exec:2   -test
 dev-lang/python:3.12  build ensurepip gdbm ncurses readline sqlite ssl verify-sig -bluetooth -debug -examples -libedit -pgo -test -tk -valgrind
+dev-lang/python:3.12  ensurepip gdbm ncurses readline sqlite ssl verify-sig -bluetooth -build -debug -examples -libedit -pgo -test -tk -valgrind
 dev-lang/python:3.13  build ensurepip gdbm ncurses readline sqlite ssl verify-sig -bluetooth -debug -examples  -libedit -pgo -test -tk -valgrind
+dev-lang/rust-bin:1.83.0  rust-analyzer rust-src rustfmt verify-sig -big-endian -clippy -doc -prefix
+dev-lang/rust:1.83.0  llvm-libunwind rust-analyzer rust-src rustfmt system-llvm verify-sig wasm -big-endian -clippy -debug -dist -doc -lto -miri -nightly -parallel-compiler -test
 dev-lang/swig  pcre -ccache -doc -test
 dev-lang/tcl:0  threads -debug
+dev-libs/boehm-gc  -static-libs
 dev-libs/expat  unicode -examples -static-libs -test
 dev-libs/gmp:0  asm cpudetection cxx -doc -pic -static-libs
 dev-libs/icu:0  verify-sig -debug -doc -examples -static-libs -test
 dev-libs/isl:0  -static-libs
 dev-libs/jsoncpp:0  -doc -test
 dev-libs/libassuan:0  verify-sig
+dev-libs/libedit -static-libs
 dev-libs/libffi:0  -debug -exec-static-trampoline -pax-kernel -static-libs -test
 dev-libs/libgcrypt:0  asm getentropy verify-sig -doc -static-libs
 dev-libs/libgpg-error  nls verify-sig -common-lisp -static-libs -test
@@ -114,6 +139,7 @@ dev-libs/nettle:0  asm gmp verify-sig -doc -static-libs
 dev-libs/npth  -test
 dev-libs/openssl:0  asm verify-sig -fips -ktls -quic -rfc3779 -sctp -static-libs -test -tls-compression -vanilla -weak-ssl-ciphers
 dev-libs/popt  nls -static-libs
+dev-libs/tree-sitter-bash  python
 dev-perl/Capture-Tiny  -examples -test
 dev-perl/Class-Inspector  -test
 dev-perl/Config-AutoConf  -test
@@ -158,6 +184,8 @@ dev-python/hpack  -test
 dev-python/hyperframe  -test
 dev-python/idna  -test
 dev-python/installer  -test
+dev-python/ipdb  -test
+dev-python/ipython  smp -examples -nbconvert -notebook -qt5 -test
 dev-python/jaraco-collections  -test
 dev-python/jaraco-context  -test
 dev-python/jaraco-functools  -test
@@ -181,6 +209,7 @@ dev-python/poetry-core  -test
 dev-python/pygments  -test
 dev-python/pyproject-hooks  -test
 dev-python/pysocks
+dev-python/python-lsp-server  all-plugins -test
 dev-python/requests   -socks5 -test
 dev-python/resolvelib  -test
 dev-python/rich  -test
@@ -192,10 +221,28 @@ dev-python/typing-extensions  -test
 dev-python/uc-micro-py  -test
 dev-python/urllib3  http2 -brotli -test -zstd
 dev-python/wheel  -test
+dev-util/debhelper  -test
 dev-util/gperf
 dev-util/patchelf
 dev-util/pkgconf:0   -test
 dev-util/re2c  -debug -test
+dev-vcs/git  blksha1 curl gpg iconv nls pcre safe-directory -cgi -cvs -doc -highlight -keyring -mediawiki -perforce -perl -selinux -subversion -test -tk -webdav -xinetd
+llvm-core/clang  extra static-analyzer verify-sig -debug -doc -ieee-long-double -pie -test -xml
+llvm-core/clang-common  cet default-compiler-rt default-libcxx default-lld llvm-libunwind verify-sig -bootstrap-prefix -hardened
+llvm-core/clang-runtime  compiler-rt default-compiler-rt default-libcxx default-lld libcxx llvm-libunwind openmp sanitize -offload -polly
+llvm-core/clang-toolchain-symlinks  native-symlinks -gcc-symlinks -multilib-symlinks
+llvm-core/lld  verify-sig zstd -debug -test
+llvm-core/lld-toolchain-symlinks  native-symlinks -multilib-symlinks
+llvm-core/llvm  libffi verify-sig zstd -binutils-plugin -bootstrap-gcc -debug -debuginfod -doc -exegesis -libedit -test -xml -z3
+llvm-core/llvm-common  verify-sig -emacs
+llvm-core/llvm-toolchain-symlinks  native-symlinks -multilib-symlinks
+llvm-core/llvmgold
+llvm-runtimes/compiler-rt  atomic-builtins clang verify-sig -debug -test
+llvm-runtimes/compiler-rt-sanitizers  asan cfi clang ctx-profile dfsan hwasan libfuzzer lsan memprof msan nsan orc profile rtsan safestack scudo tsan ubsan verify-sig xray -debug -gwp-asan -shadowcallstack -test
+llvm-runtimes/libcxx  clang libcxxabi static-libs verify-sig -test
+llvm-runtimes/libcxxabi  clang static-libs verify-sig -test
+llvm-runtimes/libunwind  clang static-libs verify-sig -debug -test
+llvm-runtimes/openmp  verify-sig -debug -gdb-plugin -hwloc -ompt -test
 net-dns/libidn2:0  nls verify-sig -static-libs
 net-firewall/iptables:0  -conntrack -netlink -nftables -pcap -static-libs -test
 net-libs/gnutls:0  cxx idn nls tools verify-sig zlib -brotli -dane -doc -examples -openssl -pkcs11   -static-libs -test -test-full -tls-heartbeat -zstd
@@ -269,10 +316,15 @@ sec-policy/selinux-openrc
 sec-policy/selinux-shutdown
 sec-policy/selinux-unconfined
 sys-apps/acl  nls -static-libs
+sys-apps/acl  nls -static-libs
+sys-apps/attr  nls -debug -static-libs
 sys-apps/attr  nls -debug -static-libs
 sys-apps/baselayout  build
+sys-apps/busybox  -static
 sys-apps/checkpolicy  -debug
 sys-apps/coreutils  acl caps nls verify-sig xattr -gmp -hostname -kill -multicall -openssl  -selinux -static -test -vanilla
+sys-apps/coreutils  acl nls xattr verify-sig -caps -gmp -hostname -kill -multicall -openssl -selinux -split-usr -static -test -vanilla
+sys-apps/debianutils  -static
 sys-apps/diffutils  nls verify-sig
 sys-apps/file  bzip2 lzma seccomp verify-sig zlib -lzip -python -static-libs -zstd
 sys-apps/findutils  nls verify-sig -selinux -static -test
@@ -293,6 +345,7 @@ sys-apps/net-tools  arp hostname ipv6 nls -nis -plipconfig -selinux -slattach -s
 sys-apps/openrc  -audit caps netifrc -pam sysvinit unicode -bash -debug -newnet -s6 -selinux -sysv-utils
 sys-apps/policycoreutils  -audit -pam
 sys-apps/portage  build gentoo-dev  native-extensions rsync-verify xattr -apidoc -doc -selinux -test
+sys-apps/portage  build gentoo-dev ipc native-extensions rsync-verify xattr -apidoc -debug -doc -selinux -test
 sys-apps/sandbox  nnp
 sys-apps/sed  acl nls verify-sig -selinux -static
 sys-apps/selinux-python  -test
@@ -310,17 +363,20 @@ sys-devel/binutils-config
 sys-devel/binutils:2.43   nls plugins zstd -debuginfod -doc  -gprofng -hardened -multitarget -pgo -static-libs -test -vanilla
 sys-devel/bison  nls verify-sig -examples -static -test
 sys-devel/flex  nls -static -test
+sys-devel/gcc  -cet -cxx -fortran -graphite -nls -openmp -pch -sanitize -zstd ada custom-cflags d debug default-stack-clash-protection default-znow doc fixed-point go hardened ieee-long-double jit libssp lto modula2 multilib objc objc++ objc-gc pgo pie rust ssp systemtap test time64 valgrind vanilla vtv
 sys-devel/gcc-config
-sys-devel/gcc:14  cet    fortran graphite nls openmp  sanitize ssp zstd -ada  -d -debug -doc  -go -hardened  -jit  -lto -modula2  -objc -objc++ -objc-gc  -pgo -rust -systemtap -test  -valgrind -vanilla -vtv
 sys-devel/gettext  acl cxx ncurses nls -openmp verify-sig  -doc -emacs -git -java -static-libs
 sys-devel/gnuconfig
 sys-devel/m4  nls verify-sig -examples
 sys-devel/patch  verify-sig xattr -static -test
 sys-fs/e2fsprogs  nls tools -archive -cron -fuse -static-libs -test
+sys-fs/squashfs-tools-ng  tools
 sys-fs/udev-init-scripts
 sys-kernel/linux-headers  -headers-only
+sys-libs/binutils-libs:0  cet nls static-libs -64-bit-bfd -multitarget -test
 sys-libs/db:6.0  -cxx -doc -examples -tcl -test
 sys-libs/gdbm:0  berkdb nls readline verify-sig -static-libs -test
+sys-libs/glibc:2.2  -audit caps cet multiarch ssp  -compile-locales  -doc -gd -hash-sysv-compat -headers-only  -multilib-bootstrap -nscd -perl -profile  -selinux -suid  -systemtap -test
 sys-libs/glibc:2.2  -audit caps cet multiarch ssp  -compile-locales  -doc -gd -hash-sysv-compat -headers-only  -multilib-bootstrap -nscd -perl -profile  -selinux -suid  -systemtap -test
 sys-libs/libcap  -pam -static-libs -tools
 sys-libs/libcap-ng  -python -static-libs
@@ -328,11 +384,16 @@ sys-libs/libseccomp  -debug  -python -static-libs -test
 sys-libs/libselinux  python -ruby -static-libs
 sys-libs/libsemanage:0
 sys-libs/libsepol:0  static-libs
+sys-libs/libunwind static-libs
 sys-libs/libxcrypt:0    -headers-only -static-libs -test
+sys-libs/musl  -crypt
+sys-libs/ncurses  -static-libs
 sys-libs/ncurses:0   verify-sig -ada  -debug -doc -gpm -minimal -profile   -static-libs -test -trace
 sys-libs/pam  -audit filecaps -berkdb -debug -examples -nis -selinux
+sys-libs/readline  -static-libs
 sys-libs/readline:0   verify-sig -static-libs -utils
 sys-libs/timezone-data  nls -leaps-timezone -zic-slim
+sys-libs/zlib  -static-libs
 sys-libs/zlib:0  verify-sig -minizip -static-libs
 sys-process/audit  python -gssapi -io-uring -ldap  -static-libs -test
 sys-process/procps:0  kill ncurses nls -elogind -modern-top -selinux -skill -static-libs  -test
@@ -343,6 +404,7 @@ virtual/editor
 virtual/libc
 virtual/libcrypt:0  -static-libs
 virtual/libiconv
+virtual/libintl
 virtual/libintl
 virtual/man
 virtual/openssh  ssl
@@ -384,67 +446,3 @@ virtual/service-manager
 virtual/ssh  -minimal
 virtual/tmpfiles
 virtual/udev
-
-app-admin/sudo  nls secure-path ssl -gcrypt -ldap -offensive -pam -sasl -selinux -sendmail -skey -sssd -verify-sig
-app-alternatives/cpio  gnu -libarchive
-app-arch/alien  bzip2 -test
-app-arch/dpkg  bzip2 lzma nls update-alternatives zlib zstd -selinux -static-libs -test
-app-arch/rpm  acl bzip2 iconv nls openmp readline sqlite zstd -audit -berkdb -caps -dbus -doc -lzma -python -selinux -sequoia
-app-crypt/libb2  -openmp
-app-editors/emacs  acl gmp inotify json libxml2 ssl threads zlib -X -Xaw3d -alsa -aqua -athena -cairo -dbus -dynamic-loading -games -gfile -gif -gpm -gsettings -gtk -gui -gzip-el -harfbuzz -imagemagick -jit -jpeg -kerberos -lcms -livecd -m17n-lib -mailutils -motif -png -selinux -sound -source -sqlite -svg -systemd -tiff -toolkit-scroll-bars -tree-sitter -valgrind -webp -wide-int -xft -xpm
-app-editors/vim  acl crypt minimal nls terminal -X -cscope -debug -gpm -lua -perl -python -racket -ruby -selinux -sound -tcl -vim-pager
-app-eselect/eselect-lua
-app-misc/tmux  -debug -jemalloc -selinux -sixel -systemd -utempter -vim-syntax
-app-shells/bash  nls readline verify-sig -afs -bashlogger -examples -mem-scramble -net -pgo -plugins
-app-shells/dash -static libedit
-app-text/xmlto  text
-dev-build/make  -doc -guile -static -test
-dev-debug/gdb  cet nls python server -debuginfod -guile -lzma -multitarget -rocm -sim -source-highlight -test -vanilla -xml -xxhash -zstd
-dev-debug/strace  elfutils verify-sig -aio -perl -selinux -static -test -unwind
-dev-embedded/sdcc  -static boehm-gc mcs51 sdcdb sdcpp stm8 ucsim
-dev-lang/go
-dev-lang/lua  deprecated readline
-dev-lang/perl  berkdb gdbm -doc -minimal
-dev-lang/python:3.12  ensurepip gdbm ncurses readline sqlite ssl verify-sig -bluetooth -build -debug -examples -libedit -pgo -test -tk -valgrind
-dev-lang/rust-bin:1.83.0  rust-analyzer rust-src rustfmt verify-sig -big-endian -clippy -doc -prefix
-dev-lang/rust:1.83.0  llvm-libunwind rust-analyzer rust-src rustfmt system-llvm verify-sig wasm -big-endian -clippy -debug -dist -doc -lto -miri -nightly -parallel-compiler -test
-dev-libs/boehm-gc  -static-libs
-dev-libs/libedit -static-libs
-dev-libs/tree-sitter-bash  python
-dev-python/ipdb  -test
-dev-python/ipython  smp -examples -nbconvert -notebook -qt5 -test
-dev-python/python-lsp-server  all-plugins -test
-dev-util/debhelper  -test
-dev-vcs/git  blksha1 curl gpg iconv nls pcre safe-directory -cgi -cvs -doc -highlight -keyring -mediawiki -perforce -perl -selinux -subversion -test -tk -webdav -xinetd
-llvm-core/clang-common  cet default-compiler-rt default-lld verify-sig -bootstrap-prefix -default-libcxx -hardened -llvm-libunwind
-llvm-core/clang-runtime:19  compiler-rt openmp sanitize -libcxx -offload
-llvm-core/clang-toolchain-symlinks:19  native-symlinks -gcc-symlinks -multilib-symlinks
-llvm-core/clang:19  extra pie static-analyzer verify-sig -debug -doc -ieee-long-double -test -xml
-llvm-core/lld-toolchain-symlinks:19  native-symlinks -multilib-symlinks
-llvm-core/lld:19  verify-sig zstd -debug -test
-llvm-core/llvm-common  verify-sig -emacs
-llvm-core/llvm-toolchain-symlinks:19  native-symlinks -multilib-symlinks
-llvm-core/llvm:19  binutils-plugin libffi verify-sig zstd -debug -debuginfod -doc -exegesis -libedit -test -xml -z3
-llvm-core/llvmgold
-llvm-runtimes/compiler-rt-sanitizers:19  asan cfi clang ctx-profile dfsan gwp-asan hwasan libfuzzer lsan memprof msan orc profile safestack scudo tsan ubsan verify-sig xray -debug -shadowcallstack -test
-llvm-runtimes/compiler-rt:19  atomic-builtins clang verify-sig -debug -test
-llvm-runtimes/libcxx  clang libcxxabi static-libs verify-sig -test
-llvm-runtimes/libcxxabi  clang static-libs verify-sig -test
-llvm-runtimes/libunwind  clang static-libs verify-sig -debug -test
-llvm-runtimes/openmp:0  verify-sig -debug -gdb-plugin -hwloc -ompt -test
-sys-apps/acl  nls -static-libs
-sys-apps/attr  nls -debug -static-libs
-sys-apps/busybox  -static
-sys-apps/coreutils  acl nls xattr verify-sig -caps -gmp -hostname -kill -multicall -openssl -selinux -split-usr -static -test -vanilla
-sys-apps/debianutils  -static
-sys-apps/portage  build gentoo-dev ipc native-extensions rsync-verify xattr -apidoc -debug -doc -selinux -test
-sys-devel/gcc:14  cet    fortran graphite nls openmp  sanitize ssp zstd -ada  -d -debug -doc  -go -hardened  -jit  -lto -modula2  -objc -objc++ -objc-gc  -pgo -rust -systemtap -test  -valgrind -vanilla -vtv
-sys-fs/squashfs-tools-ng  tools
-sys-libs/binutils-libs:0  cet nls static-libs -64-bit-bfd -multitarget -test
-sys-libs/glibc:2.2  -audit caps cet multiarch ssp  -compile-locales  -doc -gd -hash-sysv-compat -headers-only  -multilib-bootstrap -nscd -perl -profile  -selinux -suid  -systemtap -test
-sys-libs/libunwind static-libs
-sys-libs/musl  -crypt
-sys-libs/ncurses  -static-libs
-sys-libs/readline  -static-libs
-sys-libs/zlib  -static-libs
-virtual/libintl

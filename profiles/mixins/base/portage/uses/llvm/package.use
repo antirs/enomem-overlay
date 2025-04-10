@@ -1,18 +1,22 @@
-llvm-core/clang:19  extra pie static-analyzer verify-sig -debug -doc -ieee-long-double -test -xml
-llvm-core/clang-common  cet default-compiler-rt default-libcxx default-lld llvm-libunwind verify-sig -bootstrap-prefix -hardened
-llvm-core/clang-runtime:19  compiler-rt libcxx openmp sanitize -offload
-llvm-core/clang-toolchain-symlinks:19  native-symlinks -gcc-symlinks -multilib-symlinks
-llvm-core/lld:19  verify-sig zstd -debug -test
-llvm-core/lld-toolchain-symlinks:19  native-symlinks -multilib-symlinks
-llvm-core/llvm:19  libffi verify-sig zstd -binutils-plugin -debug -debuginfod -doc -exegesis -libedit -test -xml -z3
+llvm-core/clang  extra static-analyzer verify-sig -debug -doc -ieee-long-double -pie -test -xml
+llvm-core/clang-common  cet default-compiler-rt default-lld llvm-libunwind verify-sig -bootstrap-prefix -default-libcxx -hardened
+llvm-core/clang-runtime  compiler-rt default-compiler-rt default-lld libcxx llvm-libunwind openmp sanitize -default-libcxx -offload -polly
+llvm-core/clang-toolchain-symlinks  native-symlinks -gcc-symlinks -multilib-symlinks
+llvm-core/lld  verify-sig zstd -debug -test
+llvm-core/lld-toolchain-symlinks  native-symlinks -multilib-symlinks
+llvm-core/llvm  libffi verify-sig zstd -binutils-plugin -bootstrap-gcc -debug -debuginfod -doc -exegesis -libedit -test -xml -z3
 llvm-core/llvm-common  verify-sig -emacs
-llvm-core/llvm-toolchain-symlinks:19  native-symlinks -multilib-symlinks
+llvm-core/llvm-toolchain-symlinks  native-symlinks -multilib-symlinks
 llvm-core/llvmgold
-llvm-runtimes/compiler-rt:19  atomic-builtins clang verify-sig -debug -test
-llvm-runtimes/compiler-rt-sanitizers:19  asan cfi clang ctx-profile dfsan gwp-asan hwasan libfuzzer lsan memprof msan orc profile safestack scudo tsan ubsan verify-sig xray -debug -shadowcallstack -test
+llvm-runtimes/compiler-rt  atomic-builtins clang verify-sig -debug -test
+llvm-runtimes/compiler-rt-sanitizers  asan cfi clang ctx-profile dfsan hwasan libfuzzer lsan memprof msan nsan orc profile rtsan safestack scudo tsan ubsan verify-sig xray -debug -gwp-asan -shadowcallstack -test
 llvm-runtimes/libcxx  clang libcxxabi static-libs verify-sig -test
 llvm-runtimes/libcxxabi  clang static-libs verify-sig -test
 llvm-runtimes/libunwind  clang static-libs verify-sig -debug -test
-llvm-runtimes/openmp:0  verify-sig -debug -gdb-plugin -hwloc -ompt -test
-sys-libs/binutils-libs:0  cet nls static-libs -64-bit-bfd -multitarget -test
+llvm-runtimes/openmp  verify-sig -debug -gdb-plugin -hwloc -ompt -test
+sec-keys/openpgp-keys-llvm
+sys-libs/binutils-libs  cet nls static-libs -64-bit-bfd -multitarget -test
 sys-libs/libunwind static-libs
+
+llvm-core/clang  llvm_targets_AArch64 llvm_targets_ARM llvm_targets_AVR llvm_targets_BPF llvm_targets_M68k llvm_targets_Mips llvm_targets_RISCV llvm_targets_Sparc llvm_targets_Spirv llvm_targets_WebAssembly llvm_targets_X86 llvm_targets_Xtensa -llvm_targets_AMDGPU -llvm_targets_ARC -llvm_targets_CSKY -llvm_targets_DirectX -llvm_targets_Hexagon -llvm_targets_Lanai -llvm_targets_LoongArch -llvm_targets_MSP430 -llvm_targets_NVPTX -llvm_targets_PowerPC -llvm_targets_SPIRV -llvm_targets_SystemZ -llvm_targets_VE -llvm_targets_XCore
+llvm-core/llvm  llvm_targets_AArch64 llvm_targets_ARM llvm_targets_AVR llvm_targets_BPF llvm_targets_M68k llvm_targets_Mips llvm_targets_RISCV llvm_targets_Sparc llvm_targets_Spirv llvm_targets_WebAssembly llvm_targets_X86 llvm_targets_Xtensa -llvm_targets_AMDGPU -llvm_targets_ARC -llvm_targets_CSKY -llvm_targets_DirectX -llvm_targets_Hexagon -llvm_targets_Lanai -llvm_targets_LoongArch -llvm_targets_MSP430 -llvm_targets_NVPTX -llvm_targets_PowerPC -llvm_targets_SPIRV -llvm_targets_SystemZ -llvm_targets_VE -llvm_targets_XCore
