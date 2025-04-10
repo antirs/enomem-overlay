@@ -389,6 +389,7 @@ app-admin/sudo  nls secure-path ssl -gcrypt -ldap -offensive -pam -sasl -selinux
 app-crypt/libb2  -openmp
 app-editors/emacs  acl gmp inotify json libxml2 ssl threads zlib -X -Xaw3d -alsa -aqua -athena -cairo -dbus -dynamic-loading -games -gfile -gif -gpm -gsettings -gtk -gui -gzip-el -harfbuzz -imagemagick -jit -jpeg -kerberos -lcms -livecd -m17n-lib -mailutils -motif -png -selinux -sound -source -sqlite -svg -systemd -tiff -toolkit-scroll-bars -tree-sitter -valgrind -webp -wide-int -xft -xpm
 app-editors/vim  acl crypt minimal nls terminal -X -cscope -debug -gpm -lua -perl -python -racket -ruby -selinux -sound -tcl -vim-pager
+app-misc/tmux  -debug -jemalloc -selinux -sixel -systemd -utempter -vim-syntax
 app-shells/bash  nls readline verify-sig -afs -bashlogger -examples -mem-scramble -net -pgo -plugins
 app-shells/dash -static libedit
 dev-build/make  -doc -guile -static -test

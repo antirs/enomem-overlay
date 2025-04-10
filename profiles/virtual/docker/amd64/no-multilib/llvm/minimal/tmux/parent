@@ -1,0 +1,7 @@
+gentoo:default/linux/amd64/23.0/llvm
+../../../../../../../configs/amd64/docker/minimal
+../../../../../../../rewrites/default/amd64/llvm/libcxx
+../../../../../../../rewrites/default/amd64/nomultilib
+../../../../../../../rewrites/virtual/docker/minimal/tmux
+../../../../../../../rewrites/virtual/docker/minimal/glibc
+../../../../../../../rewrites/virtual/docker/amd64/llvm/minimal
