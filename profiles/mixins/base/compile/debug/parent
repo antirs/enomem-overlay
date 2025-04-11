@@ -1,2 +1,5 @@
+../../portage/features/debug
+../../portage/flags/base/debug
+../../portage/flags/base/debug/gdb
 ../../portage/flags/debug
 ../../portage/flags/compile
