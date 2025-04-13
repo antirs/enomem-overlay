@@ -1,5 +1,5 @@
-LUA_SINGLE_TARGET="luajit"
-LUA_TARGETS="luajit"
+LUA_SINGLE_TARGET="lua5-4"
+LUA_TARGETS="lua5-4 luajit"
 
-BOOTSTRAP_USE="${BOOTSTRAP_USE} lua_single_target_luajit lua_targets_luajit"
-USE="-lua_single_target_lua5-1 -lua_targets_lua5-1"
+BOOTSTRAP_USE="${BOOTSTRAP_USE} lua_single_target_lua5-4 lua_targets_lua5-4 lua_targets_luajit -lua_single_target_lua5-1 -lua_single_target_lua5-2 -lua_single_target_lua5-3 -lua_single_target_luajit -lua_targets_lua5-1 -lua_targets_lua5-2 -lua_targets_lua5-3"
+USE="lua_single_target_lua5-4 lua_targets_lua5-4 lua_targets_luajit -lua_single_target_lua5-1 -lua_single_target_lua5-2 -lua_single_target_lua5-3 -lua_single_target_luajit -lua_targets_lua5-1 -lua_targets_lua5-2 -lua_targets_lua5-3"
