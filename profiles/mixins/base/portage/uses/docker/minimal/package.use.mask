@@ -203,7 +203,7 @@ net-libs/libmnl:0  -verify-sig examples
 net-libs/libnsl:0  static-libs
 net-libs/libtirpc:0  kerberos static-libs
 net-libs/nghttp2:0  debug hpack-tools jemalloc static-libs  test utils xml
-net-misc/curl  -ftp -gnutls -hsts -imap -pop3 -progress-meter -smtp -ssl -tftp -verify-sig -websockets adns alt-svc brotli debug gopher http2 http3 idn kerberos ldap mbedtls openssl psl quic rtmp rustls samba ssh  static-libs telnet test zstd
+net-misc/curl  -ftp -gnutls -hsts -imap -pop3 -progress-meter -smtp -ssl -tftp -verify-sig -websockets adns alt-svc brotli debug gopher http2 http3 httpsrr idn kerberos ldap mbedtls openssl psl quic rtmp rustls samba ssh  static-libs telnet test zstd
 net-misc/dhcpcd  -embedded -ipv6 -udev debug privsep
 net-misc/iputils  -arping -caps -filecaps -nls clockdiff doc idn test tracepath
 net-misc/netifrc  -dhcp
@@ -386,22 +386,33 @@ virtual/tmpfiles
 virtual/udev
 
 app-admin/sudo  -nls -secure-path -ssl gcrypt ldap offensive pam sasl selinux sendmail skey sssd verify-sig
+app-alternatives/cpio  -gnu libarchive
+app-arch/alien  -bzip2 test
+app-arch/dpkg  -bzip2 -lzma -nls -update-alternatives -zlib -zstd selinux test
+app-arch/rpm  -acl -bzip2 -iconv -nls -openmp -readline -sqlite -zstd audit berkdb caps dbus doc lzma python selinux sequoia
 app-crypt/libb2  openmp
 app-editors/emacs  -acl -gmp -inotify -json -libxml2 -ssl -threads -zlib X Xaw3d alsa aqua athena cairo dbus dynamic-loading games gfile gif gpm gsettings gtk gui gzip-el harfbuzz imagemagick jit jpeg kerberos lcms livecd m17n-lib mailutils motif png selinux sound source sqlite svg systemd tiff toolkit-scroll-bars tree-sitter valgrind webp wide-int xft xpm
 app-editors/vim  -acl -crypt -minimal -nls -terminal X cscope debug gpm lua perl python racket ruby selinux sound tcl vim-pager
+app-eselect/eselect-lua
 app-misc/tmux  debug jemalloc selinux sixel systemd utempter vim-syntax
 app-shells/bash  -nls -readline -verify-sig afs bashlogger examples mem-scramble net pgo plugins
 app-shells/dash static -libedit
 dev-build/make  doc guile static test
 dev-debug/gdb  -cet -nls -python -server debuginfod guile lzma multitarget rocm sim source-highlight test vanilla xml xxhash zstd
+dev-debug/strace  -elfutils -verify-sig aio perl selinux static test unwind
 dev-embedded/sdcc  -boehm-gc -mcs51 -sdcdb -sdcpp -stm8 -ucsim static
 dev-lang/go
+dev-lang/lua  -deprecated -readline
 dev-lang/perl  -berkdb -gdbm doc minimal
 dev-lang/python:3.12  -ensurepip -gdbm -ncurses -readline -sqlite -ssl -verify-sig bluetooth build debug examples libedit pgo test tk valgrind
 dev-lang/rust-bin:1.83.0  -rust-analyzer -rust-src -rustfmt -verify-sig big-endian clippy doc prefix
 dev-lang/rust:1.83.0  -llvm-libunwind -rust-analyzer -rust-src -rustfmt -system-llvm -verify-sig -wasm big-endian clippy debug dist doc lto miri nightly parallel-compiler test
 dev-libs/boehm-gc  static-libs
 dev-libs/libedit static-libs
+dev-python/ipdb  test
+dev-python/ipython  -smp examples nbconvert notebook qt5 test
+dev-python/python-lsp-server  -all-plugins test
+dev-util/debhelper  test
 dev-vcs/git  -blksha1 -curl -gpg -iconv -nls -pcre -safe-directory cgi cvs doc highlight keyring mediawiki perforce perl selinux subversion test tk webdav xinetd
 llvm-core/clang-common  -cet -default-compiler-rt -default-lld -verify-sig bootstrap-prefix default-libcxx hardened llvm-libunwind
 llvm-core/clang-runtime:19  -compiler-rt -openmp -sanitize libcxx offload
@@ -423,6 +434,7 @@ sys-apps/acl  -nls static-libs
 sys-apps/attr  -nls debug static-libs
 sys-apps/busybox  static
 sys-apps/coreutils  -acl -nls -xattr caps gmp hostname kill multicall openssl selinux split-usr static test vanilla verify-sig
+sys-apps/debianutils  static
 sys-apps/portage  -build -gentoo-dev -ipc -native-extensions -rsync-verify -xattr apidoc debug doc selinux test
 sys-devel/gcc:14  -cet    -fortran -graphite -nls -openmp  -sanitize -ssp -zstd ada  d debug doc  go hardened  jit  lto modula2  objc objc++ objc-gc  pgo rust systemtap test  valgrind vanilla vtv
 sys-libs/binutils-libs:0  -cet -nls -static-libs 64-bit-bfd multitarget test

@@ -386,22 +386,33 @@ virtual/tmpfiles
 virtual/udev
 
 app-admin/sudo  nls secure-path ssl
+app-alternatives/cpio  gnu
+app-arch/alien  bzip2 -test
+app-arch/dpkg  bzip2 lzma nls update-alternatives zlib zstd
+app-arch/rpm  acl bzip2 iconv nls openmp readline sqlite zstd
 app-crypt/libb2
 app-editors/emacs  acl gmp inotify json libxml2 ssl threads zlib
 app-editors/vim  acl crypt minimal nls terminal
+app-eselect/eselect-lua
 app-misc/tmux
 app-shells/bash  nls readline verify-sig
 app-shells/dash libedit
 dev-build/make
 dev-debug/gdb  cet nls python server
+dev-debug/strace  elfutils verify-sig
 dev-embedded/sdcc  boehm-gc mcs51 sdcdb sdcpp stm8 ucsim
 dev-lang/go
+dev-lang/lua  deprecated readline
 dev-lang/perl  berkdb gdbm
 dev-lang/python:3.12  ensurepip gdbm ncurses readline sqlite ssl verify-sig
 dev-lang/rust-bin:1.83.0  rust-analyzer rust-src rustfmt verify-sig
 dev-lang/rust:1.83.0  llvm-libunwind rust-analyzer rust-src rustfmt system-llvm verify-sig wasm
 dev-libs/boehm-gc
 dev-libs/libedit
+dev-python/ipdb
+dev-python/ipython  smp
+dev-python/python-lsp-server  all-plugins
+dev-util/debhelper
 dev-vcs/git  blksha1 curl gpg iconv nls pcre safe-directory
 llvm-core/clang-common  cet default-compiler-rt default-lld verify-sig
 llvm-core/clang-runtime:19  compiler-rt openmp sanitize
@@ -423,6 +434,7 @@ sys-apps/acl  nls -static-libs
 sys-apps/attr  nls -debug -static-libs
 sys-apps/busybox
 sys-apps/coreutils  acl nls xattr
+sys-apps/debianutils
 sys-apps/portage  build gentoo-dev ipc native-extensions rsync-verify xattr
 sys-devel/gcc:14  cet    fortran graphite nls openmp  sanitize ssp zstd
 sys-libs/binutils-libs:0  cet nls static-libs
