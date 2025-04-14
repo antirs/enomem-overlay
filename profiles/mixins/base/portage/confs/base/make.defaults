@@ -198,6 +198,8 @@ EN_FEATURES_SIGN="sign"
 EN_FEATURES_NO_SIGN="-sign"
 EN_FEATURES_STRIP="-nostrip"
 EN_FEATURES_NO_STRIP="nostrip"
+EN_FEATURES_TEST="test"
+EN_FEATURES_NO_TEST="-test"
 EN_FEATURES_USERPRIV="userfetch userpriv usersync"
 EN_FEATURES_NO_USERPRIV="-userfetch -userpriv -usersync"
 
