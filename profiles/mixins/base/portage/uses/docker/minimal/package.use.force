@@ -397,6 +397,7 @@ app-eselect/eselect-lua
 app-misc/tmux
 app-shells/bash  nls readline verify-sig
 app-shells/dash libedit
+app-text/xmlto  text
 dev-build/make
 dev-debug/gdb  cet nls python server
 dev-debug/strace  elfutils verify-sig
@@ -409,6 +410,7 @@ dev-lang/rust-bin:1.83.0  rust-analyzer rust-src rustfmt verify-sig
 dev-lang/rust:1.83.0  llvm-libunwind rust-analyzer rust-src rustfmt system-llvm verify-sig wasm
 dev-libs/boehm-gc
 dev-libs/libedit
+dev-libs/tree-sitter-bash  python
 dev-python/ipdb
 dev-python/ipython  smp
 dev-python/python-lsp-server  all-plugins
@@ -437,6 +439,7 @@ sys-apps/coreutils  acl nls xattr
 sys-apps/debianutils
 sys-apps/portage  build gentoo-dev ipc native-extensions rsync-verify xattr
 sys-devel/gcc:14  cet    fortran graphite nls openmp  sanitize ssp zstd
+sys-fs/squashfs-tools-ng  tools
 sys-libs/binutils-libs:0  cet nls static-libs
 sys-libs/glibc:2.2   caps cet multiarch ssp
 sys-libs/libunwind static-libs

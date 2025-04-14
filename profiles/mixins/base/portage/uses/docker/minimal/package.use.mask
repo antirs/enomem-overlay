@@ -397,6 +397,7 @@ app-eselect/eselect-lua
 app-misc/tmux  debug jemalloc selinux sixel systemd utempter vim-syntax
 app-shells/bash  -nls -readline -verify-sig afs bashlogger examples mem-scramble net pgo plugins
 app-shells/dash static -libedit
+app-text/xmlto  -text
 dev-build/make  doc guile static test
 dev-debug/gdb  -cet -nls -python -server debuginfod guile lzma multitarget rocm sim source-highlight test vanilla xml xxhash zstd
 dev-debug/strace  -elfutils -verify-sig aio perl selinux static test unwind
@@ -409,6 +410,7 @@ dev-lang/rust-bin:1.83.0  -rust-analyzer -rust-src -rustfmt -verify-sig big-endi
 dev-lang/rust:1.83.0  -llvm-libunwind -rust-analyzer -rust-src -rustfmt -system-llvm -verify-sig -wasm big-endian clippy debug dist doc lto miri nightly parallel-compiler test
 dev-libs/boehm-gc  static-libs
 dev-libs/libedit static-libs
+dev-libs/tree-sitter-bash  -python
 dev-python/ipdb  test
 dev-python/ipython  -smp examples nbconvert notebook qt5 test
 dev-python/python-lsp-server  -all-plugins test
@@ -437,6 +439,7 @@ sys-apps/coreutils  -acl -nls -xattr caps gmp hostname kill multicall openssl se
 sys-apps/debianutils  static
 sys-apps/portage  -build -gentoo-dev -ipc -native-extensions -rsync-verify -xattr apidoc debug doc selinux test
 sys-devel/gcc:14  -cet    -fortran -graphite -nls -openmp  -sanitize -ssp -zstd ada  d debug doc  go hardened  jit  lto modula2  objc objc++ objc-gc  pgo rust systemtap test  valgrind vanilla vtv
+sys-fs/squashfs-tools-ng  -tools
 sys-libs/binutils-libs:0  -cet -nls -static-libs 64-bit-bfd multitarget test
 sys-libs/glibc:2.2  audit -caps -cet -multiarch -ssp  compile-locales  doc gd hash-sysv-compat headers-only  multilib-bootstrap nscd perl profile  selinux suid  systemtap test
 sys-libs/libunwind -static-libs
