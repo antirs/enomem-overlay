@@ -1,0 +1,10 @@
+llvm-core/clang  -test
+llvm-core/lld  -test
+llvm-core/lldb  -test
+llvm-core/llvm  -test
+llvm-runtimes/compiler-rt  -test
+llvm-runtimes/compiler-rt-sanitizers  -test
+llvm-runtimes/libcxx  -test
+llvm-runtimes/libcxxabi  -test
+llvm-runtimes/libunwind  -test
+llvm-runtimes/openmp  -test
