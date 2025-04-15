@@ -1,0 +1,6 @@
+gentoo:default/linux/amd64/23.0/musl
+../../../../../../../configs/amd64/docker/minimal
+../../../../../../../rewrites/default/test
+../../../../../../../rewrites/virtual/docker/minimal/python
+../../../../../../../rewrites/virtual/docker/minimal/python/test
+../../../../../../../rewrites/virtual/docker/amd64/musl/minimal
