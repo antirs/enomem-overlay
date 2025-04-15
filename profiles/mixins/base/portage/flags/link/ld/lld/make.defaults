@@ -1,0 +1,5 @@
+# -fuse-ld=ld.lld
+
+EN_LDFLAGS_LINK_LD_LLD="-fuse-ld=ld.lld"
+
+EN_LDFLAGS_LINK_LD="${EN_LDFLAGS_LINK_LD} ${EN_LDFLAGS_LINK_LD_LLD}"
