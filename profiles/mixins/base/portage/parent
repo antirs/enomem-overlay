@@ -43,7 +43,7 @@
 ./logs
 ./logs/mail
 ./mirrors
-./mirrors/local
+./mirrors/private/nonet/loststation
 ./overlays
 ./overlays/enomem
 ./perms

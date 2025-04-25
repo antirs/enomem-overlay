@@ -115,7 +115,8 @@ PORTDIR_OVERLAY="/var/db/repos/enomem"
 #GENTOO_MIRRORS="http://172.17.0.1:8080/"
 #GENTOO_MIRRORS="https://ftp.belnet.be/pub/rsync.gentoo.org/gentoo/"
 #GENTOO_MIRRORS="https://mirror.yandex.ru/gentoo-distfiles/"
-GENTOO_MIRRORS="http://127.0.0.1:8080/"
+#GENTOO_MIRRORS="http://127.0.0.1:8080/"
+GENTOO_MIRRORS="http://10.10.10.10:8080/"
 
 # This sets the language of build output to English.
 # Please keep this setting intact when reporting bugs.
