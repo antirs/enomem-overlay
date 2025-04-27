@@ -6,3 +6,4 @@ gentoo:default/linux/amd64/23.0/musl/llvm
 ../../../../../../../rewrites/default/amd64/musl/llvm
 ../../../../../../../rewrites/default/base/stage3/bootstrap/musl/llvm
 ../../../../../../../rewrites/default/amd64/nomultilib
+../../../../../../../rewrites/default/hardened

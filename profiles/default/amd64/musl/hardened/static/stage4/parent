@@ -3,3 +3,4 @@ gentoo:default/linux/amd64/23.0/musl
 ../../../../../../rewrites/default/base/stage4
 ../../../../../../rewrites/default/amd64/static
 ../../../../../../rewrites/default/amd64/musl
+../../../../../../rewrites/default/hardened

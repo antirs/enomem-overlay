@@ -2,3 +2,4 @@ gentoo:default/linux/amd64/23.0
 ../../../../../../configs/amd64/hardened/fortify3
 ../../../../../../rewrites/default/base/stage3
 ../../../../../../rewrites/default/amd64/static
+../../../../../../rewrites/default/hardened
