@@ -203,7 +203,7 @@ net-libs/libmnl:0  verify-sig
 net-libs/libnsl:0
 net-libs/libtirpc:0
 net-libs/nghttp2:0
-net-misc/curl  ftp gnutls hsts imap pop3 progress-meter smtp ssl tftp verify-sig websockets
+net-misc/curl  ftp gnutls hsts http2 imap pop3 progress-meter smtp ssl tftp verify-sig websockets
 net-misc/dhcpcd  embedded ipv6 udev
 net-misc/iputils  arping caps filecaps nls
 net-misc/netifrc  dhcp
