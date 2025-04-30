@@ -272,7 +272,7 @@ GUILE_SINGLE_TARGET="3-0"
 OFFICE_IMPLEMENTATION="libreoffice"
 LIBREOFFICE_EXTENSIONS=""
 
-LLVM_TARGETS="AArch64 ARM AVR BPF M68k Mips RISCV Sparc Spirv WebAssembly X86 Xtensa -AMDGPU -ARC -CSKY -DirectX -Hexagon -Lanai -LoongArch -MSP430 -NVPTX -PowerPC -SPIRV -SystemZ -VE -XCore"
+LLVM_TARGETS="AArch64 ARM BPF Mips RISCV Sparc Spirv WebAssembly X86 -AMDGPU -ARC -AVR -CSKY -DirectX -Hexagon -Lanai -LoongArch -M68k -MSP430 -NVPTX -PowerPC -SPIRV -SystemZ -VE -XCore -Xtensa"
 
 LUA_SINGLE_TARGET="lua5-4"
 LUA_TARGETS="lua5-4 luajit"
