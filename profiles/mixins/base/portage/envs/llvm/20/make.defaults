@@ -1,0 +1,3 @@
+LLVM_SLOT="20"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} llvm_slot_20"

@@ -1,0 +1,13 @@
+# Marsha Melova <marsha.melova@grrlz.net>
+# pin llvm version to 19
+>llvm-core/clang-19.1.7
+>llvm-core/clang-common-19.1.7
+>llvm-core/clang-runtime-19.1.7
+>llvm-core/lld-19.1.7
+>llvm-core/llvm-19.1.7
+>llvm-core/llvm-common-19.1.7
+>llvm-runtimes/compiler-rt-19.1.7
+>llvm-runtimes/compiler-rt-sanitizers-19.1.7
+>llvm-runtimes/libcxx-19.1.7
+>llvm-runtimes/libcxxabi-19.1.7
+>llvm-runtimes/openmp-19.1.7

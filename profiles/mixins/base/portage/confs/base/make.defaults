@@ -138,7 +138,7 @@ EN_USE_PLUS="${USE_CRYPTO} ${USE_GENTOO} ${USE_LANG} ${USE_NET} ${USE_SYSTEM} ${
 
 USE="${EN_USE_MINUS} ${EN_USE_PLUS}"
 
-BOOTSTRAP_USE="${BOOTSTRAP_USE} ada_target_gnat_2021 alsa_cards_hda-intel calligra_features_krita curl_ssl_gnutls guile_single_target_3-0 guile_targets_3-0 llvm_slot_20 lua_single_target_lua5-4 lua_targets_lua5-4 lua_targets_luajit -lua_single_target_lua5-1 -lua_single_target_lua5-2 -lua_single_target_lua5-3 -lua_single_target_luajit -lua_targets_lua5-1 -lua_targets_lua5-2 -lua_targets_lua5-3 postgres_targets_postgres16 python_targets_python3_12 python_targets_python2_7 python_single_target_python3_12 ruby_targets_ruby32 video_cards_intel -curl_ssl_openssl -curl_quic_openssl"
+BOOTSTRAP_USE="${BOOTSTRAP_USE} ada_target_gnat_2021 alsa_cards_hda-intel calligra_features_krita curl_ssl_gnutls guile_single_target_3-0 guile_targets_3-0 lua_single_target_lua5-4 lua_targets_lua5-4 lua_targets_luajit -lua_single_target_lua5-1 -lua_single_target_lua5-2 -lua_single_target_lua5-3 -lua_single_target_luajit -lua_targets_lua5-1 -lua_targets_lua5-2 -lua_targets_lua5-3 postgres_targets_postgres16 python_targets_python3_12 python_targets_python2_7 python_single_target_python3_12 ruby_targets_ruby32 video_cards_intel -curl_ssl_openssl -curl_quic_openssl"
 
 MAKEOPTS="-j5"
 
@@ -272,7 +272,6 @@ GUILE_SINGLE_TARGET="3-0"
 OFFICE_IMPLEMENTATION="libreoffice"
 LIBREOFFICE_EXTENSIONS=""
 
-LLVM_SLOT="20"
 LLVM_TARGETS="AArch64 ARM AVR BPF M68k Mips RISCV Sparc Spirv WebAssembly X86 Xtensa -AMDGPU -ARC -CSKY -DirectX -Hexagon -Lanai -LoongArch -MSP430 -NVPTX -PowerPC -SPIRV -SystemZ -VE -XCore"
 
 LUA_SINGLE_TARGET="lua5-4"

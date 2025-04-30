@@ -4,7 +4,7 @@
 */* curl_ssl_gnutls
 */* grub_platforms_efi-32 grub_platforms_efi-64 grub_platforms_pc
 */* guile_single_target_3-0 guile_targets_3-0
-*/* llvm_slot_20 llvm_targets_AArch64 llvm_targets_ARM llvm_targets_AVR llvm_targets_BPF llvm_targets_M68k llvm_targets_Mips llvm_targets_RISCV llvm_targets_Sparc llvm_targets_Spirv llvm_targets_WebAssembly llvm_targets_X86 llvm_targets_Xtensa
+*/* llvm_targets_AArch64 llvm_targets_ARM llvm_targets_AVR llvm_targets_BPF llvm_targets_M68k llvm_targets_Mips llvm_targets_RISCV llvm_targets_Sparc llvm_targets_Spirv llvm_targets_WebAssembly llvm_targets_X86 llvm_targets_Xtensa
 */* lua_single_target_lua5-4 lua_targets_lua5-4 lua_targets_luajit
 */* postgres_targets_postgres16
 */* python_targets_python3_12 python_targets_python2_7 python_single_target_python3_12
