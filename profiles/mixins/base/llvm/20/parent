@@ -1,0 +1,5 @@
+../../portage/abis/llvm
+../../portage/compilers/clang
+../../portage/envs/llvm/20
+../../portage/sets/versions/llvm/20
+../../portage/uses/llvm

@@ -10,4 +10,5 @@
 >llvm-runtimes/compiler-rt-sanitizers-20.1.2
 >llvm-runtimes/libcxx-20.1.2
 >llvm-runtimes/libcxxabi-20.1.2
+>llvm-runtimes/libunwind-20.1.2
 >llvm-runtimes/openmp-20.1.2
