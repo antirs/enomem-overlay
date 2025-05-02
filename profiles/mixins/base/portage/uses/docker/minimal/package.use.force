@@ -406,8 +406,8 @@ dev-lang/go
 dev-lang/lua  deprecated readline
 dev-lang/perl  berkdb gdbm
 dev-lang/python:3.12  ensurepip gdbm ncurses readline sqlite ssl verify-sig
-dev-lang/rust-bin:1.83.0  rust-analyzer rust-src rustfmt verify-sig
-dev-lang/rust:1.83.0  llvm-libunwind rust-analyzer rust-src rustfmt system-llvm verify-sig wasm
+dev-lang/rust-bin  rust-analyzer rust-src rustfmt verify-sig
+dev-lang/rust  llvm-libunwind rust-analyzer rust-src rustfmt system-llvm verify-sig wasm
 dev-libs/boehm-gc
 dev-libs/libedit
 dev-libs/tree-sitter-bash  python
