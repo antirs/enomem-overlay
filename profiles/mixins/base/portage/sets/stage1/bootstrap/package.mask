@@ -1,6 +1,6 @@
 # Marsha Melova <marsha.melova@grrlz.net>
 # sys-libs/glibc-2.40-r7 doesn't compile with endless loop and gawk OOM
-=sys-apps/gawk-5.3.1
+>=sys-apps/gawk-5.3.1
 
 # Marsha Melova <marsha.melova@grrlz.net>
 # get rid of ninja circular dependencies in stage1 to stage3 builds
