@@ -1,0 +1,3 @@
+../portage/features/multilib
+../portage/uses/base/multilib
+../portage/uses/multilib

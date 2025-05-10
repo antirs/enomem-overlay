@@ -1,0 +1,3 @@
+# Strip architecture flags for multilib compilation
+
+EN_CFLAGS_COMMON_ARCH_CPU=""

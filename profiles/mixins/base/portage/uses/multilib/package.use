@@ -1,0 +1,2 @@
+sys-devel/gcc  multilib
+sys-libs/glibc  multilib -multilib-bootstrap
