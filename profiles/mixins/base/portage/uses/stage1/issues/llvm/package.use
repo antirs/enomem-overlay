@@ -1,2 +1,0 @@
-llvm-core/clang  -llvm_targets_AVR
-llvm-core/llvm  -llvm_targets_AVR
