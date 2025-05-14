@@ -32,24 +32,25 @@ app-alternatives/ninja  reference
 app-alternatives/sh  bash
 app-alternatives/tar  gnu
 app-alternatives/yacc  bison
-app-arch/bzip2:0  verify-sig
+app-arch/bzip2  verify-sig
 app-arch/gzip  verify-sig
-app-arch/libarchive:0  acl bzip2 e2fsprogs iconv lz4 lzma lzo verify-sig xattr zstd
-app-arch/lz4:0
+app-arch/libarchive  acl bzip2 e2fsprogs iconv lz4 lzma lzo verify-sig xattr zstd
+app-arch/lz4
 app-arch/tar  acl nls selinux verify-sig xattr
-app-arch/unzip  bzip2
+app-arch/unzip  bzip2 unicode
 app-arch/xz-utils  extra-filters nls verify-sig
-app-arch/zstd:0  lz4 lzma zlib
+app-arch/zstd  lz4 lzma zlib
 app-crypt/gnupg  bzip2 nls readline selinux smartcard ssl tofu verify-sig
-app-crypt/gpgme:1  cxx verify-sig
+app-crypt/gpgme  cxx verify-sig
 app-crypt/libb2  openmp
 app-crypt/libmd
 app-crypt/pinentry  caps ncurses verify-sig
-app-crypt/rhash:0  nls ssl
-app-editors/nano  ncurses nls spell
+app-crypt/rhash  nls ssl
+app-editors/nano  ncurses nls spell unicode
 app-eselect/eselect-iptables
 app-eselect/eselect-lib-bin-symlink
 app-eselect/eselect-pinentry
+app-i18n/gnulib-l10n
 app-i18n/man-pages-l10n
 app-misc/ca-certificates
 app-misc/editor-wrapper
@@ -59,60 +60,58 @@ app-portage/elt-patches
 app-portage/gemato  gpg
 app-portage/getuto
 app-portage/portage-utils  openmp qmanifest
-app-shells/bash  nls  verify-sig
+app-shells/bash  nls readline verify-sig
 app-text/build-docbook-catalog
-app-text/docbook-xml-dtd:4.1.2
-app-text/docbook-xml-dtd:4.2
-app-text/docbook-xml-dtd:4.5
+app-text/docbook-xml-dtd
+app-text/docbook-xsl-ns-stylesheets
 app-text/docbook-xsl-stylesheets
 app-text/manpager
 app-text/opensp  nls
 app-text/po4a
 app-text/sgml-common
+dev-build/autoconf  verify-sig
 dev-build/autoconf-archive
 dev-build/autoconf-wrapper
-dev-build/autoconf:2.72  verify-sig
+dev-build/automake  verify-sig
 dev-build/automake-wrapper
-dev-build/automake:1.17  verify-sig
 dev-build/cmake  ncurses verify-sig
 dev-build/gtk-doc-am
-dev-build/libtool:2
+dev-build/libtool
 dev-build/make  nls verify-sig
 dev-build/meson  verify-sig
 dev-build/meson-format-array
 dev-build/ninja
-dev-db/sqlite:3  icu readline
-dev-lang/perl:0  berkdb gdbm
-dev-lang/python-exec-conf:2
-dev-lang/python-exec:2
-dev-lang/python:3.12  ensurepip gdbm ncurses readline sqlite ssl verify-sig
-dev-lang/python:3.13  ensurepip gdbm ncurses readline sqlite ssl verify-sig
+dev-db/sqlite  icu readline
+dev-lang/perl  berkdb gdbm
+dev-lang/python  ensurepip gdbm ncurses readline sqlite ssl verify-sig
+dev-lang/python-exec  native-symlinks
+dev-lang/python-exec-conf
 dev-lang/swig  pcre
-dev-lang/tcl:0  threads
+dev-lang/tcl  threads
 dev-libs/expat  unicode
-dev-libs/gmp:0  asm cpudetection cxx
-dev-libs/icu:0  verify-sig
-dev-libs/isl:0
-dev-libs/jsoncpp:0
-dev-libs/libassuan:0  verify-sig
-dev-libs/libffi:0
-dev-libs/libgcrypt:0  asm getentropy verify-sig
+dev-libs/gmp  asm cpudetection cxx
+dev-libs/icu  verify-sig
+dev-libs/isl
+dev-libs/jsoncpp
+dev-libs/libassuan  verify-sig
+dev-libs/libffi
+dev-libs/libgcrypt  asm getentropy verify-sig
 dev-libs/libgpg-error  nls verify-sig
 dev-libs/libksba  verify-sig
-dev-libs/libpcre2:0  bzip2 jit pcre16 pcre32 readline unicode verify-sig zlib
+dev-libs/libpcre2  bzip2 jit pcre16 pcre32 readline unicode verify-sig zlib
 dev-libs/libpipeline
-dev-libs/libtasn1:0  verify-sig
-dev-libs/libunistring:0
-dev-libs/libuv:0  verify-sig
-dev-libs/libxml2:2  icu python readline
+dev-libs/libtasn1  verify-sig
+dev-libs/libunistring
+dev-libs/libuv  verify-sig
+dev-libs/libxml2  icu python readline
 dev-libs/libxslt  crypt
-dev-libs/lzo:2
-dev-libs/mpc:0
-dev-libs/mpdecimal:4
-dev-libs/mpfr:0  verify-sig
-dev-libs/nettle:0  asm gmp verify-sig
+dev-libs/lzo
+dev-libs/mpc
+dev-libs/mpdecimal
+dev-libs/mpfr  verify-sig
+dev-libs/nettle  asm gmp verify-sig
 dev-libs/npth
-dev-libs/openssl:0  asm verify-sig
+dev-libs/openssl  asm verify-sig
 dev-libs/popt  nls
 dev-perl/Capture-Tiny
 dev-perl/Class-Inspector
@@ -181,7 +180,7 @@ dev-python/poetry-core
 dev-python/pygments
 dev-python/pyproject-hooks
 dev-python/pysocks
-dev-python/requests
+dev-python/requests  test-rust
 dev-python/resolvelib
 dev-python/rich
 dev-python/setuptools
@@ -194,27 +193,28 @@ dev-python/urllib3  http2
 dev-python/wheel
 dev-util/gperf
 dev-util/patchelf
-dev-util/pkgconf:0
+dev-util/pkgconf  native-symlinks
 dev-util/re2c
-net-dns/libidn2:0  nls verify-sig
-net-firewall/iptables:0
-net-libs/gnutls:0  cxx idn nls tools verify-sig zlib
-net-libs/libmnl:0  verify-sig
-net-libs/libnsl:0
-net-libs/libtirpc:0
-net-libs/nghttp2:0
+net-dns/libidn2  nls verify-sig
+net-firewall/iptables
+net-libs/gnutls  cxx idn nls tools verify-sig zlib
+net-libs/libmnl  verify-sig
+net-libs/libnsl
+net-libs/libtirpc
+net-libs/nghttp2
 net-misc/curl  ftp gnutls hsts http2 imap pop3 progress-meter smtp ssl tftp verify-sig websockets
 net-misc/dhcpcd  embedded ipv6 udev
 net-misc/iputils  arping caps filecaps nls
 net-misc/netifrc  dhcp
 net-misc/openssh  audit pam pie selinux ssl verify-sig
 net-misc/rsync  acl iconv ssl verify-sig xattr
-net-misc/wget  gnutls ipv6 nls pcre  verify-sig zlib
+net-misc/wget  gnutls ipv6 nls pcre ssl verify-sig zlib
 perl-core/File-Temp
 perl-core/Getopt-Long
 perl-core/Scalar-List-Utils
 perl-core/Test-Harness
 sec-keys/openpgp-keys-alejandro-colomar
+sec-keys/openpgp-keys-andrewtridgell
 sec-keys/openpgp-keys-bison
 sec-keys/openpgp-keys-bradking
 sec-keys/openpgp-keys-bzip2
@@ -246,6 +246,7 @@ sec-keys/openpgp-keys-madler
 sec-keys/openpgp-keys-make
 sec-keys/openpgp-keys-netfilter
 sec-keys/openpgp-keys-nettle
+sec-keys/openpgp-keys-nicholaswilson
 sec-keys/openpgp-keys-openssh
 sec-keys/openpgp-keys-openssl
 sec-keys/openpgp-keys-patch
@@ -284,7 +285,7 @@ sys-apps/help2man  nls
 sys-apps/install-xattr
 sys-apps/iproute2  caps iptables selinux
 sys-apps/kbd  nls pam selinux
-sys-apps/kmod  lzma  zlib zstd
+sys-apps/kmod  lzma tools zlib zstd
 sys-apps/less  pcre
 sys-apps/locale-gen
 sys-apps/man-db  manpager nls seccomp selinux zlib
@@ -292,56 +293,56 @@ sys-apps/man-pages  verify-sig
 sys-apps/net-tools  arp hostname ipv6 nls selinux
 sys-apps/openrc  audit caps netifrc pam selinux sysvinit unicode
 sys-apps/policycoreutils  audit pam
-sys-apps/portage  gentoo-dev  native-extensions rsync-verify selinux xattr
+sys-apps/portage  gentoo-dev ipc native-extensions rsync-verify selinux xattr
 sys-apps/sandbox  nnp
 sys-apps/sed  acl nls selinux verify-sig
 sys-apps/selinux-python
 sys-apps/semodule-utils
-sys-apps/shadow:0  acl audit nls pam selinux verify-sig xattr
+sys-apps/shadow  acl audit nls pam selinux verify-sig xattr
 sys-apps/systemd-utils  acl kmod selinux tmpfiles udev
 sys-apps/sysvinit  nls selinux verify-sig
 sys-apps/texinfo  nls standalone
-sys-apps/util-linux  audit caps cramfs hardlink logger ncurses nls pam python readline selinux  verify-sig
+sys-apps/util-linux  audit caps cramfs hardlink logger ncurses nls pam python readline selinux unicode verify-sig
 sys-apps/which
 sys-auth/pambase  caps nullok passwdqc selinux sha512
 sys-auth/passwdqc
 sys-devel/bc  readline
-sys-devel/binutils-config
-sys-devel/binutils:2.43   nls plugins zstd
+sys-devel/binutils  cet nls plugins zstd
+sys-devel/binutils-config  native-symlinks
 sys-devel/bison  nls verify-sig
 sys-devel/flex  nls
-sys-devel/gcc-config
 sys-devel/gcc  cet cxx fortran graphite nls openmp pch sanitize zstd
-sys-devel/gettext  acl cxx ncurses nls openmp verify-sig
+sys-devel/gcc-config  cc-wrappers native-symlinks
+sys-devel/gettext  acl cxx ncurses nls openmp verify-sig xattr
 sys-devel/gnuconfig
 sys-devel/m4  nls verify-sig
 sys-devel/patch  verify-sig xattr
 sys-fs/e2fsprogs  nls tools
 sys-fs/udev-init-scripts
 sys-kernel/linux-headers
-sys-libs/db:6.0
-sys-libs/gdbm:0  berkdb nls readline verify-sig
-sys-libs/glibc:2.2  audit caps cet multiarch selinux ssp
+sys-libs/db
+sys-libs/gdbm  berkdb nls readline verify-sig
+sys-libs/glibc  audit caps cet multiarch selinux ssp stack-realign
 sys-libs/libcap  pam
 sys-libs/libcap-ng
 sys-libs/libseccomp
 sys-libs/libselinux  python
-sys-libs/libsemanage:0
-sys-libs/libsepol:0  static-libs
-sys-libs/libxcrypt:0
-sys-libs/ncurses:0   verify-sig
-sys-libs/pam  audit filecaps selinux
-sys-libs/readline:0   verify-sig
+sys-libs/libsemanage
+sys-libs/libsepol  static-libs
+sys-libs/libxcrypt  compat system
+sys-libs/ncurses  cxx stack-realign tinfo verify-sig
+sys-libs/pam  audit filecaps nls selinux
+sys-libs/readline  unicode verify-sig
 sys-libs/timezone-data  nls
-sys-libs/zlib:0  verify-sig
+sys-libs/zlib  verify-sig
 sys-process/audit  python
-sys-process/procps:0  kill ncurses nls selinux
+sys-process/procps  kill ncurses nls selinux unicode
 sys-process/psmisc  nls selinux
 virtual/acl
 virtual/dev-manager
 virtual/editor
 virtual/libc
-virtual/libcrypt:0
+virtual/libcrypt
 virtual/libiconv
 virtual/libintl
 virtual/man
@@ -379,7 +380,7 @@ virtual/perl-Unicode-Collate
 virtual/perl-XSLoader
 virtual/perl-podlators
 virtual/perl-version
-virtual/pkgconfig
+virtual/pkgconfig  native-symlinks
 virtual/service-manager
 virtual/ssh
 virtual/tmpfiles
