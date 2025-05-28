@@ -1,2 +1,3 @@
 PORTDIR="/var/db/repos/gentoo"
 DISTDIR="/var/cache/distfiles"
+PORTAGE_TMPDIR="/var/tmp/portage"
