@@ -1,0 +1,37 @@
+# Copyright 2021-2025 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+inherit edo flag-o-matic toolchain-funcs
+
+if [[ ${PV} = 9999 ]]; then
+	EGIT_REPO_URI="https://git.sr.ht/~mcf/cproc"
+	inherit git-r3
+else
+	CPROC_COMMIT="c19a0bd9b78be94b455af55ad8ceb9be49410974"
+	CPROC_P="${PN}-${CPROC_COMMIT}"
+	SRC_URI="https://git.sr.ht/~mcf/cproc/archive/${CPROC_COMMIT}.tar.gz -> ${CPROC_P}.tar.gz"
+	S="${WORKDIR}/${CPROC_P}"
+
+	KEYWORDS="~amd64 ~arm64 ~riscv"
+fi
+
+DESCRIPTION="C11 compiler using QBE as backend"
+HOMEPAGE="https://sr.ht/~mcf/cproc/"
+
+LICENSE="ISC"
+SLOT="0"
+IUSE="static"
+
+DEPEND="static? ( sys-devel/qbe:=[static] )"
+RDEPEND="sys-devel/qbe"
+
+src_configure() {
+	tc-export CC
+
+	use static && append-cflags -static
+	use static && append-ldflags -static --static
+
+	edo ./configure --prefix=/usr
+}
