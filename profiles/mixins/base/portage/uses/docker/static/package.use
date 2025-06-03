@@ -4,5 +4,7 @@ dev-build/make  static
 dev-embedded/sdcc  static -ucsim
 sys-apps/busybox  static
 sys-apps/coreutils  static
+sys-devel/cpp  static
 sys-devel/cproc  static
 sys-devel/qbe  static
+sys-devel/binutils  static static-libs
