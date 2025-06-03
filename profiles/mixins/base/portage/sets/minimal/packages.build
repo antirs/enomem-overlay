@@ -1,4 +1,5 @@
 -app-admin/eselect
+-app-alternatives/awk
 -app-arch/bzip2
 -app-arch/gzip
 -app-arch/tar
