@@ -1,0 +1,9 @@
+gentoo:default/linux/amd64/23.0/musl/llvm
+../../../../../../../../configs/amd64/docker/minimal
+../../../../../../../../rewrites/default/amd64/static
+../../../../../../../../rewrites/default/amd64/llvm/libcxx
+../../../../../../../../rewrites/default/amd64/nomultilib
+../../../../../../../../rewrites/virtual/docker/minimal/cproc/static
+../../../../../../../../rewrites/virtual/docker/amd64/musl/minimal
+../../../../../../../../rewrites/virtual/docker/amd64/llvm/minimal
+../../../../../../../../rewrites/virtual/docker/static

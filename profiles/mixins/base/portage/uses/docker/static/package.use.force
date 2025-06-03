@@ -4,3 +4,5 @@ dev-build/make  static
 dev-embedded/sdcc  static
 sys-apps/busybox  static
 sys-apps/coreutils  static
+sys-devel/cproc  static
+sys-devel/qbe  static
