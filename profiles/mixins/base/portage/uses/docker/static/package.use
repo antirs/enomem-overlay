@@ -7,4 +7,4 @@ sys-apps/coreutils  static
 sys-devel/cpp  static
 sys-devel/cproc  static
 sys-devel/qbe  static
-sys-devel/binutils  static static-libs
+sys-devel/binutils  static static-libs -cet -debuginfod -doc -gprofng -hardened -multitarget -nls -pgo -plugins -test -vanilla -xxhash -zstd
