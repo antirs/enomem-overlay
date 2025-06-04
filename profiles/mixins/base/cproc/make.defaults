@@ -1,0 +1,5 @@
+ENOMEM_FEATURES="toolchain_cproc"
+
+IUSE_IMPLICIT="enomem_features_toolchain_cproc"
+
+BOOTSTRAP_USE="${BOOTSTRAP_USE} enomem_features_toolchain_cproc"

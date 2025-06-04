@@ -1,0 +1,4 @@
+sys-devel/cpp  custom-cflags static
+sys-devel/cproc  static
+sys-devel/qbe  static
+sys-devel/binutils  static static-libs

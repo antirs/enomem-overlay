@@ -1,0 +1,13 @@
+app-arch/bzip2
+app-arch/gzip
+app-arch/tar
+app-arch/xz-utils
+app-shells/bash:0
+dev-build/make
+dev-build/samurai
+sys-apps/file
+sys-apps/findutils
+sys-apps/portage
+sys-devel/cpp
+virtual/libc
+virtual/os-headers

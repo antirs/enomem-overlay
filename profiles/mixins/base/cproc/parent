@@ -1,0 +1,6 @@
+../portage/abis/cproc
+../portage/compilers/cproc
+../portage/pkgs/minimal
+../portage/sets/minimal
+../portage/sets/toolchain/cproc
+../portage/uses/cproc
