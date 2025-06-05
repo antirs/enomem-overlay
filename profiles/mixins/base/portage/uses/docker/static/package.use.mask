@@ -2,6 +2,7 @@ app-arch/gzip  -static
 app-shells/dash  -static
 dev-build/make  -static
 dev-embedded/sdcc  -static ucsim
+dev-lang/nasm  -static
 sys-apps/busybox  -static
 sys-apps/coreutils  -static
 sys-devel/cpp  -static
