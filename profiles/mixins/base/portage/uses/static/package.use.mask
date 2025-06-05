@@ -89,7 +89,7 @@ dev-db/pgpool2  -static-libs
 dev-db/postgis  -static-libs
 dev-db/postgresql  -static-libs
 dev-db/qdbm  -static-libs
-dev-db/sqlite  -static-libs
+dev-db/sqlite  icu -static-libs
 dev-db/tinycdb  -static-libs
 dev-db/unixODBC  -static-libs
 dev-embedded/libftdi  -static-libs
