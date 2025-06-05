@@ -220,6 +220,7 @@ dev-libs/lzo  -static-libs
 dev-libs/marisa  -static-libs
 dev-libs/mongo-c-driver  -static-libs
 dev-libs/mpc  -static-libs
+dev-libs/mpdecimal  -static-libs
 dev-libs/mpfr  -static-libs
 dev-libs/mxml  -static-libs
 dev-libs/nettle  -static-libs
