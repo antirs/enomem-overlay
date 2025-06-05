@@ -78,7 +78,8 @@ src_configure() {
 	# --enable-lto just appends -flto to *FLAGS
 	# so let users just use lto through normal make.conf *FLAGS
 
-	append-ldflags "-static"
+	use static && append-ldflags -static
+
 	econf
 }
 

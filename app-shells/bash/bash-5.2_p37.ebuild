@@ -177,7 +177,8 @@ src_configure() {
 	# bash 5.3 drops unprototyped functions, earlier versions are
 	# incompatible with C23.
 	append-cflags $(test-flags-CC -std=gnu17)
-	append-ldflags "-static"
+
+	use static && append-ldflags -static
 
 	myconf=(
 		--disable-profiling

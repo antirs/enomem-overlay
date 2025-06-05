@@ -71,7 +71,8 @@ src_configure() {
 	export EXTRA_ECONF="${EXTRA_ECONF[@]}"
 
 	toolchain_src_configure
-	append-ldflags "-static"
+
+	use static && append-ldflags -static
 }
 
 src_compile() {

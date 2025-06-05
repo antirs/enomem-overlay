@@ -62,7 +62,8 @@ src_configure() {
 		--program-prefix=g
 	)
 
-	append-ldflags "-static"
+	use static && append-ldflags -static
+
 	# Drop CONFIG_SHELL hack after 1.35: https://git.savannah.gnu.org/cgit/tar.git/commit/?id=7687bf4acc4dc4554538389383d7fb4c3e6521cd
 	CONFIG_SHELL="${BROOT}"/bin/bash FORCE_UNSAFE_CONFIGURE=1 econf "${myeconfargs[@]}"
 }

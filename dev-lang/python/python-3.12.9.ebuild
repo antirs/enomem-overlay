@@ -417,7 +417,8 @@ src_configure() {
 			--with-lto
 		)
 	fi
-	append-ldflags -static
+
+	use static && append-ldflags -static
 
 	# Force-disable modules we don't want built.
 	# See Modules/Setup for docs on how this works. Setup.local contains our local deviations.
