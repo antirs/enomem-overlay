@@ -1,14 +1,20 @@
+app-arch/bzip2  static
 app-arch/gzip  static
 app-arch/tar  static
+app-misc/tmux  static
 app-shells/bash  static
 app-shells/dash  static
+app-shells/loksh  static
 app-shells/rc  static
+app-shells/zsh  static
 dev-build/make  static
 dev-embedded/sdcc  static
 dev-lang/nasm  static
 dev-lang/python  static static-libs
+dev-lang/python-exec  static
 sys-apps/busybox  static
 sys-apps/coreutils  static
+sys-apps/gentoo-functions  static
 sys-devel/binutils  static static-libs
 sys-devel/cpp  static
 sys-devel/cproc  static
