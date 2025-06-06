@@ -4,12 +4,12 @@ DEPEND=!static? ( sys-libs/ncurses:= ) !static? ( readline? ( sys-libs/readline:
 DESCRIPTION=A reimplementation of the Plan 9 shell
 EAPI=8
 HOMEPAGE=http://static.tobold.org/
-INHERIT=autotools
+INHERIT=autotools flag-o-matic
 IUSE=libedit readline static
 KEYWORDS=~amd64 ~x86
 LICENSE=rc
 RDEPEND=!static? ( sys-libs/ncurses:= ) !static? ( readline? ( sys-libs/readline:= ) ) !static? ( libedit? ( dev-libs/libedit ) )
 SLOT=0
 SRC_URI=http://static.tobold.org/rc/rc-1.7.4.tar.gz
-_eclasses_=gnuconfig	ddeb9f8caff1b5f71a09c75b7534df79	toolchain-funcs	6afdb6107430c1832ca7e16aacbf8fa1	multilib	b2a329026f2e404e9e371097dda47f96	libtool	c81bd096be5f4c82f4e8f156ef112402	autotools	f20ecf7ab0a7c34e83238b3ed4aaf6d6
-_md5_=0155f3b13cec063209fb75ba2d24caad
+_eclasses_=gnuconfig	ddeb9f8caff1b5f71a09c75b7534df79	toolchain-funcs	6afdb6107430c1832ca7e16aacbf8fa1	multilib	b2a329026f2e404e9e371097dda47f96	libtool	c81bd096be5f4c82f4e8f156ef112402	autotools	f20ecf7ab0a7c34e83238b3ed4aaf6d6	flag-o-matic	16d3941ed2dc39f4819368ae51bc0b72
+_md5_=cadb7382451ae0efe234072a1c91f2ec

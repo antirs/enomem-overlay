@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit autotools
+inherit autotools flag-o-matic
 
 DESCRIPTION="A reimplementation of the Plan 9 shell"
 HOMEPAGE="http://static.tobold.org/"
@@ -41,7 +41,8 @@ src_configure() {
 	use readline && myconf="--with-edit=readline"
 	use libedit && myconf="--with-edit=edit"
 
-	append-ldflags "-static"
+	use static && append-cflags -static
+	use static && append-ldflags -static
 
 	econf "${myconf}"
 }
