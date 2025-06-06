@@ -689,7 +689,7 @@ src_install() {
 	emake -j1 DESTDIR="${D}" TEST_MODULES=no altinstall
 
 	# Fix collisions between different slots of Python.
-	rm "${ED}/usr/$(get_libdir)/libpython3.so" || die
+	use static || rm "${ED}/usr/$(get_libdir)/libpython3.so" || die
 
 	# Cheap hack to get version with ABIFLAGS
 	local abiver=$(cd "${ED}/usr/include"; echo python*)
