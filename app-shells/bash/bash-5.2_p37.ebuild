@@ -69,16 +69,18 @@ if (( PLEVEL >= 0 )); then
 fi
 IUSE="afs bashlogger examples mem-scramble +net nls plugins pgo +readline static"
 
-DEPEND="
-	>=sys-libs/ncurses-5.2-r2:=
+RDEPEND="
+	!static? ( >=sys-libs/ncurses-5.2-r2:= )
 	nls? ( virtual/libintl )
 "
-if (( PLEVEL >= 0 )); then
-	DEPEND+=" readline? ( >=sys-libs/readline-${READLINE_VER}:= )"
-fi
-RDEPEND="
-	${DEPEND}
+DEPEND="${RDEPEND}
+	static? ( >=sys-libs/ncurses-5.2-r2:=[static-libs] )
 "
+if (( PLEVEL >= 0 )); then
+	RDEPEND+=" !static? ( readline? ( >=sys-libs/readline-${READLINE_VER}:= ) )"
+	DEPEND+=" static? ( readline? ( >=sys-libs/readline-${READLINE_VER}:=[static-libs] ) )"
+fi
+
 # We only need bison (yacc) when the .y files get patched (bash42-005, bash51-011).
 BDEPEND="
 	pgo? ( dev-util/gperf )
