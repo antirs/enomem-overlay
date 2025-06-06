@@ -25,15 +25,19 @@ fi
 IUSE="acl minimal nls selinux static xattr"
 
 RDEPEND="
-	acl? ( virtual/acl )
-	selinux? ( sys-libs/libselinux )
+	!static? ( acl? ( virtual/acl ) )
+	!static? ( selinux? ( sys-libs/libselinux ) )
+	!static? ( xattr? ( elibc_glibc? ( sys-apps/attr ) ) )
 "
 DEPEND="
 	${RDEPEND}
-	xattr? ( elibc_glibc? ( sys-apps/attr ) )
+	static? ( acl? ( virtual/acl[static-libs] ) )
+	static? ( selinux? ( sys-libs/libselinux[static-libs] ) )
+	static? ( xattr? ( elibc_glibc? ( sys-apps/attr[static-libs] ) ) )
 "
 BDEPEND="
 	nls? ( sys-devel/gettext )
+	static? ( nls? ( sys-devel/gettext[static-libs] ) )
 	verify-sig? ( sec-keys/openpgp-keys-tar )
 "
 PDEPEND="
