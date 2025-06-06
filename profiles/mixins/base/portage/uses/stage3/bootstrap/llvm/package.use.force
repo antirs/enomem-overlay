@@ -1,2 +1,6 @@
 llvm-core/clang-common  cet default-compiler-rt default-lld llvm-libunwind verify-sig
 llvm-core/clang-runtime  compiler-rt default-compiler-rt default-lld libcxx llvm-libunwind openmp sanitize
+
+sys-devel/gettext
+app-crypt/libb2
+app-portage/portage-utils
