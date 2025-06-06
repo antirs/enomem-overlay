@@ -2,6 +2,7 @@ app-arch/gzip  -static
 app-arch/tar  -static
 app-shells/bash  -static
 app-shells/dash  -static
+app-shells/rc  -static
 dev-build/make  -static
 dev-embedded/sdcc  -static ucsim
 dev-lang/nasm  -static
