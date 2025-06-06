@@ -17,7 +17,8 @@ IUSE="libedit readline static"
 RDEPEND="!static? ( sys-libs/ncurses:= )
 	!static? ( readline? ( sys-libs/readline:= ) )
 	!static? ( libedit? ( dev-libs/libedit ) )"
-DEPEND="${RDEPEND}
+DEPEND="${RDEPEND}"
+BDEPEND="
 	static? ( sys-libs/ncurses:=[static-libs] )
 	static? ( readline? ( sys-libs/readline:=[static-libs] ) )
 	static? ( libedit? ( dev-libs/libedit[static-libs] ) )
