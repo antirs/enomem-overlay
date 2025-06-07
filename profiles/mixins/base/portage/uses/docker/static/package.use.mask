@@ -20,3 +20,4 @@ sys-devel/binutils  cet debuginfod doc gprofng hardened multitarget nls pgo plug
 sys-devel/cpp  -static
 sys-devel/cproc  -static
 sys-devel/qbe  -static
+sys-libs/ncurses  -noshared -static

@@ -20,3 +20,4 @@ sys-devel/binutils  static static-libs
 sys-devel/cpp  static
 sys-devel/cproc  static
 sys-devel/qbe  static
+sys-libs/ncurses  noshared static
