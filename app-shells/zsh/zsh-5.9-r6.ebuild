@@ -25,22 +25,27 @@ IUSE="caps debug doc examples gdbm maildir pcre static valgrind"
 # Next release should use pcre2: https://github.com/zsh-users/zsh/commit/b62e911341c8ec7446378b477c47da4256053dc0
 RDEPEND="
 	!static? ( >=sys-libs/ncurses-5.1:0= )
-	static? ( >=sys-libs/ncurses-5.7-r4:0=[static-libs] )
 	!static? ( caps? ( sys-libs/libcap ) )
-	static? ( caps? ( sys-libs/libcap[static-libs] ) )
 	pcre? (
 		!static? ( >=dev-libs/libpcre-3.9 )
-		static? ( >=dev-libs/libpcre-3.9[static-libs] )
 	)
 	gdbm? (
 		!static? ( sys-libs/gdbm:= )
-		static? ( sys-libs/gdbm:=[static-libs] )
 	)
 "
 DEPEND="
 	valgrind? ( dev-debug/valgrind )
 	${RDEPEND}"
-BDEPEND="sys-apps/groff"
+BDEPEND="sys-apps/groff
+	static? ( >=sys-libs/ncurses-5.7-r4:0=[static-libs] )
+	static? ( caps? ( sys-libs/libcap[static-libs] ) )
+	pcre? (
+		static? ( >=dev-libs/libpcre-3.9[static-libs] )
+	)
+	gdbm? (
+		static? ( sys-libs/gdbm:=[static-libs] )
+	)
+"
 PDEPEND="
 	examples? ( app-doc/zsh-lovers )
 "
