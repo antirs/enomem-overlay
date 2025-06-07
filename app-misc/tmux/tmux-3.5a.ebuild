@@ -26,18 +26,20 @@ REQUIRED_USE="
 		systemd? ( !static )
 "
 
-DEPEND="
+RDEPEND="
 	!static? ( dev-libs/libevent:= )
 	!static? ( sys-libs/ncurses:= )
 	!static? ( jemalloc? ( dev-libs/jemalloc:= ) )
 	!static? ( systemd? ( sys-apps/systemd:= ) )
 	!static? ( utempter? ( sys-libs/libutempter ) )
 	!static? ( kernel_Darwin? ( dev-libs/libutf8proc:= ) )
+	static? ( sys-libs/ncurses:=[tinfo] )
+	selinux? ( sec-policy/selinux-screen )
+	vim-syntax? ( app-vim/vim-tmux )
 "
 
-BDEPEND="
-	virtual/pkgconfig
-	app-alternatives/yacc
+DEPEND="
+	${RDEPEND}
 	static? ( dev-libs/libevent:=[static-libs] )
 	static? ( sys-libs/ncurses:=[static-libs] )
 	static? ( jemalloc? ( dev-libs/jemalloc:=[static-libs] ) )
@@ -45,10 +47,9 @@ BDEPEND="
 	static? ( kernel_Darwin? ( dev-libs/libutf8proc:=[static-libs] ) )
 "
 
-RDEPEND="
-	${DEPEND}
-	selinux? ( sec-policy/selinux-screen )
-	vim-syntax? ( app-vim/vim-tmux )
+BDEPEND="
+	virtual/pkgconfig
+	app-alternatives/yacc
 "
 
 QA_CONFIG_IMPL_DECL_SKIP=(
@@ -90,6 +91,10 @@ src_configure() {
 		$(use_enable kernel_Darwin utf8proc)
 	)
 
+	if [[ -n "${ESYSROOT}" ]]; then
+		export PKG_CONFIG_PATH="${ESYSROOT}/usr/$(get_libdir)/pkgconfig"
+		export PKG_CONFIG_SYSROOT_DIR="${ESYSROOT}"
+	fi
 	econf "${myeconfargs[@]}"
 }
 
