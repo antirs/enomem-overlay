@@ -43,7 +43,7 @@ DEPEND="
 "
 RDEPEND="
 	${DEPEND}
-	app-eselect/eselect-vi
+	!static? ( app-eselect/eselect-vi )
 	lua? (
 		$(lua_gen_cond_dep 'dev-lua/lpeg[${LUA_USEDEP}]')
 	)
@@ -107,9 +107,9 @@ update_symlinks() {
 }
 
 pkg_postrm() {
-	update_symlinks
+	use !static && update_symlinks
 }
 
 pkg_postinst() {
-	update_symlinks
+	use !static && update_symlinks
 }
