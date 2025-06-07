@@ -54,6 +54,7 @@ app-crypt/rhash  nls ssl
 app-editors/emacs  acl gmp inotify json libxml2 ssl threads zlib
 app-editors/nano  ncurses nls spell
 app-editors/vim  acl crypt minimal nls terminal
+app-editors/vis  acl ncurses tre
 app-eselect/eselect-iptables
 app-eselect/eselect-lib-bin-symlink
 app-eselect/eselect-lua
@@ -122,6 +123,7 @@ dev-libs/libksba  verify-sig
 dev-libs/libpcre2  bzip2 jit pcre16 pcre32 readline unicode verify-sig zlib
 dev-libs/libpipeline
 dev-libs/libtasn1  verify-sig
+dev-libs/libtermkey
 dev-libs/libunistring
 dev-libs/libuv  verify-sig
 dev-libs/libxml2  icu python readline
@@ -134,7 +136,9 @@ dev-libs/nettle  asm gmp verify-sig
 dev-libs/npth
 dev-libs/openssl  asm verify-sig
 dev-libs/popt  nls
+dev-libs/tre  agrep alloca approx nls
 dev-libs/tree-sitter-bash  python
+dev-libs/unibilium
 dev-perl/Capture-Tiny
 dev-perl/Class-Inspector
 dev-perl/Config-AutoConf

@@ -55,6 +55,7 @@ app-crypt/rhash  nls ssl -debug -static-libs
 app-editors/emacs  acl gmp inotify json libxml2 ssl threads zlib -X -Xaw3d -alsa -aqua -athena -cairo -dbus -dynamic-loading -games -gfile -gif -gpm -gsettings -gtk -gui -gzip-el -harfbuzz -imagemagick -jit -jpeg -kerberos -lcms -livecd -m17n-lib -mailutils -motif -png -selinux -sound -source -sqlite -svg -systemd -tiff -toolkit-scroll-bars -tree-sitter -valgrind -webp -wide-int -xft -xpm
 app-editors/nano  ncurses nls spell
 app-editors/vim  acl crypt minimal nls terminal -X -cscope -debug -gpm -lua -perl -python -racket -ruby -selinux -sound -tcl -vim-pager
+app-editors/vis  acl ncurses tre -lua -selinux -static -test
 app-eselect/eselect-iptables
 app-eselect/eselect-lib-bin-symlink
 app-eselect/eselect-lua
@@ -124,6 +125,7 @@ dev-libs/libksba  verify-sig -static-libs
 dev-libs/libpcre2  bzip2 jit pcre16 pcre32 readline unicode verify-sig zlib -libedit -static-libs -valgrind
 dev-libs/libpipeline  -test
 dev-libs/libtasn1  verify-sig -static-libs -test
+dev-libs/libtermkey  -demos -static-libs
 dev-libs/libunistring  -doc -static-libs
 dev-libs/libuv  verify-sig
 dev-libs/libxml2  icu python readline -examples -lzma -static-libs -test
@@ -136,7 +138,9 @@ dev-libs/nettle  asm gmp verify-sig -doc -static-libs
 dev-libs/npth  -test
 dev-libs/openssl  asm verify-sig -fips -ktls -quic -rfc3779 -sctp -static-libs -test -tls-compression -vanilla -weak-ssl-ciphers
 dev-libs/popt  nls -static-libs
+dev-libs/tre  agrep alloca approx nls -debug -profile -python -static-libs
 dev-libs/tree-sitter-bash  python
+dev-libs/unibilium  -doc -static-libs -test
 dev-perl/Capture-Tiny  -examples -test
 dev-perl/Class-Inspector  -test
 dev-perl/Config-AutoConf  -test

@@ -243,7 +243,9 @@ dev-libs/squareball  static-libs
 dev-libs/starpu  static-libs
 dev-libs/stfl  static-libs
 dev-libs/tinyxml  static-libs
+dev-libs/tre  static-libs
 dev-libs/ucl  static-libs
+dev-libs/unibilium  static-libs
 dev-libs/userspace-rcu  static-libs
 dev-libs/xapian  static-libs
 dev-libs/xerces-c  static-libs

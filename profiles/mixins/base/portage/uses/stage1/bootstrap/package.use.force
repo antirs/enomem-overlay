@@ -47,6 +47,7 @@ app-crypt/libmd
 app-crypt/pinentry  caps ncurses verify-sig
 app-crypt/rhash  nls ssl
 app-editors/nano  ncurses nls spell unicode
+app-editors/vis  acl ncurses tre
 app-eselect/eselect-iptables
 app-eselect/eselect-lib-bin-symlink
 app-eselect/eselect-pinentry
@@ -101,6 +102,7 @@ dev-libs/libksba  verify-sig
 dev-libs/libpcre2  bzip2 jit pcre16 pcre32 readline unicode verify-sig zlib
 dev-libs/libpipeline
 dev-libs/libtasn1  verify-sig
+dev-libs/libtermkey
 dev-libs/libunistring
 dev-libs/libuv  verify-sig
 dev-libs/libxml2  icu python readline
@@ -113,6 +115,8 @@ dev-libs/nettle  asm gmp verify-sig
 dev-libs/npth
 dev-libs/openssl  asm verify-sig
 dev-libs/popt  nls
+dev-libs/tre  agrep alloca approx nls
+dev-libs/unibilium
 dev-perl/Capture-Tiny
 dev-perl/Class-Inspector
 dev-perl/Config-AutoConf

@@ -47,6 +47,7 @@ app-crypt/libmd
 app-crypt/pinentry  caps ncurses verify-sig -X -efl -emacs -gtk -keyring -qt5 -qt6 -wayland
 app-crypt/rhash  nls ssl -debug -static-libs
 app-editors/nano  ncurses nls spell unicode -debug -justify -magic -minimal
+app-editors/vis  acl ncurses tre -lua -selinux -static -test
 app-eselect/eselect-iptables
 app-eselect/eselect-lib-bin-symlink
 app-eselect/eselect-pinentry
@@ -101,6 +102,7 @@ dev-libs/libksba  verify-sig -static-libs
 dev-libs/libpcre2  bzip2 jit pcre16 pcre32 readline unicode verify-sig zlib -libedit -static-libs -valgrind
 dev-libs/libpipeline  -test
 dev-libs/libtasn1  verify-sig -static-libs -test
+dev-libs/libtermkey  -demos -static-libs
 dev-libs/libunistring  -doc -static-libs
 dev-libs/libuv  verify-sig
 dev-libs/libxml2  icu python readline -debug -examples -ftp -lzma -static-libs -test
@@ -113,6 +115,8 @@ dev-libs/nettle  asm gmp verify-sig -doc -static-libs
 dev-libs/npth  -test
 dev-libs/openssl  asm verify-sig -fips -ktls -quic -rfc3779 -sctp -static-libs -test -tls-compression -vanilla -weak-ssl-ciphers
 dev-libs/popt  nls -static-libs
+dev-libs/tre  agrep alloca approx nls -debug -profile -python -static-libs
+dev-libs/unibilium  -doc -static-libs -test
 dev-perl/Capture-Tiny  -examples -test
 dev-perl/Class-Inspector  -test
 dev-perl/Config-AutoConf  -test

@@ -47,6 +47,7 @@ app-crypt/libmd
 app-crypt/pinentry  X efl emacs gtk keyring qt5 qt6 wayland -caps -ncurses -verify-sig
 app-crypt/rhash  debug static-libs -nls -ssl
 app-editors/nano  debug justify magic minimal -ncurses -nls -spell -unicode
+app-editors/vis  lua selinux static test -acl -ncurses -tre
 app-eselect/eselect-iptables
 app-eselect/eselect-lib-bin-symlink
 app-eselect/eselect-pinentry
@@ -101,6 +102,7 @@ dev-libs/libksba  static-libs -verify-sig
 dev-libs/libpcre2  libedit static-libs valgrind -bzip2 -jit -pcre16 -pcre32 -readline -unicode -verify-sig -zlib
 dev-libs/libpipeline  test
 dev-libs/libtasn1  static-libs test -verify-sig
+dev-libs/libtermkey  demos static-libs
 dev-libs/libunistring  doc static-libs
 dev-libs/libuv  -verify-sig
 dev-libs/libxml2  debug examples ftp lzma static-libs test -icu -python -readline
@@ -113,6 +115,8 @@ dev-libs/nettle  doc static-libs -asm -gmp -verify-sig
 dev-libs/npth  test
 dev-libs/openssl  fips ktls quic rfc3779 sctp static-libs test tls-compression vanilla weak-ssl-ciphers -asm -verify-sig
 dev-libs/popt  static-libs -nls
+dev-libs/tre  debug profile python static-libs -agrep -alloca -approx -nls
+dev-libs/unibilium  doc static-libs test
 dev-perl/Capture-Tiny  examples test
 dev-perl/Class-Inspector  test
 dev-perl/Config-AutoConf  test
