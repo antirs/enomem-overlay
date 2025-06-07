@@ -326,7 +326,7 @@ sys-fs/udev-init-scripts
 sys-kernel/linux-headers  headers-only
 sys-libs/db  cxx doc examples tcl test
 sys-libs/gdbm  static-libs test -berkdb -nls -readline -verify-sig
-sys-libs/glibc  compile-locales custom-cflags doc gd hash-sysv-compat headers-only multilib multilib-bootstrap nscd perl profile selinux static-libs suid systemd systemtap test vanilla -audit -caps -cet -multiarch -ssp -stack-realign
+sys-libs/glibc  compile-locales custom-cflags doc gd hash-sysv-compat headers-only multilib multilib-bootstrap nscd perl profile selinux suid systemd systemtap test vanilla -audit -caps -cet -multiarch -ssp -stack-realign -static-libs
 sys-libs/libcap  static-libs tools -pam
 sys-libs/libcap-ng  python static-libs
 sys-libs/libseccomp  debug experimental-loong python static-libs test
