@@ -422,7 +422,8 @@ src_configure() {
 
 	# Force-disable modules we don't want built.
 	# See Modules/Setup for docs on how this works. Setup.local contains our local deviations.
-	cat > Modules/Setup.local <<-EOF || die
+	if use static; then
+		cat > Modules/Setup.local <<-EOF || die
 *static*
 
 ############################################################################
@@ -571,7 +572,19 @@ _ctypes_test _ctypes/_ctypes_test.c
 
 xxlimited xxlimited.c
 xxlimited_35 xxlimited_35.c
+EOF
+	else
+	cat > Modules/Setup.local <<-EOF || die
+		*disabled*
+		nis
+		$(usev !gdbm '_gdbm _dbm')
+		$(usev !sqlite '_sqlite3')
+		$(usev !ssl '_hashlib _ssl')
+		$(usev !ncurses '_curses _curses_panel')
+		$(usev !readline 'readline')
+		$(usev !tk '_tkinter')
 	EOF
+	fi
 
 	# disable implicit optimization/debugging flags
 	local -x OPT=
@@ -596,7 +609,11 @@ xxlimited_35 xxlimited_35.c
 		append-cppflags -I"${ESYSROOT}"/usr/include/ncursesw
 	fi
 
-	DYNLOADFILE=dynload_stub.o econf "${myeconfargs[@]}"
+	if use static; then
+		DYNLOADFILE=dynload_stub.o econf "${myeconfargs[@]}"
+	else
+		econf "${myeconfargs[@]}"
+	fi
 
 	if grep -q "#define POSIX_SEMAPHORES_NOT_ENABLED 1" pyconfig.h; then
 		eerror "configure has detected that the sem_open function is broken."
@@ -604,8 +621,10 @@ xxlimited_35 xxlimited_35.c
 		die "Broken sem_open function (bug 496328)"
 	fi
 
-	sed -i -e 's/#define HAVE_DLOPEN 1.*/#undef HAVE_DLOPEN/' pyconfig.h
-	sed -i -e 's/#define HAVE_DYNAMIC_LOADING.*/#undef HAVE_DYNAMIC_LOADING/' pyconfig.h
+	if use static; then
+		sed -i -e 's/#define HAVE_DLOPEN 1.*/#undef HAVE_DLOPEN/' pyconfig.h
+		sed -i -e 's/#define HAVE_DYNAMIC_LOADING.*/#undef HAVE_DYNAMIC_LOADING/' pyconfig.h
+	fi
 
 	# install epython.py as part of stdlib
 	echo "EPYTHON='python${PYVER}'" > Lib/epython.py || die
