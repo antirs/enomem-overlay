@@ -13,4 +13,4 @@ RDEPEND=!static? ( >=sys-libs/ncurses-5.1:0= ) !static? ( caps? ( sys-libs/libca
 SLOT=0
 SRC_URI=https://www.zsh.org/pub/zsh-5.9.tar.xz https://www.zsh.org/pub/old/zsh-5.9.tar.xz https://downloads.sourceforge.net/zsh/zsh-5.9.tar.xz doc? ( https://www.zsh.org/pub/zsh-5.9-doc.tar.xz https://downloads.sourceforge.net/zsh/zsh-5.9-doc.tar.xz )
 _eclasses_=gnuconfig	ddeb9f8caff1b5f71a09c75b7534df79	toolchain-funcs	6afdb6107430c1832ca7e16aacbf8fa1	multilib	b2a329026f2e404e9e371097dda47f96	libtool	c81bd096be5f4c82f4e8f156ef112402	autotools	f20ecf7ab0a7c34e83238b3ed4aaf6d6	flag-o-matic	16d3941ed2dc39f4819368ae51bc0b72	prefix	c3c4c93ebda319c0fa7ed6f942ba1010
-_md5_=d5050b4997bc2c4f95c4879ff4cc33f8
+_md5_=12d7561f57f5b29b32fb0f4a6023f359

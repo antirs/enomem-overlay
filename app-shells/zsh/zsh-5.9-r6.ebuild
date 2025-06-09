@@ -125,6 +125,9 @@ src_configure() {
 		append-ldflags -Wl,-x
 	fi
 
+	if [[ -n "${ESYSROOT}" ]]; then
+		append-ldflags -L"${ESYSROOT}"/usr/$(get_libdir)
+	fi
 	econf "${myconf[@]}"
 
 	if use static ; then
