@@ -41,5 +41,7 @@ src_configure() {
 	use static && append-ldflags -static
 
 	# we want it as /bin/ksh
+	export PKG_CONFIG_PATH="${ESYSROOT}/usr/$(get_libdir)/pkgconfig"
+
 	meson_src_configure --bindir=../bin
 }
