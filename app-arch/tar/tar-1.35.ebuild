@@ -37,7 +37,6 @@ DEPEND="
 "
 BDEPEND="
 	nls? ( sys-devel/gettext )
-	static? ( nls? ( sys-devel/gettext[static-libs] ) )
 	verify-sig? ( sec-keys/openpgp-keys-tar )
 "
 PDEPEND="

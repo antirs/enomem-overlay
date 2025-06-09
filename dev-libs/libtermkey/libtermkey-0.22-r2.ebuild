@@ -14,9 +14,10 @@ SLOT="0"
 KEYWORDS="amd64 arm arm64 ~ppc ~ppc64 ~riscv x86 ~x64-macos"
 IUSE="demos static-libs"
 
-RDEPEND="dev-libs/unibilium:="
-DEPEND="
-	${RDEPEND}
+RDEPEND="
+	!static? ( dev-libs/unibilium:= )"
+DEPEND="${RDEPEND}
+	static? ( dev-libs/unibilium:=[static-libs] )
 "
 BDEPEND="
 	virtual/pkgconfig

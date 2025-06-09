@@ -34,9 +34,6 @@ RDEPEND="
 	)
 "
 DEPEND="
-	valgrind? ( dev-debug/valgrind )
-	${RDEPEND}"
-BDEPEND="sys-apps/groff
 	static? ( >=sys-libs/ncurses-5.7-r4:0=[static-libs] )
 	static? ( caps? ( sys-libs/libcap[static-libs] ) )
 	pcre? (
@@ -45,7 +42,9 @@ BDEPEND="sys-apps/groff
 	gdbm? (
 		static? ( sys-libs/gdbm:=[static-libs] )
 	)
-"
+	valgrind? ( dev-debug/valgrind )
+	${RDEPEND}"
+BDEPEND="sys-apps/groff"
 PDEPEND="
 	examples? ( app-doc/zsh-lovers )
 "

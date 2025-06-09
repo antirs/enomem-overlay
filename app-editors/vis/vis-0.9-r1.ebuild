@@ -33,20 +33,24 @@ REQUIRED_USE="
 RESTRICT="!test? ( test )"
 
 # - Known to also work with NetBSD curses
-DEPEND="
+RDEPEND="
 	!static? ( dev-libs/libtermkey )
 	!static? ( acl? ( sys-apps/acl ) )
-	lua? ( ${LUA_DEPS} )
 	!static? ( ncurses? ( sys-libs/ncurses:0= ) )
 	!static? ( selinux? ( sys-libs/selinux ) )
 	!static? ( tre? ( dev-libs/tre ) )
-"
-RDEPEND="
-	${DEPEND}
 	!static? ( app-eselect/eselect-vi )
 	lua? (
 		$(lua_gen_cond_dep 'dev-lua/lpeg[${LUA_USEDEP}]')
 	)
+"
+DEPEND="${RDEPEND}
+	static? ( dev-libs/libtermkey[static-libs] )
+	static? ( acl? ( sys-apps/acl[static-libs] ) )
+	static? ( ncurses? ( sys-libs/ncurses:0=[static-libs] ) )
+	static? ( selinux? ( sys-libs/selinux[static-libs] ) )
+	static? ( tre? ( dev-libs/tre[static-libs] ) )
+	lua? ( ${LUA_DEPS} )
 "
 # lpeg: https://github.com/martanne/vis-test/issues/28
 BDEPEND="
@@ -55,11 +59,6 @@ BDEPEND="
 		$(lua_gen_cond_dep 'dev-lua/lpeg[${LUA_USEDEP}]')
 		$(lua_gen_cond_dep 'dev-lua/busted[${LUA_USEDEP}]')
 	)
-	static? ( dev-libs/libtermkey[static-libs] )
-	static? ( acl? ( sys-apps/acl[static-libs] ) )
-	static? ( ncurses? ( sys-libs/ncurses:0=[static-libs] ) )
-	static? ( selinux? ( sys-libs/selinux[static-libs] ) )
-	static? ( tre? ( dev-libs/tre[static-libs] ) )
 "
 
 pkg_setup() {

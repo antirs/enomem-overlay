@@ -28,8 +28,6 @@ RDEPEND="
 "
 DEPEND="
 	${RDEPEND}
-"
-BDEPEND="
 	static? ( sys-libs/ncurses[static-libs] )
 "
 

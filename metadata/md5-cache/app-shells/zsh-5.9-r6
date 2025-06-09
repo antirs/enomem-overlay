@@ -1,6 +1,6 @@
-BDEPEND=sys-apps/groff static? ( >=sys-libs/ncurses-5.7-r4:0=[static-libs] ) static? ( caps? ( sys-libs/libcap[static-libs] ) ) pcre? ( static? ( >=dev-libs/libpcre-3.9[static-libs] ) ) gdbm? ( static? ( sys-libs/gdbm:=[static-libs] ) ) sys-devel/gnuconfig >=app-portage/elt-patches-20250306 || ( >=dev-build/automake-1.17-r1:1.17 >=dev-build/automake-1.16.5:1.16 ) || ( >=dev-build/autoconf-2.72-r1:2.72 ) >=dev-build/libtool-2.4.7-r3
+BDEPEND=sys-apps/groff sys-devel/gnuconfig >=app-portage/elt-patches-20250306 || ( >=dev-build/automake-1.17-r1:1.17 >=dev-build/automake-1.16.5:1.16 ) || ( >=dev-build/autoconf-2.72-r1:2.72 ) >=dev-build/libtool-2.4.7-r3
 DEFINED_PHASES=compile configure install postinst prepare test
-DEPEND=valgrind? ( dev-debug/valgrind ) !static? ( >=sys-libs/ncurses-5.1:0= ) !static? ( caps? ( sys-libs/libcap ) ) pcre? ( !static? ( >=dev-libs/libpcre-3.9 ) ) gdbm? ( !static? ( sys-libs/gdbm:= ) )
+DEPEND=static? ( >=sys-libs/ncurses-5.7-r4:0=[static-libs] ) static? ( caps? ( sys-libs/libcap[static-libs] ) ) pcre? ( static? ( >=dev-libs/libpcre-3.9[static-libs] ) ) gdbm? ( static? ( sys-libs/gdbm:=[static-libs] ) ) valgrind? ( dev-debug/valgrind ) !static? ( >=sys-libs/ncurses-5.1:0= ) !static? ( caps? ( sys-libs/libcap ) ) pcre? ( !static? ( >=dev-libs/libpcre-3.9 ) ) gdbm? ( !static? ( sys-libs/gdbm:= ) )
 DESCRIPTION=UNIX Shell similar to the Korn shell
 EAPI=8
 HOMEPAGE=https://www.zsh.org/
@@ -13,4 +13,4 @@ RDEPEND=!static? ( >=sys-libs/ncurses-5.1:0= ) !static? ( caps? ( sys-libs/libca
 SLOT=0
 SRC_URI=https://www.zsh.org/pub/zsh-5.9.tar.xz https://www.zsh.org/pub/old/zsh-5.9.tar.xz https://downloads.sourceforge.net/zsh/zsh-5.9.tar.xz doc? ( https://www.zsh.org/pub/zsh-5.9-doc.tar.xz https://downloads.sourceforge.net/zsh/zsh-5.9-doc.tar.xz )
 _eclasses_=gnuconfig	ddeb9f8caff1b5f71a09c75b7534df79	toolchain-funcs	6afdb6107430c1832ca7e16aacbf8fa1	multilib	b2a329026f2e404e9e371097dda47f96	libtool	c81bd096be5f4c82f4e8f156ef112402	autotools	f20ecf7ab0a7c34e83238b3ed4aaf6d6	flag-o-matic	16d3941ed2dc39f4819368ae51bc0b72	prefix	c3c4c93ebda319c0fa7ed6f942ba1010
-_md5_=b3dbcb07219803ed52d36027b21082c2
+_md5_=d5050b4997bc2c4f95c4879ff4cc33f8
