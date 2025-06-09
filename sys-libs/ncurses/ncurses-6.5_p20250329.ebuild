@@ -466,6 +466,11 @@ multilib_src_install_all() {
 			-type d -empty -delete || die
 	fi
 
+	if [[ -n "${ESYSROOT}" ]]; then
+		find "${ED}/usr/$(get_libdir)/pkgconfig" -name '*.pc' -print0 | \
+			xargs -n1 -0 sed -i -e "s,Libs:,Libs: -L${ESYSROOT}/usr/$(get_libdir),"
+	fi
+
 	cd "${S}" || die
 	dodoc ANNOUNCE MANIFEST NEWS README* TO-DO doc/*.doc
 	if use doc ; then
