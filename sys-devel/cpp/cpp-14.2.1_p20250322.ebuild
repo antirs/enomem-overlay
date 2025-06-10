@@ -56,7 +56,7 @@ src_prepare() {
 	eapply_user
 }
 
-IUSE="+custom-cflags +static"
+IUSE="+custom-cflags static"
 
 src_configure() {
 	EXTRA_ECONF=(--disable-bootstrap
