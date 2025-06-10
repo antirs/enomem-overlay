@@ -48,7 +48,6 @@ app-arch/zstd  static-libs test -lz4 -lzma -zlib
 app-crypt/gnupg  doc ldap selinux test tools tpm usb user-socket wks-server -bzip2 -nls -readline -smartcard -ssl -tofu -verify-sig
 app-crypt/gpgme  common-lisp debug python qt5 qt6 static-libs test -cxx -verify-sig
 app-crypt/libb2  native-cflags openmp static-libs
-app-crypt/libb2  openmp
 app-crypt/libmd
 app-crypt/pinentry  X efl emacs gtk keyring qt5 qt6 wayland -caps -ncurses -verify-sig
 app-crypt/rhash  debug static-libs -nls -ssl
@@ -60,6 +59,7 @@ app-eselect/eselect-iptables
 app-eselect/eselect-lib-bin-symlink
 app-eselect/eselect-lua
 app-eselect/eselect-pinentry
+app-eselect/eselect-ruby
 app-i18n/man-pages-l10n
 app-misc/ca-certificates  cacert
 app-misc/editor-wrapper
@@ -101,11 +101,10 @@ dev-embedded/sdcc  static -boehm-gc -mcs51 -sdcdb -sdcpp -stm8 -ucsim
 dev-lang/go
 dev-lang/lua  -deprecated -readline
 dev-lang/perl  doc minimal -berkdb -gdbm
-dev-lang/python  bluetooth build debug examples libedit pgo test tk valgrind -ensurepip -gdbm -ncurses -readline -sqlite -ssl -verify-sig
-dev-lang/python  bluetooth debug examples -build -ensurepip -gdbm -ncurses -readline -sqlite -ssl -verify-sig
 dev-lang/python  bluetooth debug examples libedit pgo test tk valgrind -build -ensurepip -gdbm -ncurses -readline -sqlite -ssl -verify-sig
 dev-lang/python-exec   test
 dev-lang/python-exec-conf
+dev-lang/ruby  berkdb debug doc examples jemalloc jit socks5 static-libs systemtap tk valgrind xemacs -gdbm -ssl
 dev-lang/rust  big-endian clippy debug dist doc lto miri nightly parallel-compiler test -llvm-libunwind -rust-analyzer -rust-src -rustfmt -system-llvm -verify-sig -wasm
 dev-lang/rust-bin  big-endian clippy doc prefix -rust-analyzer -rust-src -rustfmt -verify-sig
 dev-lang/swig  ccache doc test -pcre
@@ -130,6 +129,7 @@ dev-libs/libunistring  doc static-libs
 dev-libs/libuv  -verify-sig
 dev-libs/libxml2  examples lzma static-libs test -icu -python -readline
 dev-libs/libxslt  debug examples python static-libs -crypt
+dev-libs/libyaml  doc static-libs test
 dev-libs/lzo  examples split-usr static-libs
 dev-libs/mpc  static-libs
 dev-libs/mpdecimal  cxx test
@@ -222,10 +222,49 @@ dev-python/typing-extensions  test
 dev-python/uc-micro-py  test
 dev-python/urllib3  brotli test zstd -http2
 dev-python/wheel  test
+dev-ruby/bundler  doc test
+dev-ruby/date  test
+dev-ruby/debug  doc test
+dev-ruby/did_you_mean  doc test
+dev-ruby/forwardable  doc test
+dev-ruby/io-console  doc test
+dev-ruby/irb  test
+dev-ruby/json  doc test
+dev-ruby/kpeg  doc test
+dev-ruby/logger  doc test
+dev-ruby/matrix  doc test
+dev-ruby/minitest  doc test
+dev-ruby/net-ftp  doc test
+dev-ruby/net-imap  doc test
+dev-ruby/net-pop  doc test
+dev-ruby/net-protocol  doc test
+dev-ruby/net-smtp  doc test
+dev-ruby/power_assert  doc test
+dev-ruby/pp  doc test
+dev-ruby/prime  doc test
+dev-ruby/prism  test
+dev-ruby/psych  doc test
+dev-ruby/racc  doc test
+dev-ruby/rake  doc test
+dev-ruby/rbs  doc test
+dev-ruby/rdoc  doc test
+dev-ruby/reline  test
+dev-ruby/rexml  test
+dev-ruby/rss  doc test
+dev-ruby/rubygems  server test
+dev-ruby/singleton  doc test
+dev-ruby/stringio  doc test
+dev-ruby/strscan  test
+dev-ruby/test-unit  doc test
+dev-ruby/time  doc test
+dev-ruby/timeout  doc test
+dev-ruby/typeprof  test
+dev-util/colm  doc
 dev-util/debhelper  test
 dev-util/gperf
 dev-util/patchelf
 dev-util/pkgconf   test
+dev-util/ragel  doc
 dev-util/re2c  debug test
 dev-vcs/git  cgi cvs doc highlight keyring mediawiki perforce perl selinux subversion test tk webdav xinetd -blksha1 -curl -gpg -iconv -nls -pcre -safe-directory
 llvm-core/clang  debug doc ieee-long-double pie test xml -extra -static-analyzer -verify-sig
@@ -361,10 +400,10 @@ sys-devel/bc  libedit static -readline
 sys-devel/binutils  debuginfod doc -nls -plugins -zstd
 sys-devel/binutils-config
 sys-devel/bison  examples static test -nls -verify-sig
-sys-devel/cpp  ada cet cxx d debug default-stack-clash-protection default-znow doc fixed-point fortran go graphite hardened ieee-long-double jit libssp lto modula2 multilib nls objc objc++ objc-gc openmp pch pgo pie rust sanitize ssp systemtap test time64 valgrind vanilla vtv zstd -custom-cflags -static
+sys-devel/cpp  ada cet cxx d debug default-stack-clash-protection default-znow doc fixed-point fortran go graphite hardened ieee-long-double jit libssp lto modula2 multilib nls objc objc++ objc-gc openmp pch pgo pie rust sanitize ssp static systemtap test time64 valgrind vanilla vtv zstd -custom-cflags
 sys-devel/cproc  static
 sys-devel/flex  static test -nls
-sys-devel/gcc  cet cxx d fortran graphite nls openmp pch sanitize zstd -ada -custom-cflags -debug -default-stack-clash-protection -default-znow -doc -fixed-point -go -hardened -ieee-long-double -jit -libssp -lto -modula2 -multilib -objc -objc++ -objc-gc -pgo -pie -rust -ssp -systemtap -test -time64 -valgrind -vanilla -vtv
+sys-devel/gcc  ada custom-cflags debug default-stack-clash-protection default-znow doc fixed-point go hardened ieee-long-double jit libssp lto modula2 multilib objc objc++ objc-gc pgo pie rust ssp systemtap test time64 valgrind vanilla vtv -cet -cxx -d -fortran -graphite -nls -openmp -pch -sanitize -zstd
 sys-devel/gcc-config
 sys-devel/gettext  openmp -acl -cxx -ncurses -nls -verify-sig
 sys-devel/gnuconfig
@@ -442,6 +481,8 @@ virtual/perl-XSLoader
 virtual/perl-podlators
 virtual/perl-version
 virtual/pkgconfig
+virtual/ruby-ssl
+virtual/rubygems
 virtual/service-manager
 virtual/ssh  minimal
 virtual/tmpfiles

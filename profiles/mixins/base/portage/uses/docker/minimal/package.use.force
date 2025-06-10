@@ -59,6 +59,7 @@ app-eselect/eselect-iptables
 app-eselect/eselect-lib-bin-symlink
 app-eselect/eselect-lua
 app-eselect/eselect-pinentry
+app-eselect/eselect-ruby
 app-i18n/man-pages-l10n
 app-misc/ca-certificates
 app-misc/editor-wrapper
@@ -101,9 +102,9 @@ dev-lang/go
 dev-lang/lua  deprecated readline
 dev-lang/perl  berkdb gdbm
 dev-lang/python  build ensurepip gdbm ncurses readline sqlite ssl verify-sig
-dev-lang/python  ensurepip gdbm ncurses readline sqlite ssl verify-sig
 dev-lang/python-exec
 dev-lang/python-exec-conf
+dev-lang/ruby  gdbm ssl
 dev-lang/rust  llvm-libunwind rust-analyzer rust-src rustfmt system-llvm verify-sig wasm
 dev-lang/rust-bin  rust-analyzer rust-src rustfmt verify-sig
 dev-lang/swig  pcre
@@ -128,6 +129,7 @@ dev-libs/libunistring
 dev-libs/libuv  verify-sig
 dev-libs/libxml2  icu python readline
 dev-libs/libxslt  crypt
+dev-libs/libyaml
 dev-libs/lzo
 dev-libs/mpc
 dev-libs/mpdecimal
@@ -220,10 +222,49 @@ dev-python/typing-extensions
 dev-python/uc-micro-py
 dev-python/urllib3  http2
 dev-python/wheel
+dev-ruby/bundler
+dev-ruby/date
+dev-ruby/debug
+dev-ruby/did_you_mean
+dev-ruby/forwardable
+dev-ruby/io-console
+dev-ruby/irb
+dev-ruby/json
+dev-ruby/kpeg
+dev-ruby/logger
+dev-ruby/matrix
+dev-ruby/minitest
+dev-ruby/net-ftp
+dev-ruby/net-imap
+dev-ruby/net-pop
+dev-ruby/net-protocol
+dev-ruby/net-smtp
+dev-ruby/power_assert
+dev-ruby/pp
+dev-ruby/prime
+dev-ruby/prism
+dev-ruby/psych
+dev-ruby/racc
+dev-ruby/rake
+dev-ruby/rbs
+dev-ruby/rdoc
+dev-ruby/reline
+dev-ruby/rexml
+dev-ruby/rss
+dev-ruby/rubygems
+dev-ruby/singleton
+dev-ruby/stringio
+dev-ruby/strscan
+dev-ruby/test-unit
+dev-ruby/time
+dev-ruby/timeout
+dev-ruby/typeprof
+dev-util/colm
 dev-util/debhelper
 dev-util/gperf
 dev-util/patchelf
 dev-util/pkgconf
+dev-util/ragel
 dev-util/re2c
 dev-vcs/git  blksha1 curl gpg iconv nls pcre safe-directory
 llvm-core/clang  extra static-analyzer verify-sig
@@ -359,10 +400,10 @@ sys-devel/bc  readline
 sys-devel/binutils  nls plugins zstd
 sys-devel/binutils-config
 sys-devel/bison  nls verify-sig
-sys-devel/cpp  custom-cflags static
+sys-devel/cpp  custom-cflags
 sys-devel/cproc
 sys-devel/flex  nls
-sys-devel/gcc  ada custom-cflags d debug default-stack-clash-protection default-znow doc fixed-point go hardened ieee-long-double jit libssp lto modula2 multilib objc objc++ objc-gc pgo pie rust ssp systemtap test time64 valgrind vanilla vtv
+sys-devel/gcc  cet cxx fortran graphite nls openmp pch sanitize zstd
 sys-devel/gcc-config
 sys-devel/gettext  acl cxx ncurses nls verify-sig
 sys-devel/gnuconfig
@@ -440,6 +481,8 @@ virtual/perl-XSLoader
 virtual/perl-podlators
 virtual/perl-version
 virtual/pkgconfig
+virtual/ruby-ssl
+virtual/rubygems
 virtual/service-manager
 virtual/ssh
 virtual/tmpfiles
