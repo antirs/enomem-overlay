@@ -1,3 +1,3 @@
-RUBY_TARGETS="ruby32"
+RUBY_TARGETS="ruby33"
 
-BOOTSTRAP_USE="${BOOTSTRAP_USE} ruby_targets_ruby32"
+BOOTSTRAP_USE="${BOOTSTRAP_USE} ruby_targets_ruby33"

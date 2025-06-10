@@ -8,5 +8,5 @@
 */* lua_single_target_lua5-4 lua_targets_lua5-4 lua_targets_luajit
 */* postgres_targets_postgres16
 */* python_targets_python3_12 python_targets_python2_7 python_single_target_python3_12
-*/* ruby_targets_ruby32
+*/* ruby_targets_ruby33
 */* video_cards_intel

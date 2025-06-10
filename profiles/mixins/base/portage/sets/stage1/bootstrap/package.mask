@@ -6,3 +6,7 @@
 # get rid of ninja circular dependencies in stage1 to stage3 builds
 dev-lang/python:3.13
 dev-lang/python:3.13t
+
+# Marsha Melova <marsha.melova@grrlz.net>
+# pin dev-lang/ruby to 3.3.*
+>=dev-lang/ruby-3.4
