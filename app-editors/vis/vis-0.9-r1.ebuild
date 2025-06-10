@@ -96,6 +96,12 @@ src_configure() {
 	)
 
 	use static && append-ldflags -static -ltermkey -lunibilium
+	if [[ -n "${ESYSROOT}" ]]; then
+		export PKG_CONFIG_PATH="${ESYSROOT}/usr/$(get_libdir)/pkgconfig"
+		export PKG_CONFIG_SYSROOT_DIR="${ESYSROOT}"
+		append-cflags -L"${ESYSROOT}"/usr/$(get_libdir)
+	fi
+
 	# shell script
 	./configure "${myconfargs[@]}" || die
 }
