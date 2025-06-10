@@ -55,7 +55,7 @@ app-crypt/rhash  debug static-libs -nls -ssl
 app-editors/emacs  X Xaw3d alsa aqua athena cairo dbus dynamic-loading games gfile gif gpm gsettings gtk gui gzip-el harfbuzz imagemagick jit jpeg kerberos lcms livecd m17n-lib mailutils motif png selinux sound source sqlite svg systemd tiff toolkit-scroll-bars tree-sitter valgrind webp wide-int xft xpm -acl -gmp -inotify -json -libxml2 -ssl -threads -zlib
 app-editors/nano  -ncurses -nls -spell
 app-editors/vim  X cscope debug gpm lua perl python racket ruby selinux sound tcl vim-pager -acl -crypt -minimal -nls -terminal
-app-editors/vis  lua selinux static test -acl -ncurses -tre
+app-editors/vis  lua selinux static test tre -acl -ncurses
 app-eselect/eselect-iptables
 app-eselect/eselect-lib-bin-symlink
 app-eselect/eselect-lua

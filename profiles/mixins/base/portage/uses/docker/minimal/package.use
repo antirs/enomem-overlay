@@ -55,7 +55,7 @@ app-crypt/rhash  nls ssl -debug -static-libs
 app-editors/emacs  acl gmp inotify json libxml2 ssl threads zlib -X -Xaw3d -alsa -aqua -athena -cairo -dbus -dynamic-loading -games -gfile -gif -gpm -gsettings -gtk -gui -gzip-el -harfbuzz -imagemagick -jit -jpeg -kerberos -lcms -livecd -m17n-lib -mailutils -motif -png -selinux -sound -source -sqlite -svg -systemd -tiff -toolkit-scroll-bars -tree-sitter -valgrind -webp -wide-int -xft -xpm
 app-editors/nano  ncurses nls spell
 app-editors/vim  acl crypt minimal nls terminal -X -cscope -debug -gpm -lua -perl -python -racket -ruby -selinux -sound -tcl -vim-pager
-app-editors/vis  acl ncurses tre -lua -selinux -static -test
+app-editors/vis  acl ncurses -lua -selinux -static -test -tre
 app-eselect/eselect-iptables
 app-eselect/eselect-lib-bin-symlink
 app-eselect/eselect-lua
