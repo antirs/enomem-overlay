@@ -363,7 +363,11 @@ multilib_src_configure() {
 
 	use static && append-ldflags -static --static
 
-	ECONF_SOURCE="${S}" econf "${myeconfargs[@]}" --with-sysroot "${ESYSROOT}"
+	if ! is_cross && [[ -n "${ESYSROOT}" ]]; then
+		ECONF_SOURCE="${S}" econf "${myeconfargs[@]}" --with-sysroot "${ESYSROOT}"
+	else
+		ECONF_SOURCE="${S}" econf "${myeconfargs[@]}"
+	fi
 
 	if multilib_is_native_abi && use python ; then
 		python_foreach_impl python_configure
