@@ -609,10 +609,15 @@ EOF
 		append-cppflags -I"${ESYSROOT}"/usr/include/ncursesw
 	fi
 
+	if [[ -n "${ESYSROOT}" ]]; then
+		export PKG_CONFIG_PATH="${ESYSROOT}/usr/$(get_libdir)/pkgconfig"
+		export PKG_CONFIG_SYSROOT_DIR="${ESYSROOT}"
+	fi
+
 	if use static; then
 		DYNLOADFILE=dynload_stub.o econf "${myeconfargs[@]}"
 	else
-		econf "${myeconfargs[@]}"
+		econf "${myeconfargs[@]}" --with-sysroot="${ESYSROOT}"
 	fi
 
 	if grep -q "#define POSIX_SEMAPHORES_NOT_ENABLED 1" pyconfig.h; then
