@@ -105,7 +105,11 @@ multilib_src_configure() {
 
 	use static && append-ldflags -static
 
-	econf "${myeconfargs[@]}" --with-sysroot="${ESYSROOT}/usr/$(get_libdir)"
+	if [[ -n "${ESYSROOT}" ]]; then
+		econf "${myeconfargs[@]}" --with-sysroot="${ESYSROOT}/usr/$(get_libdir)"
+	else
+		econf "${myeconfargs[@]}"
+	fi
 }
 
 build_src_configure() {
