@@ -617,7 +617,11 @@ EOF
 	if use static; then
 		DYNLOADFILE=dynload_stub.o econf "${myeconfargs[@]}"
 	else
-		econf "${myeconfargs[@]}" --with-sysroot="${ESYSROOT}"
+		if [[ -n "${ESYSROOT}" ]]; then
+			econf "${myeconfargs[@]}" --with-sysroot="${ESYSROOT}"
+		else
+			econf "${myeconfargs[@]}"
+		fi
 	fi
 
 	if grep -q "#define POSIX_SEMAPHORES_NOT_ENABLED 1" pyconfig.h; then
