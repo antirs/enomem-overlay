@@ -241,6 +241,10 @@ src_configure() {
 	# bug #444070
 	tc-export AR
 
+	if [[ -n "${ESYSROOT}" ]]; then
+		append-ldflags -L"${ESYSROOT}"/usr/$(get_libdir)
+	fi
+
 	econf "${myconf[@]}"
 }
 
