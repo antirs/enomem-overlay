@@ -1,7 +1,9 @@
 app-arch/bzip2  noshared static
 app-arch/gzip  static
 app-arch/tar  static
+app-arch/zstd  static
 app-editors/vis  static
+app-misc/pax-utils  static
 app-misc/tmux  static
 app-shells/bash  static
 app-shells/dash  static
@@ -16,7 +18,12 @@ dev-lang/python  static static-libs
 dev-lang/python-exec  static
 sys-apps/busybox  static
 sys-apps/coreutils  static
+sys-apps/file  static
+sys-apps/findutils  static
 sys-apps/gentoo-functions  static
+sys-apps/install-xattr  static
+sys-apps/portage  static
+sys-apps/util-linux  noshared static
 sys-devel/binutils  static static-libs
 sys-devel/cpp  static
 sys-devel/cproc  static
