@@ -7,3 +7,4 @@ gentoo:default/linux/amd64/23.0/musl
 ../../../../../../../rewrites/default/amd64/musl/cproc
 ../../../../../../../rewrites/default/base/stage1/bootstrap/cproc
 ../../../../../../../rewrites/default/amd64/nomultilib
+../../../../../../../rewrites/default/amd64/cproc/static

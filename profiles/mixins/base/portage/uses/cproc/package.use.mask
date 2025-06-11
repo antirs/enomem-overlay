@@ -1,4 +1,6 @@
+app-crypt/libb2  openmp
+sys-apps/util-linux  audit
+sys-devel/binutils  cet debuginfod doc gprofng hardened multitarget nls pgo plugins test vanilla xxhash zstd -static -static-libs
 sys-devel/cpp  ada cet cxx d debug default-stack-clash-protection default-znow doc fixed-point fortran go graphite hardened ieee-long-double jit libssp lto modula2 multilib nls objc objc++ objc-gc openmp pch pgo pie rust sanitize ssp systemtap test time64 valgrind vanilla vtv zstd -custom-cflags -static
 sys-devel/cproc  -static
 sys-devel/qbe  -static
-sys-devel/binutils  cet debuginfod doc gprofng hardened multitarget nls pgo plugins test vanilla xxhash zstd -static -static-libs

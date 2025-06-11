@@ -1,4 +1,6 @@
+app-crypt/libb2
+sys-apps/util-linux
+sys-devel/binutils  static static-libs
 sys-devel/cpp  custom-cflags static
 sys-devel/cproc  static
 sys-devel/qbe  static
-sys-devel/binutils  static static-libs
