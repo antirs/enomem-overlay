@@ -23,7 +23,7 @@ sys-apps/findutils  static
 sys-apps/gentoo-functions  static
 sys-apps/install-xattr  static
 sys-apps/portage  static
-sys-apps/util-linux  noshared static
+sys-apps/util-linux  noshared static -python -readline
 sys-devel/binutils  static static-libs -cet -debuginfod -doc -gprofng -hardened -multitarget -nls -pgo -plugins -test -vanilla -xxhash -zstd
 sys-devel/cpp  static
 sys-devel/cproc  static
