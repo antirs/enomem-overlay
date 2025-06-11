@@ -3,6 +3,8 @@
 
 EAPI=8
 
+inherit flag-o-matic
+
 #GAWK_IS_BETA=yes
 
 DESCRIPTION="GNU awk pattern-matching language"
@@ -37,16 +39,22 @@ SLOT="0"
 # While tempting to enable mpfr by default as e.g. Fedora do, as of 5.2.x,
 # MPFR support is "on parole" and may be removed:
 # https://www.gnu.org/software/gawk/manual/html_node/MPFR-On-Parole.html.
-IUSE="mpfr pma nls readline"
+IUSE="mpfr pma nls noshared readline static"
 
 RDEPEND="
-	mpfr? (
+	!static? ( mpfr? (
 		dev-libs/gmp:=
 		dev-libs/mpfr:=
-	)
-	readline? ( sys-libs/readline:= )
+	) )
+	!static? ( readline? ( sys-libs/readline:= ) )
 "
-DEPEND="${RDEPEND}"
+DEPEND="${RDEPEND}
+	static? ( mpfr? (
+		dev-libs/gmp:=[static-libs]
+		dev-libs/mpfr:=[static-libs]
+	) )
+	static? ( readline? ( sys-libs/readline:=[static-libs] ) )
+"
 BDEPEND="
 	>=sys-apps/texinfo-7.1
 	>=sys-devel/bison-3.5.4
@@ -91,11 +99,14 @@ src_configure() {
 	local myeconfargs=(
 		--cache-file="${S}"/config.cache
 		--libexec='$(libdir)/misc'
+		$(usev noshared --disable-shared)
 		$(use_with mpfr)
 		$(use_enable nls)
 		$(use_enable pma)
 		$(use_with readline)
 	)
+
+	use static && append-ldflags -static --static
 
 	econf "${myeconfargs[@]}"
 }
