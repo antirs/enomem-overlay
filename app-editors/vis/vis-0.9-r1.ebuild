@@ -40,6 +40,7 @@ RDEPEND="
 	!static? ( selinux? ( sys-libs/selinux ) )
 	!static? ( tre? ( dev-libs/tre ) )
 	!static? ( app-eselect/eselect-vi )
+	static? ( ncurses? ( sys-libs/ncurses:0=[tinfo] ) )
 	lua? (
 		$(lua_gen_cond_dep 'dev-lua/lpeg[${LUA_USEDEP}]')
 	)
