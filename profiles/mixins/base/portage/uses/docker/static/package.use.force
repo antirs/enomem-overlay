@@ -16,17 +16,27 @@ dev-embedded/sdcc  static
 dev-lang/nasm  static
 dev-lang/python  static static-libs
 dev-lang/python-exec  static
+sys-apps/attr  noshared static
 sys-apps/busybox  static
 sys-apps/coreutils  static
+sys-apps/diffutils  static
 sys-apps/file  static
 sys-apps/findutils  static
+sys-apps/gawk  static
 sys-apps/gentoo-functions  static
+sys-apps/grep  static
+sys-apps/groff  static
 sys-apps/install-xattr  static
+sys-apps/less  static
 sys-apps/portage  static
+sys-apps/sed  static
 sys-apps/util-linux  noshared static
+sys-apps/which  static
+sys-devel/bc  static
 sys-devel/binutils  static static-libs
 sys-devel/cpp  static
 sys-devel/cproc  static
+sys-devel/patch  static
 sys-devel/qbe  static
 sys-libs/libxcrypt  noshared
 sys-libs/musl  static
