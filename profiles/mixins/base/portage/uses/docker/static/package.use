@@ -1,7 +1,7 @@
 app-arch/bzip2  noshared static
 app-arch/gzip  static
 app-arch/tar  static
-app-arch/zstd  static
+app-arch/zstd  noshared static
 app-editors/vis  static
 app-misc/pax-utils  static
 app-misc/tmux  static
