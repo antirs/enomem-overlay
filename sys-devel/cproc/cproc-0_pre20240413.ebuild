@@ -33,5 +33,5 @@ src_configure() {
 	use static && append-cflags -static
 	use static && append-ldflags -static --static
 
-	edo ./configure --prefix=/usr
+	edo ./configure --prefix=/usr --host=${CHOST}
 }
