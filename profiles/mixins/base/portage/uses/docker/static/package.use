@@ -19,6 +19,7 @@ dev-lang/python  static static-libs
 dev-lang/python-exec  static
 dev-libs/boehm-gc  noshared
 dev-libs/libatomic_ops  noshared
+net-libs/gnutls  -zstd
 net-misc/wget  static
 sys-apps/attr  noshared static
 sys-apps/busybox  static
