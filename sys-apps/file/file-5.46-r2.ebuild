@@ -103,7 +103,7 @@ multilib_src_configure() {
 		export PKG_CONFIG_SYSROOT_DIR="${ESYSROOT}"
 	fi
 
-	use static && append-ldflags -static
+	use static && append-ldflags -static --static
 
 	if [[ -n "${ESYSROOT}" ]]; then
 		econf "${myeconfargs[@]}" --with-sysroot="${ESYSROOT}/usr/$(get_libdir)"
