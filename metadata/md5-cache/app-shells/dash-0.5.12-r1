@@ -12,4 +12,4 @@ RDEPEND=!static? ( libedit? ( dev-libs/libedit ) )
 SLOT=0
 SRC_URI=http://gondor.apana.org.au/~herbert/dash/files/dash-0.5.12.tar.gz
 _eclasses_=toolchain-funcs	6afdb6107430c1832ca7e16aacbf8fa1	multilib	b2a329026f2e404e9e371097dda47f96	flag-o-matic	16d3941ed2dc39f4819368ae51bc0b72
-_md5_=a53d1b1ea4f594b273f2d59e218c2f35
+_md5_=0123e1de7e2ab0968ee4596d1f879c43

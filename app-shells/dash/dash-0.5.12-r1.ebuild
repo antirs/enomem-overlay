@@ -68,7 +68,11 @@ src_configure() {
 
 	if [[ -n "${ESYSROOT}" ]]; then
 		append-ldflags -L"${ESYSROOT}"/usr/$(get_libdir)
-	fi
+		export PKG_CONFIG_PATH="${ESYSROOT}/usr/$(get_libdir)/pkgconfig"
+		export PKG_CONFIG_SYSROOT_DIR="${ESYSROOT}"
 
-	econf "${myeconfargs[@]}"
+		CFLAGS="${CFLAGS} -I${ESYSROOT}/usr/include" econf "${myeconfargs[@]}"
+	else
+		econf "${myeconfargs[@]}"
+	fi
 }
