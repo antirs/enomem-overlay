@@ -151,6 +151,7 @@ dev-libs/kpathsea  -static-libs
 dev-libs/leatherman  -static-libs
 dev-libs/libaio  -static-libs
 dev-libs/libatasmart  -static-libs
+dev-libs/libatomic_ops  -static-libs
 dev-libs/libax25  -static-libs
 dev-libs/libbpf  -static-libs
 dev-libs/libbsd  -static-libs

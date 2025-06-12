@@ -1,6 +1,7 @@
 app-arch/bzip2  noshared static
 app-arch/gzip  static
 app-arch/tar  static
+app-arch/xz-utils  noshared nostatic static
 app-arch/zstd  noshared static
 app-editors/vis  static
 app-misc/pax-utils  static
@@ -16,11 +17,14 @@ dev-embedded/sdcc  static
 dev-lang/nasm  static
 dev-lang/python  static static-libs
 dev-lang/python-exec  static
+dev-libs/boehm-gc  noshared
+dev-libs/libatomic_ops  noshared
+net-misc/wget  static
 sys-apps/attr  noshared static
 sys-apps/busybox  static
 sys-apps/coreutils  static
 sys-apps/diffutils  static
-sys-apps/file  static
+sys-apps/file  noshared static
 sys-apps/findutils  static
 sys-apps/gawk  static
 sys-apps/gentoo-functions  static
