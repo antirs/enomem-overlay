@@ -1,4 +1,4 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2025 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -145,6 +145,10 @@ src_configure() {
 	use static && append-cflags -static
 	use static && append-cxxflags -static
 	use static && append-ldflags -static --static
+
+	if [[ -n "${ESYSROOT}" ]]; then
+		append-ldflags -L"${ESYSROOT}"/usr/$(get_libdir)
+	fi
 
 	econf "${myeconfargs[@]}"
 }
