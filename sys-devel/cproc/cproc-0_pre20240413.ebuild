@@ -31,7 +31,7 @@ src_configure() {
 	tc-export CC
 
 	use static && append-cflags -static
-	use static && append-ldflags -static --static
+	use static && append-ldflags -static $(test-flags-CCLD --static)
 
 	edo ./configure --prefix=/usr --host=${CHOST}
 }
