@@ -1,0 +1,15 @@
+BDEPEND=virtual/pkgconfig
+DEFINED_PHASES=configure prepare
+DEPEND=!static? ( libedit? ( dev-libs/libedit[static-libs?] ) ) libedit? ( dev-libs/libedit[static-libs?] )
+DESCRIPTION=Debian Almquist Shell
+EAPI=8
+HOMEPAGE=http://gondor.apana.org.au/~herbert/dash/
+INHERIT=flag-o-matic toolchain-funcs
+IUSE=libedit static static-libs
+KEYWORDS=~alpha amd64 arm arm64 hppa ~loong ~m68k ~mips ppc ppc64 ~riscv ~s390 sparc x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x64-solaris
+LICENSE=BSD
+RDEPEND=!static? ( libedit? ( dev-libs/libedit[static-libs?] ) )
+SLOT=0
+SRC_URI=http://gondor.apana.org.au/~herbert/dash/files/dash-0.5.12.tar.gz
+_eclasses_=toolchain-funcs	6afdb6107430c1832ca7e16aacbf8fa1	multilib	b2a329026f2e404e9e371097dda47f96	flag-o-matic	16d3941ed2dc39f4819368ae51bc0b72
+_md5_=f129b20d6c9855027383db9c4607a856

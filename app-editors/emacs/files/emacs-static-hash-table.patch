@@ -1,0 +1,248 @@
+diff -Nurp emacs-30.1/src/bytecode.c emacs-30.1.new/src/bytecode.c
+--- emacs-30.1/src/bytecode.c	2025-02-18 18:31:36.000000000 +0000
++++ emacs-30.1.new/src/bytecode.c	2025-06-15 18:23:49.362095801 +0000
+@@ -1752,7 +1752,7 @@ exec_byte_code (Lisp_Object fun, ptrdiff
+               }
+             else
+ 	      {
+-		ptrdiff_t i = hash_lookup (h, v1);
++		ptrdiff_t i = _hash_lookup (h, v1);
+ 		if (i >= 0)
+ 		  {
+ 		    op = XFIXNUM (HASH_VALUE (h, i));
+diff -Nurp emacs-30.1/src/ccl.c emacs-30.1.new/src/ccl.c
+--- emacs-30.1/src/ccl.c	2025-02-18 18:31:36.000000000 +0000
++++ emacs-30.1.new/src/ccl.c	2025-06-15 18:23:49.362095801 +0000
+@@ -1375,7 +1375,7 @@ ccl_driver (struct ccl_program *ccl, int
+ 
+ 		eop = (FIXNUM_OVERFLOW_P (reg[RRR])
+ 		       ? -1
+-		       : hash_lookup (h, make_fixnum (reg[RRR])));
++		       : _hash_lookup (h, make_fixnum (reg[RRR])));
+ 		if (eop >= 0)
+ 		  {
+ 		    Lisp_Object opl;
+@@ -1404,7 +1404,7 @@ ccl_driver (struct ccl_program *ccl, int
+ 
+ 		eop = (FIXNUM_OVERFLOW_P (i)
+ 		       ? -1
+-		       : hash_lookup (h, make_fixnum (i)));
++		       : _hash_lookup (h, make_fixnum (i)));
+ 		if (eop >= 0)
+ 		  {
+ 		    Lisp_Object opl;
+diff -Nurp emacs-30.1/src/charset.h emacs-30.1.new/src/charset.h
+--- emacs-30.1/src/charset.h	2025-02-17 22:38:58.000000000 +0000
++++ emacs-30.1.new/src/charset.h	2025-06-15 18:23:49.358095801 +0000
+@@ -285,7 +285,7 @@ extern int emacs_mule_charset[256];
+ /* Return an index to Vcharset_hash_table of the charset whose symbol
+    is SYMBOL.  */
+ #define CHARSET_SYMBOL_HASH_INDEX(symbol)	\
+-  hash_lookup (XHASH_TABLE (Vcharset_hash_table), symbol)
++  _hash_lookup (XHASH_TABLE (Vcharset_hash_table), symbol)
+ 
+ /* Return the attribute vector of CHARSET.  */
+ #define CHARSET_ATTRIBUTES(charset) (charset)->attributes
+diff -Nurp emacs-30.1/src/coding.h emacs-30.1.new/src/coding.h
+--- emacs-30.1/src/coding.h	2025-02-17 22:38:58.000000000 +0000
++++ emacs-30.1.new/src/coding.h	2025-06-15 18:23:49.358095801 +0000
+@@ -193,7 +193,7 @@ enum coding_attr_index
+ /* Return the ID of CODING_SYSTEM_SYMBOL.  */
+ 
+ #define CODING_SYSTEM_ID(coding_system_symbol)			\
+-  hash_lookup (XHASH_TABLE (Vcoding_system_hash_table),		\
++  _hash_lookup (XHASH_TABLE (Vcoding_system_hash_table),		\
+ 	       coding_system_symbol)
+ 
+ /* Return true if CODING_SYSTEM_SYMBOL is a coding system.  */
+diff -Nurp emacs-30.1/src/emacs-module.c emacs-30.1.new/src/emacs-module.c
+--- emacs-30.1/src/emacs-module.c	2025-02-18 18:31:36.000000000 +0000
++++ emacs-30.1.new/src/emacs-module.c	2025-06-15 18:23:49.354095801 +0000
+@@ -465,7 +465,7 @@ module_free_global_ref (emacs_env *env,
+   MODULE_FUNCTION_BEGIN ();
+   struct Lisp_Hash_Table *h = XHASH_TABLE (Vmodule_refs_hash);
+   Lisp_Object obj = value_to_lisp (global_value);
+-  ptrdiff_t i = hash_lookup (h, obj);
++  ptrdiff_t i = _hash_lookup (h, obj);
+ 
+   if (module_assertions)
+     {
+diff -Nurp emacs-30.1/src/fns.c emacs-30.1.new/src/fns.c
+--- emacs-30.1/src/fns.c	2025-02-18 18:31:36.000000000 +0000
++++ emacs-30.1.new/src/fns.c	2025-06-15 18:24:03.426095494 +0000
+@@ -5105,7 +5105,7 @@ hash_lookup_with_hash (struct Lisp_Hash_
+ 
+ /* Look up KEY in table H.  Return entry index or -1 if none.  */
+ ptrdiff_t
+-hash_lookup (struct Lisp_Hash_Table *h, Lisp_Object key)
++_hash_lookup (struct Lisp_Hash_Table *h, Lisp_Object key)
+ {
+   return hash_lookup_with_hash (h, key, hash_from_key (h, key));
+ }
+@@ -5344,7 +5344,7 @@ sweep_weak_table (struct Lisp_Hash_Table
+    can be any EMACS_UINT value.  */
+ 
+ EMACS_UINT
+-hash_string (char const *ptr, ptrdiff_t len)
++_hash_string (char const *ptr, ptrdiff_t len)
+ {
+   char const *p   = ptr;
+   char const *end = ptr + len;
+@@ -5516,7 +5516,7 @@ sxhash_obj (Lisp_Object obj, int depth)
+       return XHASH (obj);
+ 
+     case Lisp_String:
+-      return hash_string (SSDATA (obj), SBYTES (obj));
++      return _hash_string (SSDATA (obj), SBYTES (obj));
+ 
+     case Lisp_Vectorlike:
+       {
+@@ -5928,7 +5928,7 @@ If KEY is not found, return DFLT which d
+   (Lisp_Object key, Lisp_Object table, Lisp_Object dflt)
+ {
+   struct Lisp_Hash_Table *h = check_hash_table (table);
+-  ptrdiff_t i = hash_lookup (h, key);
++  ptrdiff_t i = _hash_lookup (h, key);
+   return i >= 0 ? HASH_VALUE (h, i) : dflt;
+ }
+ 
+diff -Nurp emacs-30.1/src/haiku_font_support.cc emacs-30.1.new/src/haiku_font_support.cc
+--- emacs-30.1/src/haiku_font_support.cc	2025-02-17 22:38:58.000000000 +0000
++++ emacs-30.1.new/src/haiku_font_support.cc	2025-06-15 18:24:03.442095493 +0000
+@@ -100,7 +100,7 @@ class EmacsFontMonitorLooper : public BL
+ };
+ 
+ static unsigned int
+-hash_string (const char *name_or_style)
++_hash_string (const char *name_or_style)
+ {
+   unsigned int i;
+ 
+@@ -121,7 +121,7 @@ cache_font_object_data (const char *fami
+   uint32_t hash;
+   struct font_object_cache_bucket *bucket, *next;
+ 
+-  hash = hash_string (family) ^ hash_string (style);
++  hash = _hash_string (family) ^ _hash_string (style);
+   bucket = font_object_cache[hash % 2048];
+ 
+   for (next = bucket; next; next = next->next)
+@@ -149,7 +149,7 @@ lookup_font_object_data (const char *fam
+   uint32_t hash;
+   struct font_object_cache_bucket *bucket, *next;
+ 
+-  hash = hash_string (family) ^ hash_string (style);
++  hash = _hash_string (family) ^ _hash_string (style);
+   bucket = font_object_cache[hash % 2048];
+ 
+   for (next = bucket; next; next = next->next)
+diff -Nurp emacs-30.1/src/image.c emacs-30.1.new/src/image.c
+--- emacs-30.1/src/image.c	2025-02-18 18:31:36.000000000 +0000
++++ emacs-30.1.new/src/image.c	2025-06-15 18:24:03.430095493 +0000
+@@ -5527,7 +5527,7 @@ xpm_free_color_cache (void)
+ static int
+ xpm_color_bucket (char *color_name)
+ {
+-  EMACS_UINT hash = hash_string (color_name, strlen (color_name));
++  EMACS_UINT hash = _hash_string (color_name, strlen (color_name));
+   return hash % XPM_COLOR_CACHE_BUCKETS;
+ }
+ 
+@@ -6226,7 +6226,7 @@ xpm_get_color_table_h (Lisp_Object color
+ {
+   struct Lisp_Hash_Table *table = XHASH_TABLE (color_table);
+   ptrdiff_t i =
+-    hash_lookup (table, make_unibyte_string (chars_start, chars_len));
++    _hash_lookup (table, make_unibyte_string (chars_start, chars_len));
+ 
+   return i >= 0 ? HASH_VALUE (table, i) : Qnil;
+ }
+diff -Nurp emacs-30.1/src/lisp.h emacs-30.1.new/src/lisp.h
+--- emacs-30.1/src/lisp.h	2025-02-18 18:31:36.000000000 +0000
++++ emacs-30.1.new/src/lisp.h	2025-06-15 18:24:03.438095493 +0000
+@@ -4288,12 +4288,12 @@ extern Lisp_Object larger_vector (Lisp_O
+ extern bool sweep_weak_table (struct Lisp_Hash_Table *, bool);
+ extern void hexbuf_digest (char *, void const *, int);
+ extern char *extract_data_from_object (Lisp_Object, ptrdiff_t *, ptrdiff_t *);
+-EMACS_UINT hash_string (char const *, ptrdiff_t);
++EMACS_UINT _hash_string (char const *, ptrdiff_t);
+ EMACS_UINT sxhash (Lisp_Object);
+ Lisp_Object make_hash_table (const struct hash_table_test *, EMACS_INT,
+                              hash_table_weakness_t, bool);
+ Lisp_Object hash_table_weakness_symbol (hash_table_weakness_t weak);
+-ptrdiff_t hash_lookup (struct Lisp_Hash_Table *, Lisp_Object);
++ptrdiff_t _hash_lookup (struct Lisp_Hash_Table *, Lisp_Object);
+ ptrdiff_t hash_lookup_get_hash (struct Lisp_Hash_Table *h, Lisp_Object key,
+ 				hash_hash_t *phash);
+ ptrdiff_t hash_put (struct Lisp_Hash_Table *, Lisp_Object, Lisp_Object,
+diff -Nurp emacs-30.1/src/lread.c emacs-30.1.new/src/lread.c
+--- emacs-30.1/src/lread.c	2025-02-18 18:31:36.000000000 +0000
++++ emacs-30.1.new/src/lread.c	2025-06-15 18:24:03.442095493 +0000
+@@ -4272,7 +4272,7 @@ read0 (Lisp_Object readcharfun, bool loc
+ 			/* #N# -- reference to numbered object */
+ 			struct Lisp_Hash_Table *h
+ 			  = XHASH_TABLE (read_objects_map);
+-			ptrdiff_t i = hash_lookup (h, make_fixnum (n));
++			ptrdiff_t i = _hash_lookup (h, make_fixnum (n));
+ 			if (i < 0)
+ 			  INVALID_SYNTAX_WITH_BUFFER ();
+ 			obj = HASH_VALUE (h, i);
+@@ -4652,7 +4652,7 @@ substitute_object_recurse (struct subst
+      by #n=, which means that we can find it as a value in
+      COMPLETED.  */
+   if (EQ (subst->completed, Qt)
+-      || hash_lookup (XHASH_TABLE (subst->completed), subtree) >= 0)
++      || _hash_lookup (XHASH_TABLE (subst->completed), subtree) >= 0)
+     subst->seen = Fcons (subtree, subst->seen);
+ 
+   /* Recurse according to subtree's type.
+@@ -5169,7 +5169,7 @@ usage: (unintern NAME OBARRAY)  */)
+ static ptrdiff_t
+ obarray_index (struct Lisp_Obarray *oa, const char *str, ptrdiff_t size_byte)
+ {
+-  EMACS_UINT hash = hash_string (str, size_byte);
++  EMACS_UINT hash = _hash_string (str, size_byte);
+   return knuth_hash (reduce_emacs_uint_to_hash_hash (hash), oa->size_bits);
+ }
+ 
+diff -Nurp emacs-30.1/src/macfont.m emacs-30.1.new/src/macfont.m
+--- emacs-30.1/src/macfont.m	2025-02-17 22:38:58.000000000 +0000
++++ emacs-30.1.new/src/macfont.m	2025-06-15 18:23:49.338095802 +0000
+@@ -1018,7 +1018,7 @@ macfont_get_family_cache_if_present (Lis
+   if (HASH_TABLE_P (macfont_family_cache))
+     {
+       struct Lisp_Hash_Table *h = XHASH_TABLE (macfont_family_cache);
+-      ptrdiff_t i = hash_lookup (h, symbol);
++      ptrdiff_t i = _hash_lookup (h, symbol);
+ 
+       if (i >= 0)
+ 	{
+diff -Nurp emacs-30.1/src/minibuf.c emacs-30.1.new/src/minibuf.c
+--- emacs-30.1/src/minibuf.c	2025-02-18 18:31:36.000000000 +0000
++++ emacs-30.1.new/src/minibuf.c	2025-06-15 18:23:49.334095802 +0000
+@@ -2103,7 +2103,7 @@ the values STRING, PREDICATE and `lambda
+   else if (HASH_TABLE_P (collection))
+     {
+       struct Lisp_Hash_Table *h = XHASH_TABLE (collection);
+-      ptrdiff_t i = hash_lookup (h, string);
++      ptrdiff_t i = _hash_lookup (h, string);
+       if (i >= 0)
+         {
+           tem = HASH_KEY (h, i);
+diff -Nurp emacs-30.1/test/manual/etags/c-src/emacs/src/lisp.h emacs-30.1.new/test/manual/etags/c-src/emacs/src/lisp.h
+--- emacs-30.1/test/manual/etags/c-src/emacs/src/lisp.h	2025-02-17 22:38:58.000000000 +0000
++++ emacs-30.1.new/test/manual/etags/c-src/emacs/src/lisp.h	2025-06-15 18:24:03.422095494 +0000
+@@ -3574,11 +3574,11 @@ enum { NEXT_ALMOST_PRIME_LIMIT = 11 };
+ extern EMACS_INT next_almost_prime (EMACS_INT) ATTRIBUTE_CONST;
+ extern Lisp_Object larger_vector (Lisp_Object, ptrdiff_t, ptrdiff_t);
+ extern void sweep_weak_hash_tables (void);
+-EMACS_UINT hash_string (char const *, ptrdiff_t);
++EMACS_UINT _hash_string (char const *, ptrdiff_t);
+ EMACS_UINT sxhash (Lisp_Object, int);
+ Lisp_Object make_hash_table (struct hash_table_test, Lisp_Object, Lisp_Object,
+                              Lisp_Object, Lisp_Object);
+-ptrdiff_t hash_lookup (struct Lisp_Hash_Table *, Lisp_Object, EMACS_UINT *);
++ptrdiff_t _hash_lookup (struct Lisp_Hash_Table *, Lisp_Object, EMACS_UINT *);
+ ptrdiff_t hash_put (struct Lisp_Hash_Table *, Lisp_Object, Lisp_Object,
+ 		    EMACS_UINT);
+ extern struct hash_table_test hashtest_eql, hashtest_equal;

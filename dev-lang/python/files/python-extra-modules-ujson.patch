@@ -1,0 +1,3897 @@
+diff '--color=auto' -Nurp Python-3.12.9/Modules/Setup.stdlib.in Python-3.12.9.new/Modules/Setup.stdlib.in
+--- a/Modules/Setup.stdlib.in	2025-02-04 14:38:38.000000000 +0000
++++ b/Modules/Setup.stdlib.in	2025-06-16 16:45:13.376336602 +0000
+@@ -160,6 +160,8 @@
+ # _scproxy needs SystemConfiguration and CoreFoundation framework
+ @MODULE__SCPROXY_TRUE@_scproxy _scproxy.c
+ 
++# ujson
++ujson ujson/python/ujson.c ujson/python/objToJSON.c ujson/python/JSONtoObj.c ujson/lib/ultrajsonenc.c ujson/lib/ultrajsondec.c ujson/lib/dconv_wrapper.cc
+ 
+ ############################################################################
+ # Test modules
+diff '--color=auto' -Nurp Python-3.12.9/Modules/ujson/lib/Makefile Python-3.12.9.new/Modules/ujson/lib/Makefile
+--- a/Modules/ujson/lib/Makefile	1970-01-01 00:00:00.000000000 +0000
++++ b/Modules/ujson/lib/Makefile	2024-05-14 02:00:06.000000000 +0000
+@@ -0,0 +1,22 @@
++PROGRAM=libujson.a
++CPP=gcc
++LIBS=-lm
++SOURCE=.
++OBJS=ultrajsonenc.o ultrajsondec.o
++LINKFLAGS=-shared
++#-Wl,-soname,libultrajson.so.1
++
++CPPFLAGS=-D_REENTRANT -D_LINUX
++all : CPPFLAGS += -O3 -DNDEBUG -fPIC
++all : libultrajson
++
++libultrajson : $(OBJS)
++	ar rcs ./$(PROGRAM) $(OBJS)
++	cp ./$(PROGRAM) ./python/lib/
++
++%.o:    $(SOURCE)/%.c
++	$(CPP) $(CPPFLAGS) -c $< -o ./$@
++
++clean:
++	rm -rf *.o
++	rm -rf $(PROGRAM)
+diff '--color=auto' -Nurp Python-3.12.9/Modules/ujson/lib/dconv_wrapper.cc Python-3.12.9.new/Modules/ujson/lib/dconv_wrapper.cc
+--- a/Modules/ujson/lib/dconv_wrapper.cc	1970-01-01 00:00:00.000000000 +0000
++++ b/Modules/ujson/lib/dconv_wrapper.cc	2024-05-14 02:00:06.000000000 +0000
+@@ -0,0 +1,56 @@
++#include "double-conversion.h"
++
++namespace double_conversion
++{
++  extern "C"
++  {
++    void dconv_d2s_init(void **d2s,
++                        int flags,
++                        const char* infinity_symbol,
++                        const char* nan_symbol,
++                        char exponent_character,
++                        int decimal_in_shortest_low,
++                        int decimal_in_shortest_high,
++                        int max_leading_padding_zeroes_in_precision_mode,
++                        int max_trailing_padding_zeroes_in_precision_mode)
++    {
++        *d2s = new DoubleToStringConverter(flags, infinity_symbol, nan_symbol,
++                                        exponent_character, decimal_in_shortest_low,
++                                        decimal_in_shortest_high, max_leading_padding_zeroes_in_precision_mode,
++                                        max_trailing_padding_zeroes_in_precision_mode);
++    }
++
++    int dconv_d2s(void *d2s, double value, char* buf, int buflen, int* strlength)
++    {
++        StringBuilder sb(buf, buflen);
++        int success =  static_cast<int>(static_cast<DoubleToStringConverter*>(d2s)->ToShortest(value, &sb));
++        *strlength = success ? sb.position() : -1;
++        return success;
++    }
++
++    void dconv_d2s_free(void **d2s)
++    {
++        delete static_cast<DoubleToStringConverter*>(*d2s);
++        *d2s = NULL;
++    }
++
++    void dconv_s2d_init(void **s2d, int flags, double empty_string_value,
++                        double junk_string_value, const char* infinity_symbol,
++                        const char* nan_symbol)
++    {
++        *s2d = new StringToDoubleConverter(flags, empty_string_value,
++                            junk_string_value, infinity_symbol, nan_symbol);
++    }
++
++    double dconv_s2d(void *s2d, const char* buffer, int length, int* processed_characters_count)
++    {
++        return static_cast<StringToDoubleConverter*>(s2d)->StringToDouble(buffer, length, processed_characters_count);
++    }
++
++    void dconv_s2d_free(void **s2d)
++    {
++        delete static_cast<StringToDoubleConverter*>(*s2d);
++        *s2d = NULL;
++    }
++  }
++}
+diff '--color=auto' -Nurp Python-3.12.9/Modules/ujson/lib/ultrajson.h Python-3.12.9.new/Modules/ujson/lib/ultrajson.h
+--- a/Modules/ujson/lib/ultrajson.h	1970-01-01 00:00:00.000000000 +0000
++++ b/Modules/ujson/lib/ultrajson.h	2024-05-14 02:00:06.000000000 +0000
+@@ -0,0 +1,395 @@
++/*
++Developed by ESN, an Electronic Arts Inc. studio.
++Copyright (c) 2014, Electronic Arts Inc.
++All rights reserved.
++
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions are met:
++* Redistributions of source code must retain the above copyright
++notice, this list of conditions and the following disclaimer.
++* Redistributions in binary form must reproduce the above copyright
++notice, this list of conditions and the following disclaimer in the
++documentation and/or other materials provided with the distribution.
++* Neither the name of ESN, Electronic Arts Inc. nor the
++names of its contributors may be used to endorse or promote products
++derived from this software without specific prior written permission.
++
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
++ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
++WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
++DISCLAIMED. IN NO EVENT SHALL ELECTRONIC ARTS INC. BE LIABLE
++FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
++(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
++ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
++SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++
++
++Portions of code from MODP_ASCII - Ascii transformations (upper/lower, etc)
++https://github.com/client9/stringencoders
++Copyright (c) 2007  Nick Galbreath -- nickg [at] modp [dot] com. All rights reserved.
++
++Numeric decoder derived from from TCL library
++https://opensource.apple.com/source/tcl/tcl-14/tcl/license.terms
++ * Copyright (c) 1988-1993 The Regents of the University of California.
++ * Copyright (c) 1994 Sun Microsystems, Inc.
++*/
++
++/*
++Ultra fast JSON encoder and decoder
++Developed by Jonas Tarnstrom (jonas@esn.me).
++
++Encoder notes:
++------------------
++
++:: Cyclic references ::
++Cyclic referenced objects are not detected.
++Set JSONObjectEncoder.recursionMax to suitable value or make sure input object
++tree doesn't have cyclic references.
++
++*/
++
++#ifndef __ULTRAJSON_H__
++#define __ULTRAJSON_H__
++
++#include <stdio.h>
++
++// Max decimals to encode double floating point numbers with
++#ifndef JSON_DOUBLE_MAX_DECIMALS
++    #define JSON_DOUBLE_MAX_DECIMALS 15
++#endif
++
++// Max recursion depth, default for encoder
++#ifndef JSON_MAX_RECURSION_DEPTH
++    #define JSON_MAX_RECURSION_DEPTH 1024
++#endif
++
++// Max recursion depth, default for decoder
++#ifndef JSON_MAX_OBJECT_DEPTH
++    #define JSON_MAX_OBJECT_DEPTH 1024
++#endif
++
++/*
++Dictates and limits how much stack space for buffers UltraJSON will use before resorting to provided heap functions */
++#ifndef JSON_MAX_STACK_BUFFER_SIZE
++    #define JSON_MAX_STACK_BUFFER_SIZE 1024
++#endif
++
++#ifdef _WIN32
++
++    typedef __int64 JSINT64;
++    typedef unsigned __int64 JSUINT64;
++
++    typedef __int32 JSINT32;
++    typedef unsigned __int32 JSUINT32;
++    typedef unsigned __int8 JSUINT8;
++    typedef unsigned __int16 JSUTF16;
++    typedef unsigned __int32 JSUTF32;
++    typedef __int64 JSLONG;
++
++    #define EXPORTFUNCTION __declspec(dllexport)
++
++    #define FASTCALL_MSVC __fastcall
++    #define FASTCALL_ATTR
++    #define INLINE_PREFIX __inline
++
++#else
++
++    #include <stdint.h>
++    typedef int64_t JSINT64;
++    typedef uint64_t JSUINT64;
++
++    typedef int32_t JSINT32;
++    typedef uint32_t JSUINT32;
++
++    #define FASTCALL_MSVC
++
++    #if !defined __x86_64__
++        #define FASTCALL_ATTR __attribute__((fastcall))
++    #else
++        #define FASTCALL_ATTR
++    #endif
++
++    #define INLINE_PREFIX inline
++
++    typedef uint8_t JSUINT8;
++    typedef uint16_t JSUTF16;
++    typedef uint32_t JSUTF32;
++
++    typedef int64_t JSLONG;
++
++    #define EXPORTFUNCTION
++#endif
++
++#ifdef __GNUC__
++    #define LIKELY(x)       __builtin_expect(!!(x), 1)
++    #define UNLIKELY(x)     __builtin_expect(!!(x), 0)
++#else
++    #define LIKELY(x)       (x)
++    #define UNLIKELY(x)     (x)
++#endif
++
++#if !(defined(__LITTLE_ENDIAN__) || defined(__BIG_ENDIAN__))
++
++    #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
++        #define __LITTLE_ENDIAN__
++    #else
++
++    #if __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
++        #define __BIG_ENDIAN__
++    #endif
++
++#endif
++
++#endif
++
++#if !defined(__LITTLE_ENDIAN__) && !defined(__BIG_ENDIAN__)
++    #error "Endianness not supported"
++#endif
++
++enum JSTYPES
++{
++  JT_NULL,      // NULL
++  JT_TRUE,      // boolean true
++  JT_FALSE,     // boolean false
++  JT_INT,       // (JSINT32 (signed 32-bit))
++  JT_LONG,      // (JSINT64 (signed 64-bit))
++  JT_ULONG,     // (JSUINT64 (unsigned 64-bit))
++  JT_DOUBLE,    // (double)
++  JT_UTF8,      // (char 8-bit)
++  JT_RAW,       // (raw char 8-bit)
++  JT_ARRAY,     // Array structure
++  JT_OBJECT,    // Key/Value structure
++  JT_INVALID,   // Internal, do not return nor expect
++  JT_NAN,       // Not A Number
++  JT_POS_INF,   // Positive infinity
++  JT_NEG_INF,   // Negative infinity
++};
++
++typedef void * JSOBJ;
++typedef void * JSITER;
++
++typedef struct __JSONTypeContext
++{
++  int type;
++  void *prv;
++  void *encoder_prv;
++} JSONTypeContext;
++
++/*
++Function pointer declarations, suitable for implementing UltraJSON */
++typedef int (*JSPFN_ITERNEXT)(JSOBJ obj, JSONTypeContext *tc);
++typedef void (*JSPFN_ITEREND)(JSOBJ obj, JSONTypeContext *tc);
++typedef JSOBJ (*JSPFN_ITERGETVALUE)(JSOBJ obj, JSONTypeContext *tc);
++typedef char *(*JSPFN_ITERGETNAME)(JSOBJ obj, JSONTypeContext *tc, size_t *outLen);
++typedef void *(*JSPFN_MALLOC)(size_t size);
++typedef void (*JSPFN_FREE)(void *pptr);
++typedef void *(*JSPFN_REALLOC)(void *base, size_t size);
++
++
++struct __JSONObjectEncoder;
++
++typedef struct __JSONObjectEncoder
++{
++  void (*beginTypeContext)(JSOBJ obj, JSONTypeContext *tc, struct __JSONObjectEncoder *enc);
++  void (*endTypeContext)(JSOBJ obj, JSONTypeContext *tc);
++  const char *(*getStringValue)(JSOBJ obj, JSONTypeContext *tc, size_t *_outLen);
++  JSINT64 (*getLongValue)(JSOBJ obj, JSONTypeContext *tc);
++  JSUINT64 (*getUnsignedLongValue)(JSOBJ obj, JSONTypeContext *tc);
++  double (*getDoubleValue)(JSOBJ obj, JSONTypeContext *tc);
++
++  /*
++  Retrieve next object in an iteration. Should return 0 to indicate iteration has reached end or 1 if there are more items.
++  Implementer is responsible for keeping state of the iteration. Use ti->prv fields for this
++  */
++  JSPFN_ITERNEXT iterNext;
++
++  /*
++  Ends the iteration of an iterable object.
++  Any iteration state stored in ti->prv can be freed here
++  */
++  JSPFN_ITEREND iterEnd;
++
++  /*
++  Returns a reference to the value object of an iterator
++  The is responsible for the life-cycle of the returned string. Use iterNext/iterEnd and ti->prv to keep track of current object
++  */
++  JSPFN_ITERGETVALUE iterGetValue;
++
++  /*
++  Return name of iterator.
++  The is responsible for the life-cycle of the returned string. Use iterNext/iterEnd and ti->prv to keep track of current object
++  */
++  JSPFN_ITERGETNAME iterGetName;
++
++  /*
++  Release a value as indicated by setting ti->release = 1 in the previous getValue call.
++  The ti->prv array should contain the necessary context to release the value
++  */
++  void (*releaseObject)(JSOBJ obj);
++
++  /* Library functions
++  Set to NULL to use STDLIB malloc,realloc,free */
++  JSPFN_MALLOC malloc;
++  JSPFN_REALLOC realloc;
++  JSPFN_FREE free;
++
++  /*
++  Configuration for max recursion, set to 0 to use default (see JSON_MAX_RECURSION_DEPTH)*/
++  int recursionMax;
++
++  /*
++  If true output will be ASCII with all characters above 127 encoded as \uXXXX. If false output will be UTF-8 or what ever charset strings are brought as */
++  int forceASCII;
++
++  /*
++  If true, '<', '>', and '&' characters will be encoded as \u003c, \u003e, and \u0026, respectively. If false, no special encoding will be used. */
++  int encodeHTMLChars;
++
++  /*
++  If true, '/' will be encoded as \/. If false, no escaping. */
++  int escapeForwardSlashes;
++
++  /*
++  If true, dictionaries are iterated through in sorted key order. */
++  int sortKeys;
++
++  /*
++  Configuration for spaces of indent */
++  int indent;
++
++  /*
++  If true, NaN will be encoded as a string matching the Python standard library's JSON behavior.
++  This is not valid JSON. */
++  int allowNan;
++
++  /*
++  If true, bytes are rejected. */
++  int rejectBytes;
++
++  /*
++  Configuration for item and key separators, e.g. "," and ":" for a compact representation or ", " and ": " to match the Python standard library's defaults. */
++  size_t itemSeparatorLength;
++  const char *itemSeparatorChars;
++  size_t keySeparatorLength;
++  const char *keySeparatorChars;
++
++  /*
++  Private pointer to be used by the caller. Passed as encoder_prv in JSONTypeContext */
++  void *prv;
++
++  /*
++  Pointer to the DoubleToStringConverter instance */
++  void *d2s;
++
++  /*
++  Set to an error message if error occurred */
++  const char *errorMsg;
++  JSOBJ errorObj;
++
++  /* Buffer stuff */
++  char *start;
++  char *offset;
++  char *end;
++  int heap;
++  int level;
++
++} JSONObjectEncoder;
++
++
++/*
++Encode an object structure into JSON.
++
++Arguments:
++obj - An anonymous type representing the object
++enc - Function definitions for querying JSOBJ type
++buffer - Preallocated buffer to store result in. If NULL function allocates own buffer
++cbBuffer - Length of buffer (ignored if buffer is NULL)
++outLen - Will store the length of the encoded string
++
++Returns:
++Encoded JSON object as a char string.
++
++NOTE:
++If the supplied buffer wasn't enough to hold the result the function will allocate a new buffer.
++Life cycle of the provided buffer must still be handled by caller.
++
++If the return value doesn't equal the specified buffer caller must release the memory using
++JSONObjectEncoder.free or free() as specified when calling this function.
++
++If an error occurs during encoding, NULL is returned and no outLen is stored.
++*/
++EXPORTFUNCTION char *JSON_EncodeObject(JSOBJ obj, JSONObjectEncoder *enc, char *buffer, size_t cbBuffer, size_t *outLen);
++
++typedef struct __JSONObjectDecoder
++{
++  JSOBJ (*newString)(void *prv, JSUINT32 *start, JSUINT32 *end);
++  void (*objectAddKey)(void *prv, JSOBJ obj, JSOBJ name, JSOBJ value);
++  void (*arrayAddItem)(void *prv, JSOBJ obj, JSOBJ value);
++  JSOBJ (*newTrue)(void *prv);
++  JSOBJ (*newFalse)(void *prv);
++  JSOBJ (*newNull)(void *prv);
++  JSOBJ (*newNaN)(void *prv);
++  JSOBJ (*newPosInf)(void *prv);
++  JSOBJ (*newNegInf)(void *prv);
++  JSOBJ (*newObject)(void *prv);
++  JSOBJ (*newArray)(void *prv);
++  JSOBJ (*newInt)(void *prv, JSINT32 value);
++  JSOBJ (*newLong)(void *prv, JSINT64 value);
++  JSOBJ (*newUnsignedLong)(void *prv, JSUINT64 value);
++  JSOBJ (*newIntegerFromString)(void *prv, char *value, size_t length);
++  JSOBJ (*newDouble)(void *prv, double value);
++  void (*releaseObject)(void *prv, JSOBJ obj);
++  JSPFN_MALLOC malloc;
++  JSPFN_FREE free;
++  JSPFN_REALLOC realloc;
++  char *errorStr;
++  char *errorOffset;
++  void *prv;
++  void *s2d;
++} JSONObjectDecoder;
++
++EXPORTFUNCTION JSOBJ JSON_DecodeObject(JSONObjectDecoder *dec, const char *buffer, size_t cbBuffer);
++
++#define DCONV_DECIMAL_IN_SHORTEST_LOW -4
++#define DCONV_DECIMAL_IN_SHORTEST_HIGH 16
++
++enum dconv_d2s_flags {
++  DCONV_D2S_NO_FLAGS = 0,
++  DCONV_D2S_EMIT_POSITIVE_EXPONENT_SIGN = 1,
++  DCONV_D2S_EMIT_TRAILING_DECIMAL_POINT = 2,
++  DCONV_D2S_EMIT_TRAILING_ZERO_AFTER_POINT = 4,
++  DCONV_D2S_UNIQUE_ZERO = 8
++};
++
++enum dconv_s2d_flags
++{
++  DCONV_S2D_NO_FLAGS = 0,
++  DCONV_S2D_ALLOW_HEX = 1,
++  DCONV_S2D_ALLOW_OCTALS = 2,
++  DCONV_S2D_ALLOW_TRAILING_JUNK = 4,
++  DCONV_S2D_ALLOW_LEADING_SPACES = 8,
++  DCONV_S2D_ALLOW_TRAILING_SPACES = 16,
++  DCONV_S2D_ALLOW_SPACES_AFTER_SIGN = 32
++};
++
++void dconv_d2s_init(void **d2s,
++                    int flags,
++                    const char* infinity_symbol,
++                    const char* nan_symbol,
++                    char exponent_character,
++                    int decimal_in_shortest_low,
++                    int decimal_in_shortest_high,
++                    int max_leading_padding_zeroes_in_precision_mode,
++                    int max_trailing_padding_zeroes_in_precision_mode);
++int dconv_d2s(void *d2s, double value, char* buf, int buflen, int* strlength);
++void dconv_d2s_free(void **d2s);
++
++void dconv_s2d_init(void **s2d, int flags, double empty_string_value,
++                    double junk_string_value, const char* infinity_symbol,
++                    const char* nan_symbol);
++double dconv_s2d(void *s2d, const char* buffer, int length, int* processed_characters_count);
++void dconv_s2d_free(void **s2d);
++
++#endif
+diff '--color=auto' -Nurp Python-3.12.9/Modules/ujson/lib/ultrajsondec.c Python-3.12.9.new/Modules/ujson/lib/ultrajsondec.c
+--- a/Modules/ujson/lib/ultrajsondec.c	1970-01-01 00:00:00.000000000 +0000
++++ b/Modules/ujson/lib/ultrajsondec.c	2024-05-14 02:00:06.000000000 +0000
+@@ -0,0 +1,834 @@
++/*
++Developed by ESN, an Electronic Arts Inc. studio.
++Copyright (c) 2014, Electronic Arts Inc.
++All rights reserved.
++
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions are met:
++* Redistributions of source code must retain the above copyright
++notice, this list of conditions and the following disclaimer.
++* Redistributions in binary form must reproduce the above copyright
++notice, this list of conditions and the following disclaimer in the
++documentation and/or other materials provided with the distribution.
++* Neither the name of ESN, Electronic Arts Inc. nor the
++names of its contributors may be used to endorse or promote products
++derived from this software without specific prior written permission.
++
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
++ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
++WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
++DISCLAIMED. IN NO EVENT SHALL ELECTRONIC ARTS INC. BE LIABLE
++FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
++(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
++ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
++SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++
++
++Portions of code from MODP_ASCII - Ascii transformations (upper/lower, etc)
++https://github.com/client9/stringencoders
++Copyright (c) 2007  Nick Galbreath -- nickg [at] modp [dot] com. All rights reserved.
++
++Numeric decoder derived from from TCL library
++https://opensource.apple.com/source/tcl/tcl-14/tcl/license.terms
++* Copyright (c) 1988-1993 The Regents of the University of California.
++* Copyright (c) 1994 Sun Microsystems, Inc.
++*/
++
++#include "ultrajson.h"
++#include <math.h>
++#include <assert.h>
++#include <string.h>
++#include <limits.h>
++#include <stdlib.h>
++#include <errno.h>
++#include <stdint.h>
++
++#ifndef TRUE
++#define TRUE 1
++#define FALSE 0
++#endif
++#ifndef NULL
++#define NULL 0
++#endif
++
++struct DecoderState
++{
++  char *start;
++  char *end;
++  JSUINT32 *escStart;
++  JSUINT32 *escEnd;
++  int escHeap;
++  int lastType;
++  JSUINT32 objDepth;
++  void *prv;
++  JSONObjectDecoder *dec;
++};
++
++static JSOBJ FASTCALL_MSVC decode_any( struct DecoderState *ds) FASTCALL_ATTR;
++typedef JSOBJ (*PFN_DECODER)( struct DecoderState *ds);
++
++static JSOBJ SetError( struct DecoderState *ds, int offset, const char *message)
++{
++  ds->dec->errorOffset = ds->start + offset;
++  ds->dec->errorStr = (char *) message;
++  return NULL;
++}
++
++static FASTCALL_ATTR JSOBJ FASTCALL_MSVC decodeDouble(struct DecoderState *ds)
++{
++  int processed_characters_count;
++  /* Prevent int overflow if ds->end - ds->start is too large. See check_decode_decimal_no_int_overflow()
++  inside tests/test_ujson.py for an example where this check is necessary. */
++  int len = ((size_t) (ds->end - ds->start) < (size_t) INT_MAX) ? (int) (ds->end - ds->start) : INT_MAX;
++  double value = dconv_s2d(ds->dec->s2d, ds->start, len, &processed_characters_count);
++  ds->lastType = JT_DOUBLE;
++  ds->start += processed_characters_count;
++  return ds->dec->newDouble(ds->prv, value);
++}
++
++static FASTCALL_ATTR JSOBJ FASTCALL_MSVC decode_numeric (struct DecoderState *ds)
++{
++  int intNeg = 1;
++  int hasError = 0;
++  JSUINT64 intValue;
++  JSUINT64 addIntValue;
++  int chr;
++  char *offset = ds->start;
++
++  JSUINT64 maxIntValue = ULLONG_MAX;
++  JSUINT64 overflowLimit = maxIntValue / 10LLU;
++
++  if (*(offset) == 'I')
++  {
++    goto DECODE_INF;
++  }
++  else if (*(offset) == 'N')
++  {
++    goto DECODE_NAN;
++  }
++  else if (*(offset) == '-')
++  {
++    offset++;
++    intNeg = -1;
++    if (*(offset) == 'I')
++    {
++      goto DECODE_INF;
++    }
++    maxIntValue = -(JSUINT64) LLONG_MIN;
++    overflowLimit = maxIntValue / 10LL;
++  }
++
++  // Scan integer part
++  intValue = 0;
++
++  while (1)
++  {
++    chr = (int) (unsigned char) *(offset);
++
++    switch (chr)
++    {
++      case '0':
++      case '1':
++      case '2':
++      case '3':
++      case '4':
++      case '5':
++      case '6':
++      case '7':
++      case '8':
++      case '9':
++      {
++        // check whether multiplication would be out of bounds
++        if (intValue > overflowLimit)
++        {
++          hasError = 1;
++        }
++        intValue *= 10ULL;
++        addIntValue = (JSUINT64) (chr - 48);
++
++        // check whether addition would be out of bounds
++        if (maxIntValue - intValue < addIntValue)
++        {
++          hasError = 1;
++        }
++
++        intValue += addIntValue;
++        offset ++;
++        break;
++      }
++      case '.':
++      {
++        offset ++;
++        return decodeDouble(ds);
++      }
++      case 'e':
++      case 'E':
++      {
++        offset ++;
++        return decodeDouble(ds);
++      }
++
++      default:
++      {
++        if (hasError)
++        {
++          char *strStart = ds->start;
++          ds->lastType = JT_INT;
++          ds->start = offset;
++          return ds->dec->newIntegerFromString(ds->prv, strStart, offset - strStart);
++        }
++        goto BREAK_INT_LOOP;
++        break;
++      }
++    }
++  }
++
++BREAK_INT_LOOP:
++
++  ds->lastType = JT_INT;
++  ds->start = offset;
++
++  if (intNeg == 1 && (intValue & 0x8000000000000000ULL) != 0)
++  {
++    return ds->dec->newUnsignedLong(ds->prv, intValue);
++  }
++  else if ((intValue >> 31))
++  {
++    return ds->dec->newLong(ds->prv, (JSINT64) (intValue * (JSINT64) intNeg));
++  }
++  else
++  {
++    return ds->dec->newInt(ds->prv, (JSINT32) (intValue * intNeg));
++  }
++
++DECODE_NAN:
++    offset++;
++    if (*(offset++) != 'a') goto SET_NAN_ERROR;
++    if (*(offset++) != 'N') goto SET_NAN_ERROR;
++
++    ds->lastType = JT_NAN;
++    ds->start = offset;
++    return ds->dec->newNaN(ds->prv);
++
++SET_NAN_ERROR:
++    return SetError(ds, -1, "Unexpected character found when decoding 'NaN'");
++
++DECODE_INF:
++    offset++;
++    if (*(offset++) != 'n') goto SET_INF_ERROR;
++    if (*(offset++) != 'f') goto SET_INF_ERROR;
++    if (*(offset++) != 'i') goto SET_INF_ERROR;
++    if (*(offset++) != 'n') goto SET_INF_ERROR;
++    if (*(offset++) != 'i') goto SET_INF_ERROR;
++    if (*(offset++) != 't') goto SET_INF_ERROR;
++    if (*(offset++) != 'y') goto SET_INF_ERROR;
++
++    ds->start = offset;
++
++    if (intNeg == 1) {
++      ds->lastType = JT_POS_INF;
++      return ds->dec->newPosInf(ds->prv);
++    } else {
++      ds->lastType = JT_NEG_INF;
++      return ds->dec->newNegInf(ds->prv);
++    }
++
++SET_INF_ERROR:
++    if (intNeg == 1) {
++      const char *msg = "Unexpected character found when decoding 'Infinity'";
++      return SetError(ds, -1, msg);
++    } else {
++      const char *msg = "Unexpected character found when decoding '-Infinity'";
++      return SetError(ds, -1, msg);
++    }
++
++}
++
++static FASTCALL_ATTR JSOBJ FASTCALL_MSVC decode_true ( struct DecoderState *ds)
++{
++  char *offset = ds->start;
++  offset ++;
++
++  if (*(offset++) != 'r')
++    goto SETERROR;
++  if (*(offset++) != 'u')
++    goto SETERROR;
++  if (*(offset++) != 'e')
++    goto SETERROR;
++
++  ds->lastType = JT_TRUE;
++  ds->start = offset;
++  return ds->dec->newTrue(ds->prv);
++
++SETERROR:
++  return SetError(ds, -1, "Unexpected character found when decoding 'true'");
++}
++
++static FASTCALL_ATTR JSOBJ FASTCALL_MSVC decode_false ( struct DecoderState *ds)
++{
++  char *offset = ds->start;
++  offset ++;
++
++  if (*(offset++) != 'a')
++    goto SETERROR;
++  if (*(offset++) != 'l')
++    goto SETERROR;
++  if (*(offset++) != 's')
++    goto SETERROR;
++  if (*(offset++) != 'e')
++    goto SETERROR;
++
++  ds->lastType = JT_FALSE;
++  ds->start = offset;
++  return ds->dec->newFalse(ds->prv);
++
++SETERROR:
++  return SetError(ds, -1, "Unexpected character found when decoding 'false'");
++}
++
++static FASTCALL_ATTR JSOBJ FASTCALL_MSVC decode_null ( struct DecoderState *ds)
++{
++  char *offset = ds->start;
++  offset ++;
++
++  if (*(offset++) != 'u')
++    goto SETERROR;
++  if (*(offset++) != 'l')
++    goto SETERROR;
++  if (*(offset++) != 'l')
++    goto SETERROR;
++
++  ds->lastType = JT_NULL;
++  ds->start = offset;
++  return ds->dec->newNull(ds->prv);
++
++SETERROR:
++  return SetError(ds, -1, "Unexpected character found when decoding 'null'");
++}
++
++static FASTCALL_ATTR void FASTCALL_MSVC SkipWhitespace(struct DecoderState *ds)
++{
++  char *offset = ds->start;
++
++  for (;;)
++  {
++    switch (*offset)
++    {
++      case ' ':
++      case '\t':
++      case '\r':
++      case '\n':
++        offset ++;
++        break;
++
++      default:
++        ds->start = offset;
++        return;
++    }
++  }
++}
++
++enum DECODESTRINGSTATE
++{
++  DS_ISNULL = 0x32,
++  DS_ISQUOTE,
++  DS_ISESCAPE,
++  DS_UTFLENERROR,
++
++};
++
++static const JSUINT8 g_decoderLookup[256] =
++{
++  /* 0x00 */ DS_ISNULL, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++  /* 0x10 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++  /* 0x20 */ 1, 1, DS_ISQUOTE, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++  /* 0x30 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++  /* 0x40 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++  /* 0x50 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, DS_ISESCAPE, 1, 1, 1,
++  /* 0x60 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++  /* 0x70 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++  /* 0x80 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++  /* 0x90 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++  /* 0xa0 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++  /* 0xb0 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++  /* 0xc0 */ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
++  /* 0xd0 */ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
++  /* 0xe0 */ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
++  /* 0xf0 */ 4, 4, 4, 4, 4, 4, 4, 4, DS_UTFLENERROR, DS_UTFLENERROR, DS_UTFLENERROR, DS_UTFLENERROR, DS_UTFLENERROR, DS_UTFLENERROR, DS_UTFLENERROR, DS_UTFLENERROR,
++};
++
++static FASTCALL_ATTR JSOBJ FASTCALL_MSVC decode_string ( struct DecoderState *ds)
++{
++  int index;
++  JSUINT32 *escOffset;
++  JSUINT32 *escStart;
++  size_t escLen = (ds->escEnd - ds->escStart);
++  JSUINT8 *inputOffset;
++  JSUTF16 ch = 0;
++  JSUINT8 *lastHighSurrogate = NULL;
++  JSUINT8 oct;
++  JSUTF32 ucs;
++  ds->lastType = JT_INVALID;
++  ds->start ++;
++
++  if ( (size_t) (ds->end - ds->start) > escLen)
++  {
++    size_t newSize = (ds->end - ds->start);
++
++    if (ds->escHeap)
++    {
++      if (newSize > (SIZE_MAX / sizeof(JSUINT32)))
++      {
++        return SetError(ds, -1, "Could not reserve memory block");
++      }
++      escStart = (JSUINT32 *)ds->dec->realloc(ds->escStart, newSize * sizeof(JSUINT32));
++      if (!escStart)
++      {
++        // Don't free ds->escStart here; it gets handled in JSON_DecodeObject.
++        return SetError(ds, -1, "Could not reserve memory block");
++      }
++      ds->escStart = escStart;
++    }
++    else
++    {
++      JSUINT32 *oldStart = ds->escStart;
++      if (newSize > (SIZE_MAX / sizeof(JSUINT32)))
++      {
++        return SetError(ds, -1, "Could not reserve memory block");
++      }
++      ds->escStart = (JSUINT32 *) ds->dec->malloc(newSize * sizeof(JSUINT32));
++      if (!ds->escStart)
++      {
++        return SetError(ds, -1, "Could not reserve memory block");
++      }
++      ds->escHeap = 1;
++      memcpy(ds->escStart, oldStart, escLen * sizeof(JSUINT32));
++    }
++
++    ds->escEnd = ds->escStart + newSize;
++  }
++
++  escOffset = ds->escStart;
++  inputOffset = (JSUINT8 *) ds->start;
++
++  for (;;)
++  {
++    switch (g_decoderLookup[(JSUINT8)(*inputOffset)])
++    {
++      case DS_ISNULL:
++      {
++        return SetError(ds, -1, "Unmatched '\"' when decoding 'string'");
++      }
++      case DS_ISQUOTE:
++      {
++        ds->lastType = JT_UTF8;
++        inputOffset ++;
++        ds->start += ( (char *) inputOffset - (ds->start));
++        return ds->dec->newString(ds->prv, ds->escStart, escOffset);
++      }
++      case DS_UTFLENERROR:
++      {
++        return SetError (ds, -1, "Invalid UTF-8 sequence length when decoding 'string'");
++      }
++      case DS_ISESCAPE:
++      {
++        inputOffset ++;
++        switch (*inputOffset)
++        {
++          case '\\': *(escOffset++) = '\\'; inputOffset++; continue;
++          case '\"': *(escOffset++) = '\"'; inputOffset++; continue;
++          case '/':  *(escOffset++) = '/';  inputOffset++; continue;
++          case 'b':  *(escOffset++) = '\b'; inputOffset++; continue;
++          case 'f':  *(escOffset++) = '\f'; inputOffset++; continue;
++          case 'n':  *(escOffset++) = '\n'; inputOffset++; continue;
++          case 'r':  *(escOffset++) = '\r'; inputOffset++; continue;
++          case 't':  *(escOffset++) = '\t'; inputOffset++; continue;
++
++          case 'u':
++          {
++            int index;
++            inputOffset ++;
++
++            for (index = 0; index < 4; index ++)
++            {
++              switch (*inputOffset)
++              {
++                case '\0': return SetError (ds, -1, "Unterminated unicode escape sequence when decoding 'string'");
++                default: return SetError (ds, -1, "Unexpected character in unicode escape sequence when decoding 'string'");
++
++                case '0':
++                case '1':
++                case '2':
++                case '3':
++                case '4':
++                case '5':
++                case '6':
++                case '7':
++                case '8':
++                case '9':
++                  ch = (ch << 4) + (JSUTF16) (*inputOffset - '0');
++                  break;
++
++                case 'a':
++                case 'b':
++                case 'c':
++                case 'd':
++                case 'e':
++                case 'f':
++                  ch = (ch << 4) + 10 + (JSUTF16) (*inputOffset - 'a');
++                  break;
++
++                case 'A':
++                case 'B':
++                case 'C':
++                case 'D':
++                case 'E':
++                case 'F':
++                  ch = (ch << 4) + 10 + (JSUTF16) (*inputOffset - 'A');
++                  break;
++              }
++
++              inputOffset ++;
++            }
++
++            if ((ch & 0xfc00) == 0xdc00 && lastHighSurrogate == inputOffset - 6 * sizeof(*inputOffset))
++            {
++              // Low surrogate immediately following a high surrogate
++              // Overwrite existing high surrogate with combined character
++              *(escOffset-1) = (((*(escOffset-1) - 0xd800) <<10) | (ch - 0xdc00)) + 0x10000;
++            }
++            else
++            {
++              *(escOffset++) = (JSUINT32) ch;
++            }
++            if ((ch & 0xfc00) == 0xd800)
++            {
++              lastHighSurrogate = inputOffset;
++            }
++            break;
++          }
++
++          case '\0': return SetError(ds, -1, "Unterminated escape sequence when decoding 'string'");
++          default: return SetError(ds, -1, "Unrecognized escape sequence when decoding 'string'");
++        }
++        break;
++      }
++
++      case 1:
++      {
++        *(escOffset++) = (JSUINT32) (*inputOffset++);
++        break;
++      }
++
++      case 2:
++      {
++        ucs = (*inputOffset++) & 0x1f;
++        ucs <<= 6;
++        if (((*inputOffset) & 0x80) != 0x80)
++        {
++          return SetError(ds, -1, "Invalid octet in UTF-8 sequence when decoding 'string'");
++        }
++        ucs |= (*inputOffset++) & 0x3f;
++        if (ucs < 0x80) return SetError (ds, -1, "Overlong 2 byte UTF-8 sequence detected when decoding 'string'");
++        *(escOffset++) = (JSUINT32) ucs;
++        break;
++      }
++
++      case 3:
++      {
++        JSUTF32 ucs = 0;
++        ucs |= (*inputOffset++) & 0x0f;
++
++        for (index = 0; index < 2; index ++)
++        {
++          ucs <<= 6;
++          oct = (*inputOffset++);
++
++          if ((oct & 0x80) != 0x80)
++          {
++            return SetError(ds, -1, "Invalid octet in UTF-8 sequence when decoding 'string'");
++          }
++
++          ucs |= oct & 0x3f;
++        }
++
++        if (ucs < 0x800) return SetError (ds, -1, "Overlong 3 byte UTF-8 sequence detected when encoding string");
++        *(escOffset++) = (JSUINT32) ucs;
++        break;
++      }
++
++      case 4:
++      {
++        JSUTF32 ucs = 0;
++        ucs |= (*inputOffset++) & 0x07;
++
++        for (index = 0; index < 3; index ++)
++        {
++          ucs <<= 6;
++          oct = (*inputOffset++);
++
++          if ((oct & 0x80) != 0x80)
++          {
++            return SetError(ds, -1, "Invalid octet in UTF-8 sequence when decoding 'string'");
++          }
++
++          ucs |= oct & 0x3f;
++        }
++
++        if (ucs < 0x10000) return SetError (ds, -1, "Overlong 4 byte UTF-8 sequence detected when decoding 'string'");
++
++        *(escOffset++) = (JSUINT32) ucs;
++        break;
++      }
++    }
++  }
++}
++
++static FASTCALL_ATTR JSOBJ FASTCALL_MSVC decode_array(struct DecoderState *ds)
++{
++  JSOBJ itemValue;
++  JSOBJ newObj;
++  int len;
++  ds->objDepth++;
++  if (ds->objDepth > JSON_MAX_OBJECT_DEPTH) {
++    return SetError(ds, -1, "Reached object decoding depth limit");
++  }
++
++  newObj = ds->dec->newArray(ds->prv);
++  len = 0;
++
++  ds->lastType = JT_INVALID;
++  ds->start ++;
++
++  for (;;)
++  {
++    SkipWhitespace(ds);
++
++    if ((*ds->start) == ']')
++    {
++      ds->objDepth--;
++      if (len == 0)
++      {
++        ds->start ++;
++        return newObj;
++      }
++
++      ds->dec->releaseObject(ds->prv, newObj);
++      return SetError(ds, -1, "Unexpected character found when decoding array value (1)");
++    }
++
++    itemValue = decode_any(ds);
++
++    if (itemValue == NULL)
++    {
++      ds->dec->releaseObject(ds->prv, newObj);
++      return NULL;
++    }
++
++    ds->dec->arrayAddItem (ds->prv, newObj, itemValue);
++
++    SkipWhitespace(ds);
++
++    switch (*(ds->start++))
++    {
++    case ']':
++    {
++      ds->objDepth--;
++      return newObj;
++    }
++    case ',':
++      break;
++
++    default:
++      ds->dec->releaseObject(ds->prv, newObj);
++      return SetError(ds, -1, "Unexpected character found when decoding array value (2)");
++    }
++
++    len++;
++  }
++}
++
++static FASTCALL_ATTR JSOBJ FASTCALL_MSVC decode_object( struct DecoderState *ds)
++{
++  JSOBJ itemName;
++  JSOBJ itemValue;
++  JSOBJ newObj;
++  int len;
++
++  ds->objDepth++;
++  if (ds->objDepth > JSON_MAX_OBJECT_DEPTH)
++  {
++    return SetError(ds, -1, "Reached object decoding depth limit");
++  }
++
++  newObj = ds->dec->newObject(ds->prv);
++  len = 0;
++
++  ds->start ++;
++
++  for (;;)
++  {
++    SkipWhitespace(ds);
++
++    if ((*ds->start) == '}')
++    {
++      ds->objDepth--;
++      if (len == 0)
++      {
++        ds->start ++;
++        return newObj;
++      }
++
++      ds->dec->releaseObject(ds->prv, newObj);
++      return SetError(ds, -1, "Unexpected character in found when decoding object value");
++    }
++
++    ds->lastType = JT_INVALID;
++    itemName = decode_any(ds);
++
++    if (itemName == NULL)
++    {
++      ds->dec->releaseObject(ds->prv, newObj);
++      return NULL;
++    }
++
++    if (ds->lastType != JT_UTF8)
++    {
++      ds->dec->releaseObject(ds->prv, newObj);
++      ds->dec->releaseObject(ds->prv, itemName);
++      return SetError(ds, -1, "Key name of object must be 'string' when decoding 'object'");
++    }
++
++    SkipWhitespace(ds);
++
++    if (*(ds->start++) != ':')
++    {
++      ds->dec->releaseObject(ds->prv, newObj);
++      ds->dec->releaseObject(ds->prv, itemName);
++      return SetError(ds, -1, "No ':' found when decoding object value");
++    }
++
++    SkipWhitespace(ds);
++
++    itemValue = decode_any(ds);
++
++    if (itemValue == NULL)
++    {
++      ds->dec->releaseObject(ds->prv, newObj);
++      ds->dec->releaseObject(ds->prv, itemName);
++      return NULL;
++    }
++
++    ds->dec->objectAddKey (ds->prv, newObj, itemName, itemValue);
++
++    SkipWhitespace(ds);
++
++    switch (*(ds->start++))
++    {
++      case '}':
++      {
++        ds->objDepth--;
++        return newObj;
++      }
++      case ',':
++        break;
++
++      default:
++        ds->dec->releaseObject(ds->prv, newObj);
++        return SetError(ds, -1, "Unexpected character in found when decoding object value");
++    }
++
++    len++;
++  }
++}
++
++static FASTCALL_ATTR JSOBJ FASTCALL_MSVC decode_any(struct DecoderState *ds)
++{
++  for (;;)
++  {
++    switch (*ds->start)
++    {
++      case '\"':
++        return decode_string (ds);
++      case '0':
++      case '1':
++      case '2':
++      case '3':
++      case '4':
++      case '5':
++      case '6':
++      case '7':
++      case '8':
++      case '9':
++      case 'I':
++      case 'N':
++      case '-':
++        return decode_numeric (ds);
++
++      case '[': return decode_array (ds);
++      case '{': return decode_object (ds);
++      case 't': return decode_true (ds);
++      case 'f': return decode_false (ds);
++      case 'n': return decode_null (ds);
++
++      case ' ':
++      case '\t':
++      case '\r':
++      case '\n':
++        // White space
++        ds->start ++;
++        break;
++
++      default:
++        return SetError(ds, -1, "Expected object or value");
++    }
++  }
++}
++
++JSOBJ JSON_DecodeObject(JSONObjectDecoder *dec, const char *buffer, size_t cbBuffer)
++{
++  /*
++  FIXME: Base the size of escBuffer of that of cbBuffer so that the unicode escaping doesn't run into the wall each time */
++  struct DecoderState ds;
++  JSUINT32 escBuffer[(JSON_MAX_STACK_BUFFER_SIZE / sizeof(JSUINT32))];
++  JSOBJ ret;
++
++  ds.start = (char *) buffer;
++  ds.end = ds.start + cbBuffer;
++
++  ds.escStart = escBuffer;
++  ds.escEnd = ds.escStart + (JSON_MAX_STACK_BUFFER_SIZE / sizeof(JSUINT32));
++  ds.escHeap = 0;
++  ds.prv = dec->prv;
++  ds.dec = dec;
++  ds.dec->errorStr = NULL;
++  ds.dec->errorOffset = NULL;
++  ds.objDepth = 0;
++
++  ds.dec = dec;
++
++  ret = decode_any (&ds);
++
++  if (ds.escHeap)
++  {
++    dec->free(ds.escStart);
++  }
++
++  if (!(dec->errorStr))
++  {
++    if ((ds.end - ds.start) > 0)
++    {
++      SkipWhitespace(&ds);
++    }
++
++    if (ds.start != ds.end && ret)
++    {
++      dec->releaseObject(ds.prv, ret);
++      return SetError(&ds, -1, "Trailing data");
++    }
++  }
++
++  return ret;
++}
+diff '--color=auto' -Nurp Python-3.12.9/Modules/ujson/lib/ultrajsonenc.c Python-3.12.9.new/Modules/ujson/lib/ultrajsonenc.c
+--- a/Modules/ujson/lib/ultrajsonenc.c	1970-01-01 00:00:00.000000000 +0000
++++ b/Modules/ujson/lib/ultrajsonenc.c	2024-05-14 02:00:06.000000000 +0000
+@@ -0,0 +1,1001 @@
++/*
++Developed by ESN, an Electronic Arts Inc. studio.
++Copyright (c) 2014, Electronic Arts Inc.
++All rights reserved.
++
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions are met:
++* Redistributions of source code must retain the above copyright
++notice, this list of conditions and the following disclaimer.
++* Redistributions in binary form must reproduce the above copyright
++notice, this list of conditions and the following disclaimer in the
++documentation and/or other materials provided with the distribution.
++* Neither the name of ESN, Electronic Arts Inc. nor the
++names of its contributors may be used to endorse or promote products
++derived from this software without specific prior written permission.
++
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
++ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
++WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
++DISCLAIMED. IN NO EVENT SHALL ELECTRONIC ARTS INC. BE LIABLE
++FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
++(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
++ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
++SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++
++
++Portions of code from MODP_ASCII - Ascii transformations (upper/lower, etc)
++https://github.com/client9/stringencoders
++Copyright (c) 2007  Nick Galbreath -- nickg [at] modp [dot] com. All rights reserved.
++
++Numeric decoder derived from from TCL library
++https://opensource.apple.com/source/tcl/tcl-14/tcl/license.terms
++ * Copyright (c) 1988-1993 The Regents of the University of California.
++ * Copyright (c) 1994 Sun Microsystems, Inc.
++*/
++
++#include "ultrajson.h"
++#include <stdio.h>
++#include <assert.h>
++#include <string.h>
++#include <stdlib.h>
++#include <stddef.h>
++#include <stdint.h>
++#include <math.h>
++
++#include <float.h>
++
++#ifndef TRUE
++#define TRUE 1
++#endif
++#ifndef FALSE
++#define FALSE 0
++#endif
++
++#if ( (defined(_WIN32) || defined(WIN32) ) && ( defined(_MSC_VER) ) )
++#define snprintf sprintf_s
++#endif
++
++/*
++Worst cases being:
++
++Control characters (ASCII < 32)
++0x00 (1 byte) input => \u0000 output (6 bytes)
++1 * 6 => 6 (6 bytes required)
++
++or UTF-16 surrogate pairs
++4 bytes input in UTF-8 => \uXXXX\uYYYY (12 bytes).
++
++4 * 6 => 24 bytes (12 bytes required)
++
++The extra 2 bytes are for the quotes around the string
++
++*/
++#define RESERVE_STRING(_len) (2 + ((_len) * 6))
++
++static const char g_hexChars[] = "0123456789abcdef";
++static const char g_escapeChars[] = "0123456789\\b\\t\\n\\f\\r\\\"\\\\\\/";
++
++/*
++FIXME: While this is fine dandy and working it's a magic value mess which probably only the author understands.
++Needs a cleanup and more documentation */
++
++/*
++Table for pure ascii output escaping all characters above 127 to \uXXXX */
++static const JSUINT8 g_asciiOutputTable[256] =
++{
++/* 0x00 */ 0, 30, 30, 30, 30, 30, 30, 30, 10, 12, 14, 30, 16, 18, 30, 30,
++/* 0x10 */ 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30,
++/* 0x20 */ 1, 1, 20, 1, 1, 1, 29, 1, 1, 1, 1, 1, 1, 1, 1, 24,
++/* 0x30 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 29, 1, 29, 1,
++/* 0x40 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++/* 0x50 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 22, 1, 1, 1,
++/* 0x60 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++/* 0x70 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++/* 0x80 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++/* 0x90 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++/* 0xa0 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++/* 0xb0 */ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
++/* 0xc0 */ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
++/* 0xd0 */ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
++/* 0xe0 */ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
++/* 0xf0 */ 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 1, 1
++};
++
++static void SetError (JSOBJ obj, JSONObjectEncoder *enc, const char *message)
++{
++  enc->errorMsg = message;
++  enc->errorObj = obj;
++}
++
++/*
++FIXME: Keep track of how big these get across several encoder calls and try to make an estimate
++That way we won't run our head into the wall each call */
++static void Buffer_Realloc (JSONObjectEncoder *enc, size_t cbNeeded)
++{
++  size_t free_space = enc->end - enc->offset;
++  if (free_space >= cbNeeded)
++  {
++    return;
++  }
++  size_t curSize = enc->end - enc->start;
++  size_t newSize = curSize;
++  size_t offset = enc->offset - enc->start;
++
++#ifdef DEBUG
++  // In debug mode, allocate only what is requested so that any miscalculation
++  // shows up plainly as a crash.
++  newSize = (enc->offset - enc->start) + cbNeeded;
++#else
++  while (newSize < curSize + cbNeeded)
++  {
++    newSize *= 2;
++  }
++#endif
++
++  if (enc->heap)
++  {
++    enc->start = (char *) enc->realloc (enc->start, newSize);
++    if (!enc->start)
++    {
++      SetError (NULL, enc, "Could not reserve memory block");
++      return;
++    }
++  }
++  else
++  {
++    char *oldStart = enc->start;
++    enc->heap = 1;
++    enc->start = (char *) enc->malloc (newSize);
++    if (!enc->start)
++    {
++      SetError (NULL, enc, "Could not reserve memory block");
++      return;
++    }
++    memcpy (enc->start, oldStart, offset);
++  }
++  enc->offset = enc->start + offset;
++  enc->end = enc->start + newSize;
++}
++
++#define Buffer_Reserve(__enc, __len) \
++    if ( (size_t) ((__enc)->end - (__enc)->offset) < (size_t) (__len))  \
++    {   \
++      Buffer_Realloc((__enc), (__len));\
++    }   \
++
++static void *Buffer_memcpy (JSONObjectEncoder *enc, const void *src, size_t n)
++{
++  void *out;
++#ifdef DEBUG
++  if ((size_t) (enc->end - enc->offset) < n) {
++    fprintf(stderr, "Ran out of buffer space during Buffer_memcpy()\n");
++    abort();
++  }
++#endif
++  out = memcpy(enc->offset, src, n);
++  enc->offset += n;
++  return out;
++}
++
++static FASTCALL_ATTR INLINE_PREFIX void FASTCALL_MSVC Buffer_AppendShortHexUnchecked (char *outputOffset, unsigned short value)
++{
++  *(outputOffset++) = g_hexChars[(value & 0xf000) >> 12];
++  *(outputOffset++) = g_hexChars[(value & 0x0f00) >> 8];
++  *(outputOffset++) = g_hexChars[(value & 0x00f0) >> 4];
++  *(outputOffset++) = g_hexChars[(value & 0x000f) >> 0];
++}
++
++static int Buffer_EscapeStringUnvalidated (JSONObjectEncoder *enc, const char *io, const char *end)
++{
++  char *of = (char *) enc->offset;
++
++  for (;;)
++  {
++#ifdef DEBUG
++    // 6 is the maximum length of a single character (cf. RESERVE_STRING).
++    if ((io < end) && (enc->end - of < 6)) {
++      fprintf(stderr, "Ran out of buffer space during Buffer_EscapeStringUnvalidated()\n");
++      abort();
++    }
++#endif
++    switch (*io)
++    {
++      case 0x00:
++      {
++        if (io < end)
++        {
++          *(of++) = '\\';
++          *(of++) = 'u';
++          *(of++) = '0';
++          *(of++) = '0';
++          *(of++) = '0';
++          *(of++) = '0';
++          break;
++        }
++        else
++        {
++          enc->offset += (of - enc->offset);
++          return TRUE;
++        }
++      }
++      case '\"': (*of++) = '\\'; (*of++) = '\"'; break;
++      case '\\': (*of++) = '\\'; (*of++) = '\\'; break;
++      case '\b': (*of++) = '\\'; (*of++) = 'b'; break;
++      case '\f': (*of++) = '\\'; (*of++) = 'f'; break;
++      case '\n': (*of++) = '\\'; (*of++) = 'n'; break;
++      case '\r': (*of++) = '\\'; (*of++) = 'r'; break;
++      case '\t': (*of++) = '\\'; (*of++) = 't'; break;
++
++      case '/':
++      {
++        if (enc->escapeForwardSlashes)
++        {
++          (*of++) = '\\';
++          (*of++) = '/';
++        }
++        else
++        {
++          // Same as default case below.
++          (*of++) = (*io);
++        }
++        break;
++      }
++      case 0x26: // '&'
++      case 0x3c: // '<'
++      case 0x3e: // '>'
++      {
++        if (enc->encodeHTMLChars)
++        {
++          // Fall through to \u00XX case below.
++        }
++        else
++        {
++          // Same as default case below.
++          (*of++) = (*io);
++          break;
++        }
++      }
++      case 0x01:
++      case 0x02:
++      case 0x03:
++      case 0x04:
++      case 0x05:
++      case 0x06:
++      case 0x07:
++      case 0x0b:
++      case 0x0e:
++      case 0x0f:
++      case 0x10:
++      case 0x11:
++      case 0x12:
++      case 0x13:
++      case 0x14:
++      case 0x15:
++      case 0x16:
++      case 0x17:
++      case 0x18:
++      case 0x19:
++      case 0x1a:
++      case 0x1b:
++      case 0x1c:
++      case 0x1d:
++      case 0x1e:
++      case 0x1f:
++      {
++        *(of++) = '\\';
++        *(of++) = 'u';
++        *(of++) = '0';
++        *(of++) = '0';
++        *(of++) = g_hexChars[ (unsigned char) (((*io) & 0xf0) >> 4)];
++        *(of++) = g_hexChars[ (unsigned char) ((*io) & 0x0f)];
++        break;
++      }
++      default: (*of++) = (*io); break;
++    }
++    io++;
++  }
++}
++
++static int Buffer_EscapeStringValidated (JSOBJ obj, JSONObjectEncoder *enc, const char *io, const char *end)
++{
++  JSUTF32 ucs;
++  char *of = (char *) enc->offset;
++
++  for (;;)
++  {
++#ifdef DEBUG
++    /*
++    6 is the maximum length of a single character (cf. RESERVE_STRING).
++    Note that the loop below may consume more than one input char and produce a UTF-16 surrogate pair.
++    In that case, more than 6 characters would be needed on the output buffer.
++    So this calculates the maximum length of the entire remaining input buffer instead. */
++    if (enc->end - enc->offset < 6 * (end - io)) {
++      fprintf(stderr, "Ran out of buffer space during Buffer_EscapeStringValidated()\n");
++      abort();
++    }
++#endif
++    JSUINT8 utflen = g_asciiOutputTable[(unsigned char) *io];
++
++    switch (utflen)
++    {
++      case 0:
++      {
++        if (io < end)
++        {
++          *(of++) = '\\';
++          *(of++) = 'u';
++          *(of++) = '0';
++          *(of++) = '0';
++          *(of++) = '0';
++          *(of++) = '0';
++          io ++;
++          continue;
++        }
++        else
++        {
++          enc->offset += (of - enc->offset);
++          return TRUE;
++        }
++      }
++
++      case 1:
++      {
++        *(of++)= (*io++);
++        continue;
++      }
++
++      case 2:
++      {
++        JSUTF32 in;
++        JSUTF16 in16;
++
++        if (end - io < 1)
++        {
++          enc->offset += (of - enc->offset);
++          SetError (obj, enc, "Unterminated UTF-8 sequence when encoding string");
++          return FALSE;
++        }
++
++        memcpy(&in16, io, sizeof(JSUTF16));
++        in = (JSUTF32) in16;
++
++#ifdef __LITTLE_ENDIAN__
++        ucs = ((in & 0x1f) << 6) | ((in >> 8) & 0x3f);
++#else
++        ucs = ((in & 0x1f00) >> 2) | (in & 0x3f);
++#endif
++
++        if (ucs < 0x80)
++        {
++          enc->offset += (of - enc->offset);
++          SetError (obj, enc, "Overlong 2 byte UTF-8 sequence detected when encoding string");
++          return FALSE;
++        }
++
++        io += 2;
++        break;
++      }
++
++      case 3:
++      {
++        JSUTF32 in;
++        JSUTF16 in16;
++        JSUINT8 in8;
++
++        if (end - io < 2)
++        {
++          enc->offset += (of - enc->offset);
++          SetError (obj, enc, "Unterminated UTF-8 sequence when encoding string");
++          return FALSE;
++        }
++
++        memcpy(&in16, io, sizeof(JSUTF16));
++        memcpy(&in8, io + 2, sizeof(JSUINT8));
++#ifdef __LITTLE_ENDIAN__
++        in = (JSUTF32) in16;
++        in |= in8 << 16;
++        ucs = ((in & 0x0f) << 12) | ((in & 0x3f00) >> 2) | ((in & 0x3f0000) >> 16);
++#else
++        in = in16 << 8;
++        in |= in8;
++        ucs = ((in & 0x0f0000) >> 4) | ((in & 0x3f00) >> 2) | (in & 0x3f);
++#endif
++
++        if (ucs < 0x800)
++        {
++          enc->offset += (of - enc->offset);
++          SetError (obj, enc, "Overlong 3 byte UTF-8 sequence detected when encoding string");
++          return FALSE;
++        }
++
++        io += 3;
++        break;
++      }
++      case 4:
++      {
++        JSUTF32 in;
++
++        if (end - io < 3)
++        {
++          enc->offset += (of - enc->offset);
++          SetError (obj, enc, "Unterminated UTF-8 sequence when encoding string");
++          return FALSE;
++        }
++
++        memcpy(&in, io, sizeof(JSUTF32));
++#ifdef __LITTLE_ENDIAN__
++        ucs = ((in & 0x07) << 18) | ((in & 0x3f00) << 4) | ((in & 0x3f0000) >> 10) | ((in & 0x3f000000) >> 24);
++#else
++        ucs = ((in & 0x07000000) >> 6) | ((in & 0x3f0000) >> 4) | ((in & 0x3f00) >> 2) | (in & 0x3f);
++#endif
++        if (ucs < 0x10000)
++        {
++          enc->offset += (of - enc->offset);
++          SetError (obj, enc, "Overlong 4 byte UTF-8 sequence detected when encoding string");
++          return FALSE;
++        }
++
++        io += 4;
++        break;
++      }
++
++
++      case 5:
++      case 6:
++      {
++        enc->offset += (of - enc->offset);
++        SetError (obj, enc, "Unsupported UTF-8 sequence length when encoding string");
++        return FALSE;
++      }
++
++      case 29:
++      {
++        if (enc->encodeHTMLChars)
++        {
++          // Fall through to \u00XX case 30 below.
++        }
++        else
++        {
++          // Same as case 1 above.
++          *(of++) = (*io++);
++          continue;
++        }
++      }
++
++      case 30:
++      {
++        // \uXXXX encode
++        *(of++) = '\\';
++        *(of++) = 'u';
++        *(of++) = '0';
++        *(of++) = '0';
++        *(of++) = g_hexChars[ (unsigned char) (((*io) & 0xf0) >> 4)];
++        *(of++) = g_hexChars[ (unsigned char) ((*io) & 0x0f)];
++        io ++;
++        continue;
++      }
++      case 10:
++      case 12:
++      case 14:
++      case 16:
++      case 18:
++      case 20:
++      case 22:
++      {
++        *(of++) = *( (char *) (g_escapeChars + utflen + 0));
++        *(of++) = *( (char *) (g_escapeChars + utflen + 1));
++        io ++;
++        continue;
++      }
++      case 24:
++      {
++        if (enc->escapeForwardSlashes)
++        {
++          *(of++) = *( (char *) (g_escapeChars + utflen + 0));
++          *(of++) = *( (char *) (g_escapeChars + utflen + 1));
++          io ++;
++        }
++        else
++        {
++          // Same as case 1 above.
++          *(of++) = (*io++);
++        }
++        continue;
++      }
++      // This can never happen, it's here to make L4 VC++ happy
++      default:
++      {
++        ucs = 0;
++        break;
++      }
++    }
++
++    /*
++    If the character is a UTF8 sequence of length > 1 we end up here */
++    if (ucs >= 0x10000)
++    {
++      ucs -= 0x10000;
++      *(of++) = '\\';
++      *(of++) = 'u';
++      Buffer_AppendShortHexUnchecked(of, (unsigned short) (ucs >> 10) + 0xd800);
++      of += 4;
++
++      *(of++) = '\\';
++      *(of++) = 'u';
++      Buffer_AppendShortHexUnchecked(of, (unsigned short) (ucs & 0x3ff) + 0xdc00);
++      of += 4;
++    }
++    else
++    {
++      *(of++) = '\\';
++      *(of++) = 'u';
++      Buffer_AppendShortHexUnchecked(of, (unsigned short) ucs);
++      of += 4;
++    }
++  }
++}
++
++
++static FASTCALL_ATTR INLINE_PREFIX void FASTCALL_MSVC Buffer_AppendCharUnchecked(JSONObjectEncoder *enc, char chr)
++{
++#ifdef DEBUG
++  if (enc->end <= enc->offset)
++  {
++    fprintf(stderr, "Overflow writing byte %d '%c'. The last few characters were:\n'''", chr, chr);
++    char * recent = enc->offset - 1000;
++    if (enc->start > recent)
++    {
++      recent = enc->start;
++    }
++    for (; recent < enc->offset; recent++)
++    {
++      fprintf(stderr, "%c", *recent);
++    }
++    fprintf(stderr, "'''\n");
++    abort();
++  }
++#endif
++  *(enc->offset++) = chr;
++}
++
++static FASTCALL_ATTR INLINE_PREFIX void FASTCALL_MSVC strreverse(char* begin, char* end)
++{
++  char aux;
++  while (end > begin)
++  aux = *end, *end-- = *begin, *begin++ = aux;
++}
++
++static void Buffer_AppendIndentNewlineUnchecked(JSONObjectEncoder *enc)
++{
++  if (enc->indent > 0) Buffer_AppendCharUnchecked(enc, '\n');
++}
++
++static void Buffer_AppendIndentUnchecked(JSONObjectEncoder *enc, JSINT32 value)
++{
++  int i;
++  if (enc->indent > 0)
++    while (value-- > 0)
++      for (i = 0; i < enc->indent; i++)
++        Buffer_AppendCharUnchecked(enc, ' ');
++}
++
++static void Buffer_AppendLongUnchecked(JSONObjectEncoder *enc, JSINT64 value)
++{
++  char* wstr;
++  JSUINT64 uvalue;
++
++  if (value == INT64_MIN) {
++    uvalue = INT64_MAX + UINT64_C(1);
++  } else {
++    uvalue = (value < 0) ? -value : value;
++  }
++
++  wstr = enc->offset;
++#ifdef DEBUG
++  // 20 is the maximum length of a JSINT64 (minus sign plus 19 digits)
++  if (enc->end - enc->offset < 20) {
++    fprintf(stderr, "Ran out of buffer space during Buffer_AppendLongUnchecked()\n");
++    abort();
++  }
++#endif
++  // Conversion. Number is reversed.
++
++  do *wstr++ = (char)(48 + (uvalue % 10ULL)); while(uvalue /= 10ULL);
++  if (value < 0) *wstr++ = '-';
++
++  // Reverse string
++  strreverse(enc->offset,wstr - 1);
++  enc->offset += (wstr - (enc->offset));
++}
++
++static void Buffer_AppendUnsignedLongUnchecked(JSONObjectEncoder *enc, JSUINT64 value)
++{
++  char* wstr;
++  JSUINT64 uvalue = value;
++
++  wstr = enc->offset;
++#ifdef DEBUG
++  // 21 is the maximum length of a JSUINT64 (minus sign plus 20 digits)
++  if (enc->end - enc->offset < 21) {
++    fprintf(stderr, "Ran out of buffer space during Buffer_AppendUnsignedLongUnchecked()\n");
++    abort();
++  }
++#endif
++  // Conversion. Number is reversed.
++
++  do *wstr++ = (char)(48 + (uvalue % 10ULL)); while(uvalue /= 10ULL);
++
++  // Reverse string
++  strreverse(enc->offset,wstr - 1);
++  enc->offset += (wstr - (enc->offset));
++}
++
++static int Buffer_AppendDoubleDconv(JSOBJ obj, JSONObjectEncoder *enc, double value)
++{
++  char buf[128];
++  int strlength;
++#ifdef DEBUG
++  if ((size_t) (enc->end - enc->offset) < sizeof(buf)) {
++    fprintf(stderr, "Ran out of buffer space during Buffer_AppendDoubleDconv()\n");
++    abort();
++  }
++#endif
++  if(!dconv_d2s(enc->d2s, value, buf, sizeof(buf), &strlength))
++  {
++    SetError (obj, enc, "Invalid value when encoding double");
++    return FALSE;
++  }
++
++  Buffer_memcpy(enc, buf, strlength);
++
++  return TRUE;
++}
++
++/*
++FIXME:
++Handle integration functions returning NULL here */
++
++/*
++FIXME:
++Perhaps implement recursion detection */
++
++static void encode(JSOBJ obj, JSONObjectEncoder *enc, const char *name, size_t cbName)
++{
++  const char *value;
++  char *objName;
++  int count, res;
++  JSOBJ iterObj;
++  size_t szlen;
++  JSONTypeContext tc;
++
++  if (enc->level > enc->recursionMax)
++  {
++    SetError (obj, enc, "Maximum recursion level reached");
++    return;
++  }
++
++  if (enc->errorMsg)
++  {
++    return;
++  }
++
++  if (name)
++  {
++    Buffer_Reserve(enc, RESERVE_STRING(cbName) + enc->keySeparatorLength);
++    Buffer_AppendCharUnchecked(enc, '\"');
++
++    if (enc->forceASCII)
++    {
++      if (!Buffer_EscapeStringValidated(obj, enc, name, name + cbName))
++      {
++        return;
++      }
++    }
++    else
++    {
++      if (!Buffer_EscapeStringUnvalidated(enc, name, name + cbName))
++      {
++        return;
++      }
++    }
++
++    Buffer_AppendCharUnchecked(enc, '\"');
++
++    Buffer_memcpy(enc, enc->keySeparatorChars, enc->keySeparatorLength);
++  }
++
++  tc.encoder_prv = enc->prv;
++  enc->beginTypeContext(obj, &tc, enc);
++
++  /*
++  This reservation covers any additions on non-variable parts below, specifically:
++  - Opening brackets for JT_ARRAY and JT_OBJECT
++  - Number representation for JT_LONG, JT_ULONG, JT_INT, and JT_DOUBLE
++  - Constant value for JT_TRUE, JT_FALSE, JT_NULL
++
++  The length of 128 is the worst case length of the Buffer_AppendDoubleDconv addition.
++  The other types above all have smaller representations.
++  */
++  Buffer_Reserve (enc, 128);
++
++  switch (tc.type)
++  {
++    case JT_INVALID:
++    {
++      /*
++      There should already be an exception at the Python level.
++      This however sets the errorMsg so recursion on arrays and objects stops.
++      endTypeContext must not be called here as beginTypeContext already cleans up in the INVALID case.
++      */
++      SetError (obj, enc, "Invalid type");
++      enc->level--;
++      return;
++    }
++
++    case JT_ARRAY:
++    {
++      count = 0;
++
++      Buffer_AppendCharUnchecked (enc, '[');
++
++      while (enc->iterNext(obj, &tc))
++      {
++        // The extra 1 byte covers the optional newline.
++        Buffer_Reserve (enc, enc->indent * (enc->level + 1) + enc->itemSeparatorLength + 1);
++
++        if (count > 0)
++        {
++          Buffer_memcpy(enc, enc->itemSeparatorChars, enc->itemSeparatorLength);
++        }
++        Buffer_AppendIndentNewlineUnchecked (enc);
++
++        iterObj = enc->iterGetValue(obj, &tc);
++
++        enc->level ++;
++        Buffer_AppendIndentUnchecked (enc, enc->level);
++        encode (iterObj, enc, NULL, 0);
++        if (enc->errorMsg)
++        {
++          enc->iterEnd(obj, &tc);
++          enc->endTypeContext(obj, &tc);
++          enc->level--;
++          return;
++        }
++        count ++;
++      }
++
++      enc->iterEnd(obj, &tc);
++
++      if (count > 0) {
++        // Reserve space for the indentation plus the newline.
++        Buffer_Reserve (enc, enc->indent * enc->level + 1);
++        Buffer_AppendIndentNewlineUnchecked (enc);
++        Buffer_AppendIndentUnchecked (enc, enc->level);
++      }
++      Buffer_Reserve (enc, 1);
++      Buffer_AppendCharUnchecked (enc, ']');
++      break;
++    }
++
++    case JT_OBJECT:
++    {
++      count = 0;
++
++      Buffer_AppendCharUnchecked (enc, '{');
++
++      while ((res = enc->iterNext(obj, &tc)))
++      {
++        // The extra 1 byte covers the optional newline.
++        Buffer_Reserve (enc, enc->indent * (enc->level + 1) + enc->itemSeparatorLength + 1);
++
++        if(res < 0)
++        {
++          enc->iterEnd(obj, &tc);
++          enc->endTypeContext(obj, &tc);
++          enc->level--;
++          return;
++        }
++
++        if (count > 0)
++        {
++          Buffer_memcpy(enc, enc->itemSeparatorChars, enc->itemSeparatorLength);
++        }
++        Buffer_AppendIndentNewlineUnchecked (enc);
++
++        iterObj = enc->iterGetValue(obj, &tc);
++        objName = enc->iterGetName(obj, &tc, &szlen);
++
++        enc->level ++;
++        Buffer_AppendIndentUnchecked (enc, enc->level);
++        encode (iterObj, enc, objName, szlen);
++        if (enc->errorMsg)
++        {
++          enc->iterEnd(obj, &tc);
++          enc->endTypeContext(obj, &tc);
++          enc->level--;
++          return;
++        }
++        count ++;
++      }
++
++      enc->iterEnd(obj, &tc);
++
++      if (count > 0) {
++        Buffer_Reserve (enc, enc->indent * enc->level + 1);
++        Buffer_AppendIndentNewlineUnchecked (enc);
++        Buffer_AppendIndentUnchecked (enc, enc->level);
++      }
++      Buffer_Reserve (enc, 1);
++      Buffer_AppendCharUnchecked (enc, '}');
++      break;
++    }
++
++    case JT_LONG:
++    {
++      Buffer_AppendLongUnchecked (enc, enc->getLongValue(obj, &tc));
++      break;
++    }
++
++    case JT_ULONG:
++    {
++      Buffer_AppendUnsignedLongUnchecked (enc, enc->getUnsignedLongValue(obj, &tc));
++      break;
++    }
++
++    case JT_TRUE:
++    {
++      Buffer_AppendCharUnchecked (enc, 't');
++      Buffer_AppendCharUnchecked (enc, 'r');
++      Buffer_AppendCharUnchecked (enc, 'u');
++      Buffer_AppendCharUnchecked (enc, 'e');
++      break;
++    }
++
++    case JT_FALSE:
++    {
++      Buffer_AppendCharUnchecked (enc, 'f');
++      Buffer_AppendCharUnchecked (enc, 'a');
++      Buffer_AppendCharUnchecked (enc, 'l');
++      Buffer_AppendCharUnchecked (enc, 's');
++      Buffer_AppendCharUnchecked (enc, 'e');
++      break;
++    }
++
++    case JT_NULL:
++    {
++      Buffer_AppendCharUnchecked (enc, 'n');
++      Buffer_AppendCharUnchecked (enc, 'u');
++      Buffer_AppendCharUnchecked (enc, 'l');
++      Buffer_AppendCharUnchecked (enc, 'l');
++      break;
++    }
++
++    case JT_DOUBLE:
++    {
++      if (!Buffer_AppendDoubleDconv(obj, enc, enc->getDoubleValue(obj, &tc)))
++      {
++        enc->endTypeContext(obj, &tc);
++        enc->level--;
++        return;
++      }
++      break;
++    }
++
++    case JT_UTF8:
++    {
++      value = enc->getStringValue(obj, &tc, &szlen);
++      if(!value)
++      {
++        SetError(obj, enc, "utf-8 encoding error");
++        return;
++      }
++
++      Buffer_Reserve(enc, RESERVE_STRING(szlen));
++      if (enc->errorMsg)
++      {
++        enc->endTypeContext(obj, &tc);
++        return;
++      }
++      Buffer_AppendCharUnchecked (enc, '\"');
++
++      if (enc->forceASCII)
++      {
++        if (!Buffer_EscapeStringValidated(obj, enc, value, value + szlen))
++        {
++          enc->endTypeContext(obj, &tc);
++          enc->level--;
++          return;
++        }
++      }
++      else
++      {
++        if (!Buffer_EscapeStringUnvalidated(enc, value, value + szlen))
++        {
++          enc->endTypeContext(obj, &tc);
++          enc->level--;
++          return;
++        }
++      }
++
++      Buffer_AppendCharUnchecked (enc, '\"');
++      break;
++    }
++
++    case JT_RAW:
++    {
++      value = enc->getStringValue(obj, &tc, &szlen);
++      if(!value)
++      {
++        SetError(obj, enc, "utf-8 encoding error");
++        return;
++      }
++
++      Buffer_Reserve(enc, szlen);
++      if (enc->errorMsg)
++      {
++        enc->endTypeContext(obj, &tc);
++        return;
++      }
++
++      Buffer_memcpy(enc, value, szlen);
++
++      break;
++    }
++  }
++
++  enc->endTypeContext(obj, &tc);
++  enc->level--;
++}
++
++char *JSON_EncodeObject(JSOBJ obj, JSONObjectEncoder *enc, char *_buffer, size_t _cbBuffer, size_t *_outLen)
++{
++  enc->malloc = enc->malloc ? enc->malloc : malloc;
++  enc->free =  enc->free ? enc->free : free;
++  enc->realloc = enc->realloc ? enc->realloc : realloc;
++  enc->errorMsg = NULL;
++  enc->errorObj = NULL;
++  enc->level = 0;
++
++  if (enc->recursionMax < 1)
++  {
++    enc->recursionMax = JSON_MAX_RECURSION_DEPTH;
++  }
++
++  if (_buffer == NULL)
++  {
++    _cbBuffer = 32768;
++    enc->start = (char *) enc->malloc (_cbBuffer);
++    if (!enc->start)
++    {
++      SetError(obj, enc, "Could not reserve memory block");
++      return NULL;
++    }
++    enc->heap = 1;
++  }
++  else
++  {
++    enc->start = _buffer;
++    enc->heap = 0;
++  }
++
++  enc->end = enc->start + _cbBuffer;
++  enc->offset = enc->start;
++
++  encode (obj, enc, NULL, 0);
++
++  if (enc->errorMsg)
++  {
++    if (enc->heap == 1)
++    {
++      // Buffer was realloc'd at some point, or no initial buffer was provided.
++      enc->free(enc->start);
++    }
++    return NULL;
++  }
++
++  *_outLen = enc->offset - enc->start;
++  return enc->start;
++}
+diff '--color=auto' -Nurp Python-3.12.9/Modules/ujson/python/JSONtoObj.c Python-3.12.9.new/Modules/ujson/python/JSONtoObj.c
+--- a/Modules/ujson/python/JSONtoObj.c	1970-01-01 00:00:00.000000000 +0000
++++ b/Modules/ujson/python/JSONtoObj.c	2024-05-14 02:00:06.000000000 +0000
+@@ -0,0 +1,316 @@
++/*
++Developed by ESN, an Electronic Arts Inc. studio.
++Copyright (c) 2014, Electronic Arts Inc.
++All rights reserved.
++
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions are met:
++* Redistributions of source code must retain the above copyright
++notice, this list of conditions and the following disclaimer.
++* Redistributions in binary form must reproduce the above copyright
++notice, this list of conditions and the following disclaimer in the
++documentation and/or other materials provided with the distribution.
++* Neither the name of ESN, Electronic Arts Inc. nor the
++names of its contributors may be used to endorse or promote products
++derived from this software without specific prior written permission.
++
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
++ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
++WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
++DISCLAIMED. IN NO EVENT SHALL ELECTRONIC ARTS INC. BE LIABLE
++FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
++(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
++ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
++SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++
++
++Portions of code from MODP_ASCII - Ascii transformations (upper/lower, etc)
++http://code.google.com/p/stringencoders/
++Copyright (c) 2007  Nick Galbreath -- nickg [at] modp [dot] com. All rights reserved.
++
++Numeric decoder derived from from TCL library
++http://www.opensource.apple.com/source/tcl/tcl-14/tcl/license.terms
++ * Copyright (c) 1988-1993 The Regents of the University of California.
++ * Copyright (c) 1994 Sun Microsystems, Inc.
++*/
++
++#include <stdbool.h>
++
++#include <Python.h>
++#include <ultrajson.h>
++#include "ujson.h"
++
++
++//#define PRINTMARK() fprintf(stderr, "%s: MARK(%d)\n", __FILE__, __LINE__)
++#define PRINTMARK()
++
++static void Object_objectAddKey(void *prv, JSOBJ obj, JSOBJ name, JSOBJ value)
++{
++  PyDict_SetItem (obj, name, value);
++  Py_DECREF( (PyObject *) name);
++  Py_DECREF( (PyObject *) value);
++  return;
++}
++
++static void Object_arrayAddItem(void *prv, JSOBJ obj, JSOBJ value)
++{
++  PyList_Append(obj, value);
++  Py_DECREF( (PyObject *) value);
++  return;
++}
++
++/*
++Check that Py_UCS4 is the same as JSUINT32, else Object_newString will fail.
++Based on Linux's check in vbox_vmmdev_types.h.
++This should be replaced with
++  _Static_assert(sizeof(Py_UCS4) == sizeof(JSUINT32));
++when C11 is made mandatory (CPython 3.11+, PyPy ?).
++*/
++typedef char assert_py_ucs4_is_jsuint32[1 - 2*!(sizeof(Py_UCS4) == sizeof(JSUINT32))];
++
++static JSOBJ Object_newString(void *prv, JSUINT32 *start, JSUINT32 *end)
++{
++  return PyUnicode_FromKindAndData (PyUnicode_4BYTE_KIND, (Py_UCS4 *) start, (end - start));
++}
++
++static JSOBJ Object_newTrue(void *prv)
++{
++  Py_RETURN_TRUE;
++}
++
++static JSOBJ Object_newFalse(void *prv)
++{
++  Py_RETURN_FALSE;
++}
++
++static JSOBJ Object_newNull(void *prv)
++{
++  Py_RETURN_NONE;
++}
++
++static JSOBJ Object_newNaN(void *prv)
++{
++    return PyFloat_FromDouble(Py_NAN);
++}
++
++static JSOBJ Object_newPosInf(void *prv)
++{
++    return PyFloat_FromDouble(Py_HUGE_VAL);
++}
++
++static JSOBJ Object_newNegInf(void *prv)
++{
++    return PyFloat_FromDouble(-Py_HUGE_VAL);
++}
++
++static JSOBJ Object_newObject(void *prv)
++{
++  return PyDict_New();
++}
++
++static JSOBJ Object_newArray(void *prv)
++{
++  return PyList_New(0);
++}
++
++static JSOBJ Object_newInteger(void *prv, JSINT32 value)
++{
++  return PyLong_FromLong( (long) value);
++}
++
++static JSOBJ Object_newLong(void *prv, JSINT64 value)
++{
++  return PyLong_FromLongLong (value);
++}
++
++static JSOBJ Object_newUnsignedLong(void *prv, JSUINT64 value)
++{
++  return PyLong_FromUnsignedLongLong (value);
++}
++
++static JSOBJ Object_newIntegerFromString(void *prv, char *value, size_t length)
++{
++  // PyLong_FromString requires a NUL-terminated string in CPython, contrary to the documentation: https://github.com/python/cpython/issues/59200
++  char *buf = PyObject_Malloc(length + 1);
++  memcpy(buf, value, length);
++  buf[length] = '\0';
++  return PyLong_FromString(buf, NULL, 10);
++}
++
++static JSOBJ Object_newDouble(void *prv, double value)
++{
++  return PyFloat_FromDouble(value);
++}
++
++static void Object_releaseObject(void *prv, JSOBJ obj)
++{
++  Py_DECREF( ((PyObject *)obj));
++}
++
++static char *g_kwlist[] = {"obj", NULL};
++
++PyObject* JSONToObj(PyObject* self, PyObject *args, PyObject *kwargs)
++{
++  PyObject *ret;
++  PyObject *sarg;
++  PyObject *arg;
++  JSONObjectDecoder decoder =
++  {
++    Object_newString,
++    Object_objectAddKey,
++    Object_arrayAddItem,
++    Object_newTrue,
++    Object_newFalse,
++    Object_newNull,
++    Object_newNaN,
++    Object_newPosInf,
++    Object_newNegInf,
++    Object_newObject,
++    Object_newArray,
++    Object_newInteger,
++    Object_newLong,
++    Object_newUnsignedLong,
++    Object_newIntegerFromString,
++    Object_newDouble,
++    Object_releaseObject,
++    PyObject_Malloc,
++    PyObject_Free,
++    PyObject_Realloc
++  };
++
++  decoder.prv = NULL;
++
++  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O", g_kwlist, &arg))
++  {
++      return NULL;
++  }
++
++  Py_buffer buffer;
++  size_t sarg_length;
++  char * raw;
++  bool is_bytes_like = !PyObject_GetBuffer(arg, &buffer, PyBUF_C_CONTIGUOUS);
++  if (is_bytes_like)
++  {
++    #ifdef PYPY_VERSION
++      // PyPy's buffer protocol implementation is buggy: https://foss.heptapod.net/pypy/pypy/-/issues/3872
++      if (!PyBytes_Check(arg) && !PyByteArray_Check(arg)) {
++        PyBuffer_Release(&buffer);
++        PyErr_Format(PyExc_TypeError, "Arbitrary bytes-like objects are not supported on PyPy, Use either string, bytes, or bytearray");
++        return NULL;
++      }
++    #endif
++    raw = buffer.buf;
++    sarg_length = buffer.len;
++  }
++  else
++  {
++    PyErr_Clear();
++    if (PyUnicode_Check(arg))
++    {
++      sarg = PyUnicode_AsEncodedString(arg, NULL, "surrogatepass");
++      if (sarg == NULL)
++      {
++        //Exception raised above us by codec according to docs
++        return NULL;
++      }
++      sarg_length = PyBytes_Size(sarg);
++      raw = PyBytes_AsString(sarg);
++    }
++    else
++    {
++      #ifdef PYPY_VERSION
++        PyErr_Format(PyExc_TypeError, "Expected string, bytes, or bytearray");
++      #else
++        PyErr_Format(PyExc_TypeError, "Expected string or C-contiguous bytes-like object");
++      #endif
++      return NULL;
++    }
++  }
++
++  decoder.errorStr = NULL;
++  decoder.errorOffset = NULL;
++
++  decoder.s2d = NULL;
++  dconv_s2d_init(&decoder.s2d, DCONV_S2D_ALLOW_TRAILING_JUNK, 0.0, 0.0, "Infinity", "NaN");
++
++  ret = JSON_DecodeObject(&decoder, raw, sarg_length);
++
++  dconv_s2d_free(&decoder.s2d);
++
++  if (!is_bytes_like)
++  {
++    Py_DECREF(sarg);
++  }
++  else
++  {
++    PyBuffer_Release(&buffer);
++  }
++
++  if (decoder.errorStr)
++  {
++    /*
++    FIXME: It's possible to give a much nicer error message here with actual failing element in input etc*/
++
++    PyErr_Format (JSONDecodeError, "%s", decoder.errorStr);
++
++    if (ret)
++    {
++        Py_DECREF( (PyObject *) ret);
++    }
++
++    return NULL;
++  }
++
++  return ret;
++}
++
++PyObject* JSONFileToObj(PyObject* self, PyObject *args, PyObject *kwargs)
++{
++  PyObject *read;
++  PyObject *string;
++  PyObject *result;
++  PyObject *file = NULL;
++  PyObject *argtuple;
++
++  if (!PyArg_ParseTuple (args, "O", &file))
++  {
++    return NULL;
++  }
++
++  if (!PyObject_HasAttrString (file, "read"))
++  {
++    PyErr_Format (PyExc_TypeError, "expected file");
++    return NULL;
++  }
++
++  read = PyObject_GetAttrString (file, "read");
++
++  if (!PyCallable_Check (read)) {
++    Py_XDECREF(read);
++    PyErr_Format (PyExc_TypeError, "expected file");
++    return NULL;
++  }
++
++  string = PyObject_CallObject (read, NULL);
++  Py_XDECREF(read);
++
++  if (string == NULL)
++  {
++    return NULL;
++  }
++
++  argtuple = PyTuple_Pack(1, string);
++
++  result = JSONToObj (self, argtuple, kwargs);
++
++  Py_XDECREF(argtuple);
++  Py_XDECREF(string);
++
++  if (result == NULL) {
++    return NULL;
++  }
++
++  return result;
++}
+diff '--color=auto' -Nurp Python-3.12.9/Modules/ujson/python/objToJSON.c Python-3.12.9.new/Modules/ujson/python/objToJSON.c
+--- a/Modules/ujson/python/objToJSON.c	1970-01-01 00:00:00.000000000 +0000
++++ b/Modules/ujson/python/objToJSON.c	2024-05-14 02:00:06.000000000 +0000
+@@ -0,0 +1,933 @@
++/*
++Developed by ESN, an Electronic Arts Inc. studio.
++Copyright (c) 2014, Electronic Arts Inc.
++All rights reserved.
++
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions are met:
++* Redistributions of source code must retain the above copyright
++notice, this list of conditions and the following disclaimer.
++* Redistributions in binary form must reproduce the above copyright
++notice, this list of conditions and the following disclaimer in the
++documentation and/or other materials provided with the distribution.
++* Neither the name of ESN, Electronic Arts Inc. nor the
++names of its contributors may be used to endorse or promote products
++derived from this software without specific prior written permission.
++
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
++ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
++WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
++DISCLAIMED. IN NO EVENT SHALL ELECTRONIC ARTS INC. BE LIABLE
++FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
++(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
++ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
++SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++
++
++Portions of code from MODP_ASCII - Ascii transformations (upper/lower, etc)
++http://code.google.com/p/stringencoders/
++Copyright (c) 2007  Nick Galbreath -- nickg [at] modp [dot] com. All rights reserved.
++
++Numeric decoder derived from from TCL library
++http://www.opensource.apple.com/source/tcl/tcl-14/tcl/license.terms
++* Copyright (c) 1988-1993 The Regents of the University of California.
++* Copyright (c) 1994 Sun Microsystems, Inc.
++*/
++
++#include <Python.h>
++#include <stdio.h>
++#include <ultrajson.h>
++
++#define EPOCH_ORD 719163
++
++typedef void *(*PFN_PyTypeToJSON)(JSOBJ obj, JSONTypeContext *ti, void *outValue, size_t *_outLen);
++
++int object_is_decimal_type(PyObject *obj);
++
++typedef struct __TypeContext
++{
++  JSPFN_ITEREND iterEnd;
++  JSPFN_ITERNEXT iterNext;
++  JSPFN_ITERGETNAME iterGetName;
++  JSPFN_ITERGETVALUE iterGetValue;
++  PFN_PyTypeToJSON PyTypeToJSON;
++  PyObject *newObj;
++  PyObject *dictObj;
++  Py_ssize_t index;
++  Py_ssize_t size;
++  PyObject *itemValue;
++  PyObject *itemName;
++
++  union
++  {
++    PyObject *rawJSONValue;
++    JSINT64 longValue;
++    JSUINT64 unsignedLongValue;
++  };
++} TypeContext;
++
++#define GET_TC(__ptrtc) ((TypeContext *)((__ptrtc)->prv))
++
++// If newObj is set, we should use it rather than JSOBJ
++#define GET_OBJ(__jsobj, __ptrtc) (GET_TC(__ptrtc)->newObj ? GET_TC(__ptrtc)->newObj : __jsobj)
++
++// Avoid infinite loop caused by the default function
++#define DEFAULT_FN_MAX_DEPTH 3
++
++//#define PRINTMARK() fprintf(stderr, "%s: MARK(%d)\n", __FILE__, __LINE__)
++#define PRINTMARK()
++
++static void *PyLongToINT64(JSOBJ _obj, JSONTypeContext *tc, void *outValue, size_t *_outLen)
++{
++  *((JSINT64 *) outValue) = GET_TC(tc)->longValue;
++  return NULL;
++}
++
++static void *PyLongToUINT64(JSOBJ _obj, JSONTypeContext *tc, void *outValue, size_t *_outLen)
++{
++  *((JSUINT64 *) outValue) = GET_TC(tc)->unsignedLongValue;
++  return NULL;
++}
++
++static void *PyLongToINTSTR(JSOBJ _obj, JSONTypeContext *tc, void *outValue, size_t *_outLen)
++{
++  PyObject *obj = GET_TC(tc)->rawJSONValue;
++  *_outLen = PyUnicode_GET_LENGTH(obj);
++  return PyUnicode_1BYTE_DATA(obj);
++}
++
++static void *PyFloatToDOUBLE(JSOBJ _obj, JSONTypeContext *tc, void *outValue, size_t *_outLen)
++{
++  PyObject *obj = (PyObject *) _obj;
++  *((double *) outValue) = PyFloat_AsDouble (obj);
++  return NULL;
++}
++
++static void *PyStringToUTF8(JSOBJ _obj, JSONTypeContext *tc, void *outValue, size_t *_outLen)
++{
++  PyObject *obj = (PyObject *) _obj;
++  *_outLen = PyBytes_GET_SIZE(obj);
++  return PyBytes_AS_STRING(obj);
++}
++
++static char *PyUnicodeToUTF8Raw(JSOBJ _obj, size_t *_outLen, PyObject **pBytesObj)
++{
++  /*
++  Converts the PyUnicode object to char* whose size is stored in _outLen.
++  This conversion may require the creation of an intermediate PyBytes object.
++  In that case, the returned char* is in fact the internal buffer of that PyBytes object,
++  and when the char* buffer is no longer needed, the bytesObj must be DECREF'd.
++  */
++  PyObject *obj = (PyObject *) _obj;
++
++#ifndef Py_LIMITED_API
++  if (PyUnicode_IS_COMPACT_ASCII(obj))
++  {
++    Py_ssize_t len;
++    char *data = PyUnicode_AsUTF8AndSize(obj, &len);
++    *_outLen = len;
++    return data;
++  }
++#endif
++
++  PyObject *bytesObj = *pBytesObj = PyUnicode_AsEncodedString (obj, NULL, "surrogatepass");
++  if (!bytesObj)
++  {
++    return NULL;
++  }
++
++  *_outLen = PyBytes_GET_SIZE(bytesObj);
++  return PyBytes_AS_STRING(bytesObj);
++}
++
++static void *PyUnicodeToUTF8(JSOBJ _obj, JSONTypeContext *tc, void *outValue, size_t *_outLen)
++{
++  return PyUnicodeToUTF8Raw(_obj, _outLen, &(GET_TC(tc)->newObj));
++}
++
++static void *PyRawJSONToUTF8(JSOBJ _obj, JSONTypeContext *tc, void *outValue, size_t *_outLen)
++{
++  PyObject *obj = GET_TC(tc)->rawJSONValue;
++  if (PyUnicode_Check(obj))
++  {
++    return PyUnicodeToUTF8(obj, tc, outValue, _outLen);
++  }
++  else
++  {
++    return PyStringToUTF8(obj, tc, outValue, _outLen);
++  }
++}
++
++static int Tuple_iterNext(JSOBJ obj, JSONTypeContext *tc)
++{
++  if (GET_TC(tc)->index >= GET_TC(tc)->size)
++  {
++    return 0;
++  }
++
++  GET_TC(tc)->itemValue = PyTuple_GET_ITEM(obj, GET_TC(tc)->index);
++  GET_TC(tc)->index ++;
++  return 1;
++}
++
++static void Tuple_iterEnd(JSOBJ obj, JSONTypeContext *tc)
++{
++}
++
++static JSOBJ Tuple_iterGetValue(JSOBJ obj, JSONTypeContext *tc)
++{
++  return GET_TC(tc)->itemValue;
++}
++
++static int List_iterNext(JSOBJ obj, JSONTypeContext *tc)
++{
++  if (GET_TC(tc)->index >= GET_TC(tc)->size)
++  {
++    PRINTMARK();
++    return 0;
++  }
++
++  GET_TC(tc)->itemValue = PyList_GET_ITEM(obj, GET_TC(tc)->index);
++  GET_TC(tc)->index ++;
++  return 1;
++}
++
++static void List_iterEnd(JSOBJ obj, JSONTypeContext *tc)
++{
++}
++
++static JSOBJ List_iterGetValue(JSOBJ obj, JSONTypeContext *tc)
++{
++  return GET_TC(tc)->itemValue;
++}
++
++//=============================================================================
++// Dict iteration functions
++// itemName might converted to string (PyObject_Str). Do refCounting
++// itemValue is borrowed from object (which is dict). No refCounting
++//=============================================================================
++
++static PyObject* Dict_convertKey(PyObject* key)
++{
++  if (PyUnicode_Check(key))
++  {
++    return PyUnicode_AsEncodedString(key, NULL, "surrogatepass");
++  }
++  if (PyBytes_Check(key))
++  {
++    Py_INCREF(key);
++    return key;
++  }
++  if (UNLIKELY(PyBool_Check(key)))
++  {
++    return PyBytes_FromString(key == Py_True ? "true" : "false");
++  }
++  if (UNLIKELY(key == Py_None))
++  {
++    return PyBytes_FromString("null");
++  }
++  PyObject* keystr = PyObject_Str(key);
++  if (!keystr)
++  {
++    PRINTMARK();
++    return NULL;
++  }
++  key = PyUnicode_AsEncodedString(keystr, NULL, "surrogatepass");
++  Py_DECREF(keystr);
++  return key;
++}
++
++static int Dict_iterNext(JSOBJ obj, JSONTypeContext *tc)
++{
++  PyObject* key;
++  if (!PyDict_Next(GET_TC(tc)->dictObj, &GET_TC(tc)->index, &key, &GET_TC(tc)->itemValue))
++  {
++    PRINTMARK();
++    return 0;
++  }
++  Py_XDECREF(GET_TC(tc)->itemName);
++  GET_TC(tc)->itemName = Dict_convertKey(key);
++  if (!GET_TC(tc)->itemName)
++  {
++    return -1;
++  }
++  PRINTMARK();
++  return 1;
++}
++
++static void Dict_iterEnd(JSOBJ obj, JSONTypeContext *tc)
++{
++  Py_CLEAR(GET_TC(tc)->itemName);
++  Py_DECREF(GET_TC(tc)->dictObj);
++  PRINTMARK();
++}
++
++static JSOBJ Dict_iterGetValue(JSOBJ obj, JSONTypeContext *tc)
++{
++  return GET_TC(tc)->itemValue;
++}
++
++static char *Dict_iterGetName(JSOBJ obj, JSONTypeContext *tc, size_t *outLen)
++{
++  *outLen = PyBytes_GET_SIZE(GET_TC(tc)->itemName);
++  return PyBytes_AS_STRING(GET_TC(tc)->itemName);
++}
++
++static int SortedDict_iterNext(JSOBJ obj, JSONTypeContext *tc)
++{
++  // Upon first call, obtain a list of the keys and sort them. This follows the same logic as the
++  // standard library's _json.c sort_keys handler.
++  if (GET_TC(tc)->newObj == NULL)
++  {
++    // Obtain the list of keys from the dictionary.
++    PyObject *keys = PyDict_Keys(GET_TC(tc)->dictObj);
++    if (keys == NULL)
++    {
++      return -1;
++    }
++    // Sort the list.
++    if (PyList_Sort(keys) < 0)
++    {
++      Py_DECREF(keys);
++      return -1;
++    }
++    // Store the sorted list of keys in the newObj slot.
++    GET_TC(tc)->newObj = keys;
++    GET_TC(tc)->size = PyList_GET_SIZE(keys);
++  }
++
++  if (GET_TC(tc)->index >= GET_TC(tc)->size)
++  {
++    PRINTMARK();
++    return 0;
++  }
++
++  PyObject* key = PyList_GET_ITEM(GET_TC(tc)->newObj, GET_TC(tc)->index);
++  Py_XDECREF(GET_TC(tc)->itemName);
++  GET_TC(tc)->itemName = Dict_convertKey(key);
++  if (!GET_TC(tc)->itemName)
++  {
++    return -1;
++  }
++  GET_TC(tc)->itemValue = PyDict_GetItem(GET_TC(tc)->dictObj, key);
++  if (!GET_TC(tc)->itemValue)
++  {
++    return -1;
++  }
++  GET_TC(tc)->index++;
++  return 1;
++}
++
++static void SetupDictIter(PyObject *dictObj, TypeContext *pc, JSONObjectEncoder *enc)
++{
++  pc->dictObj = dictObj;
++  if (enc->sortKeys)
++  {
++    pc->iterNext = SortedDict_iterNext;
++  }
++  else
++  {
++    pc->iterNext = Dict_iterNext;
++  }
++  pc->iterEnd = Dict_iterEnd;
++  pc->iterGetValue = Dict_iterGetValue;
++  pc->iterGetName = Dict_iterGetName;
++  pc->index = 0;
++}
++
++static void Object_beginTypeContext (JSOBJ _obj, JSONTypeContext *tc, JSONObjectEncoder *enc)
++{
++  PyObject *obj, *objRepr, *defaultFn, *newObj;
++  int level = 0;
++  TypeContext *pc;
++  PRINTMARK();
++  if (!_obj)
++  {
++    tc->type = JT_INVALID;
++    return;
++  }
++
++  obj = (PyObject*) _obj;
++  defaultFn = (PyObject*) enc->prv;
++
++  tc->prv = PyObject_Malloc(sizeof(TypeContext));
++  pc = (TypeContext *) tc->prv;
++  if (!pc)
++  {
++    tc->type = JT_INVALID;
++    PyErr_NoMemory();
++    return;
++  }
++  pc->newObj = NULL;
++  pc->dictObj = NULL;
++  pc->itemValue = NULL;
++  pc->itemName = NULL;
++  pc->index = 0;
++  pc->size = 0;
++  pc->longValue = 0;
++  pc->rawJSONValue = NULL;
++
++BEGIN:
++  if (PyIter_Check(obj))
++  {
++    PRINTMARK();
++    goto ISITERABLE;
++  }
++
++  if (PyBool_Check(obj))
++  {
++    PRINTMARK();
++    tc->type = (obj == Py_True) ? JT_TRUE : JT_FALSE;
++    return;
++  }
++  else
++  if (PyLong_Check(obj))
++  {
++    PRINTMARK();
++    pc->PyTypeToJSON = PyLongToINT64;
++    tc->type = JT_LONG;
++    GET_TC(tc)->longValue = PyLong_AsLongLong(obj);
++    if (!(GET_TC(tc)->longValue == -1 && PyErr_Occurred()))
++    {
++      return;
++    }
++    if (!PyErr_ExceptionMatches(PyExc_OverflowError))
++    {
++      goto INVALID;
++    }
++    PyErr_Clear();
++    pc->PyTypeToJSON = PyLongToUINT64;
++    tc->type = JT_ULONG;
++    GET_TC(tc)->unsignedLongValue = PyLong_AsUnsignedLongLong(obj);
++    if (!(GET_TC(tc)->unsignedLongValue == (unsigned long long)-1 && PyErr_Occurred()))
++    {
++      return;
++    }
++    if (!PyErr_ExceptionMatches(PyExc_OverflowError))
++    {
++      goto INVALID;
++    }
++    PyErr_Clear();
++    GET_TC(tc)->rawJSONValue = PyNumber_ToBase(obj, 10);
++    if (!GET_TC(tc)->rawJSONValue)
++    {
++      goto INVALID;
++    }
++    pc->PyTypeToJSON = PyLongToINTSTR;
++    tc->type = JT_RAW;
++    return;
++  }
++  else
++  if (UNLIKELY(PyBytes_Check(obj)))
++  {
++    PRINTMARK();
++    if (enc->rejectBytes)
++    {
++      PyErr_Format (PyExc_TypeError, "reject_bytes is on and '%s' is bytes", PyBytes_AS_STRING(obj));
++      goto INVALID;
++    }
++    else
++    {
++      pc->PyTypeToJSON = PyStringToUTF8; tc->type = JT_UTF8;
++      return;
++    }
++  }
++  else
++  if (PyUnicode_Check(obj))
++  {
++    PRINTMARK();
++    pc->PyTypeToJSON = PyUnicodeToUTF8; tc->type = JT_UTF8;
++    return;
++  }
++  else
++  if (obj == Py_None)
++  {
++    PRINTMARK();
++    tc->type = JT_NULL;
++    return;
++  }
++  else
++  if (PyFloat_Check(obj) || object_is_decimal_type(obj))
++  {
++    PRINTMARK();
++    pc->PyTypeToJSON = PyFloatToDOUBLE; tc->type = JT_DOUBLE;
++    return;
++  }
++
++ISITERABLE:
++  if (PyDict_Check(obj))
++  {
++    PRINTMARK();
++    tc->type = JT_OBJECT;
++    SetupDictIter(obj, pc, enc);
++    Py_INCREF(obj);
++    return;
++  }
++  else
++  if (PyList_Check(obj))
++  {
++    PRINTMARK();
++    tc->type = JT_ARRAY;
++    pc->iterEnd = List_iterEnd;
++    pc->iterNext = List_iterNext;
++    pc->iterGetValue = List_iterGetValue;
++    GET_TC(tc)->index =  0;
++    GET_TC(tc)->size = PyList_GET_SIZE( (PyObject *) obj);
++    return;
++  }
++  else
++  if (PyTuple_Check(obj))
++  {
++    PRINTMARK();
++    tc->type = JT_ARRAY;
++    pc->iterEnd = Tuple_iterEnd;
++    pc->iterNext = Tuple_iterNext;
++    pc->iterGetValue = Tuple_iterGetValue;
++    GET_TC(tc)->index = 0;
++    GET_TC(tc)->size = PyTuple_GET_SIZE( (PyObject *) obj);
++    GET_TC(tc)->itemValue = NULL;
++
++    return;
++  }
++
++  if (UNLIKELY(PyObject_HasAttrString(obj, "toDict")))
++  {
++    PyObject* toDictResult = PyObject_CallMethod(obj, "toDict", NULL);
++    if (toDictResult == NULL)
++    {
++      goto INVALID;
++    }
++
++    if (!PyDict_Check(toDictResult))
++    {
++      PyErr_Format(PyExc_TypeError, "toDict() should return a dict, got %s",
++                   Py_TYPE(toDictResult)->tp_name);
++      Py_DECREF(toDictResult);
++      goto INVALID;
++    }
++
++    PRINTMARK();
++    tc->type = JT_OBJECT;
++    SetupDictIter(toDictResult, pc, enc);
++    return;
++  }
++  else
++  if (UNLIKELY(PyObject_HasAttrString(obj, "__json__")))
++  {
++    PyObject* toJSONResult = PyObject_CallMethod(obj, "__json__", NULL);
++    if (toJSONResult == NULL)
++    {
++      goto INVALID;
++    }
++
++    if (!PyBytes_Check(toJSONResult) && !PyUnicode_Check(toJSONResult))
++    {
++      PyErr_Format(PyExc_TypeError, "__json__() should return str or bytes, got %s",
++                   Py_TYPE(toJSONResult)->tp_name);
++      Py_DECREF(toJSONResult);
++      goto INVALID;
++    }
++
++    PRINTMARK();
++    pc->PyTypeToJSON = PyRawJSONToUTF8;
++    tc->type = JT_RAW;
++    GET_TC(tc)->rawJSONValue = toJSONResult;
++    return;
++  }
++
++  if (defaultFn)
++  {
++    // Break infinite loop
++    if (level >= DEFAULT_FN_MAX_DEPTH)
++    {
++      PRINTMARK();
++      PyErr_Format(PyExc_TypeError, "maximum recursion depth exceeded");
++      goto INVALID;
++    }
++
++    newObj = PyObject_CallFunctionObjArgs(defaultFn, obj, NULL);
++    if (newObj)
++    {
++      PRINTMARK();
++      Py_XDECREF(pc->newObj);
++      obj = pc->newObj = newObj;
++      level += 1;
++      goto BEGIN;
++    }
++    else
++    {
++      goto INVALID;
++    }
++  }
++
++  PRINTMARK();
++  PyErr_Clear();
++
++  objRepr = PyObject_Repr(obj);
++  if (!objRepr)
++  {
++    goto INVALID;
++  }
++  PyObject* str = PyUnicode_AsEncodedString(objRepr, NULL, "strict");
++  if (str)
++  {
++    PyErr_Format (PyExc_TypeError, "%s is not JSON serializable", PyBytes_AS_STRING(str));
++  }
++  Py_XDECREF(str);
++  Py_DECREF(objRepr);
++
++INVALID:
++  PRINTMARK();
++  tc->type = JT_INVALID;
++  PyObject_Free(tc->prv);
++  tc->prv = NULL;
++  return;
++}
++
++static void Object_endTypeContext(JSOBJ obj, JSONTypeContext *tc)
++{
++  Py_XDECREF(GET_TC(tc)->newObj);
++
++  if (tc->type == JT_RAW)
++  {
++    Py_XDECREF(GET_TC(tc)->rawJSONValue);
++  }
++  PyObject_Free(tc->prv);
++  tc->prv = NULL;
++}
++
++static const char *Object_getStringValue(JSOBJ obj, JSONTypeContext *tc, size_t *_outLen)
++{
++  obj = GET_OBJ(obj, tc);
++  return GET_TC(tc)->PyTypeToJSON (obj, tc, NULL, _outLen);
++}
++
++static JSINT64 Object_getLongValue(JSOBJ obj, JSONTypeContext *tc)
++{
++  JSINT64 ret;
++  obj = GET_OBJ(obj, tc);
++  GET_TC(tc)->PyTypeToJSON (obj, tc, &ret, NULL);
++  return ret;
++}
++
++static JSUINT64 Object_getUnsignedLongValue(JSOBJ obj, JSONTypeContext *tc)
++{
++  JSUINT64 ret;
++  obj = GET_OBJ(obj, tc);
++  GET_TC(tc)->PyTypeToJSON (obj, tc, &ret, NULL);
++  return ret;
++}
++
++static double Object_getDoubleValue(JSOBJ obj, JSONTypeContext *tc)
++{
++  double ret;
++  obj = GET_OBJ(obj, tc);
++  GET_TC(tc)->PyTypeToJSON (obj, tc, &ret, NULL);
++  return ret;
++}
++
++static void Object_releaseObject(JSOBJ _obj)
++{
++  Py_DECREF( (PyObject *) _obj);
++}
++
++static int Object_iterNext(JSOBJ obj, JSONTypeContext *tc)
++{
++  obj = GET_OBJ(obj, tc);
++  return GET_TC(tc)->iterNext(obj, tc);
++}
++
++static void Object_iterEnd(JSOBJ obj, JSONTypeContext *tc)
++{
++  obj = GET_OBJ(obj, tc);
++  GET_TC(tc)->iterEnd(obj, tc);
++}
++
++static JSOBJ Object_iterGetValue(JSOBJ obj, JSONTypeContext *tc)
++{
++  obj = GET_OBJ(obj, tc);
++  return GET_TC(tc)->iterGetValue(obj, tc);
++}
++
++static char *Object_iterGetName(JSOBJ obj, JSONTypeContext *tc, size_t *outLen)
++{
++  obj = GET_OBJ(obj, tc);
++  return GET_TC(tc)->iterGetName(obj, tc, outLen);
++}
++
++PyObject* objToJSON(PyObject* self, PyObject *args, PyObject *kwargs)
++{
++  static char *kwlist[] = { "obj", "ensure_ascii", "encode_html_chars", "escape_forward_slashes", "sort_keys", "indent", "allow_nan", "reject_bytes", "default", "separators", NULL };
++
++  char buffer[65536];
++  char *ret;
++  const char *csNan = NULL, *csInf = NULL;
++  PyObject *newobj;
++  PyObject *oinput = NULL;
++  PyObject *oensureAscii = NULL;
++  PyObject *oencodeHTMLChars = NULL;
++  PyObject *oescapeForwardSlashes = NULL;
++  PyObject *osortKeys = NULL;
++  PyObject *odefaultFn = NULL;
++  PyObject *oseparators = NULL;
++  PyObject *oseparatorsItem = NULL;
++  PyObject *separatorsItemBytes = NULL;
++  PyObject *oseparatorsKey = NULL;
++  PyObject *separatorsKeyBytes = NULL;
++  int allowNan = -1;
++  int orejectBytes = -1;
++  size_t retLen;
++
++  JSONObjectEncoder encoder =
++  {
++    Object_beginTypeContext,
++    Object_endTypeContext,
++    Object_getStringValue,
++    Object_getLongValue,
++    Object_getUnsignedLongValue,
++    Object_getDoubleValue,
++    Object_iterNext,
++    Object_iterEnd,
++    Object_iterGetValue,
++    Object_iterGetName,
++    Object_releaseObject,
++    PyObject_Malloc,
++    PyObject_Realloc,
++    PyObject_Free,
++    -1, //recursionMax
++    1, //forceAscii
++    0, //encodeHTMLChars
++    1, //escapeForwardSlashes
++    0, //sortKeys
++    0, //indent
++    1, //allowNan
++    1, //rejectBytes
++    0, //itemSeparatorLength
++    NULL, //itemSeparatorChars
++    0, //keySeparatorLength
++    NULL, //keySeparatorChars
++    NULL, //prv
++  };
++
++
++  PRINTMARK();
++
++  if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|OOOOiiiOO", kwlist, &oinput, &oensureAscii, &oencodeHTMLChars, &oescapeForwardSlashes, &osortKeys, &encoder.indent, &allowNan, &orejectBytes, &odefaultFn, &oseparators))
++  {
++    return NULL;
++  }
++
++  if (oensureAscii != NULL && !PyObject_IsTrue(oensureAscii))
++  {
++    encoder.forceASCII = 0;
++  }
++
++  if (oencodeHTMLChars != NULL && PyObject_IsTrue(oencodeHTMLChars))
++  {
++    encoder.encodeHTMLChars = 1;
++  }
++
++  if (oescapeForwardSlashes != NULL && !PyObject_IsTrue(oescapeForwardSlashes))
++  {
++    encoder.escapeForwardSlashes = 0;
++  }
++
++  if (osortKeys != NULL && PyObject_IsTrue(osortKeys))
++  {
++    encoder.sortKeys = 1;
++  }
++
++  if (allowNan != -1)
++  {
++    encoder.allowNan = allowNan;
++  }
++
++  if (odefaultFn != NULL && odefaultFn != Py_None)
++  {
++    // Here use prv to store default function
++    encoder.prv = odefaultFn;
++  }
++
++  if (encoder.allowNan)
++  {
++    csInf = "Infinity";
++    csNan = "NaN";
++  }
++
++  if (orejectBytes != -1)
++  {
++    encoder.rejectBytes = orejectBytes;
++  }
++
++  if (oseparators != NULL && oseparators != Py_None)
++  {
++    if (!PyTuple_Check(oseparators))
++    {
++      PyErr_SetString(PyExc_TypeError, "expected tuple or None as separator");
++      return NULL;
++    }
++    if (PyTuple_GET_SIZE(oseparators) != 2)
++    {
++      PyErr_SetString(PyExc_ValueError, "expected tuple of size 2 as separator");
++      return NULL;
++    }
++    oseparatorsItem = PyTuple_GET_ITEM(oseparators, 0);
++    if (!PyUnicode_Check(oseparatorsItem))
++    {
++      PyErr_SetString(PyExc_TypeError, "expected str as item separator");
++      return NULL;
++    }
++    oseparatorsKey = PyTuple_GET_ITEM(oseparators, 1);
++    if (!PyUnicode_Check(oseparatorsKey))
++    {
++      PyErr_SetString(PyExc_TypeError, "expected str as key separator");
++      return NULL;
++    }
++    encoder.itemSeparatorChars = PyUnicodeToUTF8Raw(oseparatorsItem, &encoder.itemSeparatorLength, &separatorsItemBytes);
++    if (encoder.itemSeparatorChars == NULL)
++    {
++      PyErr_SetString(PyExc_ValueError, "item separator malformed");
++      goto ERROR;
++    }
++    encoder.keySeparatorChars = PyUnicodeToUTF8Raw(oseparatorsKey, &encoder.keySeparatorLength, &separatorsKeyBytes);
++    if (encoder.keySeparatorChars == NULL)
++    {
++      PyErr_SetString(PyExc_ValueError, "key separator malformed");
++      goto ERROR;
++    }
++  }
++  else
++  {
++    // Default to most compact representation
++    encoder.itemSeparatorChars = ",";
++    encoder.itemSeparatorLength = 1;
++    if (encoder.indent)
++    {
++      // Extra space when indentation is in use
++      encoder.keySeparatorChars = ": ";
++      encoder.keySeparatorLength = 2;
++    }
++    else
++    {
++      encoder.keySeparatorChars = ":";
++      encoder.keySeparatorLength = 1;
++    }
++  }
++
++  encoder.d2s = NULL;
++  dconv_d2s_init(&encoder.d2s, DCONV_D2S_EMIT_TRAILING_DECIMAL_POINT | DCONV_D2S_EMIT_TRAILING_ZERO_AFTER_POINT | DCONV_D2S_EMIT_POSITIVE_EXPONENT_SIGN,
++                 csInf, csNan, 'e', DCONV_DECIMAL_IN_SHORTEST_LOW, DCONV_DECIMAL_IN_SHORTEST_HIGH, 0, 0);
++
++  PRINTMARK();
++  ret = JSON_EncodeObject (oinput, &encoder, buffer, sizeof (buffer), &retLen);
++  PRINTMARK();
++
++  dconv_d2s_free(&encoder.d2s);
++  Py_XDECREF(separatorsItemBytes);
++  Py_XDECREF(separatorsKeyBytes);
++
++  if (encoder.errorMsg)
++  {
++    // If there is an error message and we don't already have a Python exception, set one.
++    if (!PyErr_Occurred())
++      PyErr_Format(PyExc_OverflowError, "%s", encoder.errorMsg);
++    return NULL;
++  }
++
++  if (PyErr_Occurred())
++  {
++    if (ret != buffer)
++    {
++      encoder.free (ret);
++    }
++
++    return NULL;
++  }
++
++  newobj = PyUnicode_DecodeUTF8(ret, retLen, "surrogatepass");
++
++  if (ret != buffer)
++  {
++    encoder.free (ret);
++  }
++
++  PRINTMARK();
++
++  return newobj;
++
++ERROR:
++  Py_XDECREF(separatorsItemBytes);
++  Py_XDECREF(separatorsKeyBytes);
++  return NULL;
++}
++
++PyObject* objToJSONFile(PyObject* self, PyObject *args, PyObject *kwargs)
++{
++  PyObject *data;
++  PyObject *file;
++  PyObject *string;
++  PyObject *write;
++  PyObject *argtuple;
++  PyObject *write_result;
++
++  PRINTMARK();
++
++  if (!PyArg_ParseTuple (args, "OO", &data, &file))
++  {
++    return NULL;
++  }
++
++  if (!PyObject_HasAttrString (file, "write"))
++  {
++    PyErr_Format (PyExc_TypeError, "expected file");
++    return NULL;
++  }
++
++  write = PyObject_GetAttrString (file, "write");
++
++  if (!PyCallable_Check (write))
++  {
++    Py_XDECREF(write);
++    PyErr_Format (PyExc_TypeError, "expected file");
++    return NULL;
++  }
++
++  argtuple = PyTuple_Pack(1, data);
++
++  string = objToJSON (self, argtuple, kwargs);
++
++  if (string == NULL)
++  {
++    Py_XDECREF(write);
++    Py_XDECREF(argtuple);
++    return NULL;
++  }
++
++  Py_XDECREF(argtuple);
++
++  argtuple = PyTuple_Pack (1, string);
++  if (argtuple == NULL)
++  {
++    Py_XDECREF(write);
++    return NULL;
++  }
++
++  write_result = PyObject_CallObject (write, argtuple);
++  if (write_result == NULL)
++  {
++    Py_XDECREF(write);
++    Py_XDECREF(argtuple);
++    return NULL;
++  }
++
++  Py_DECREF(write_result);
++  Py_XDECREF(write);
++  Py_DECREF(argtuple);
++  Py_XDECREF(string);
++
++  PRINTMARK();
++
++  Py_RETURN_NONE;
++}
+diff '--color=auto' -Nurp Python-3.12.9/Modules/ujson/python/ujson.c Python-3.12.9.new/Modules/ujson/python/ujson.c
+--- a/Modules/ujson/python/ujson.c	1970-01-01 00:00:00.000000000 +0000
++++ b/Modules/ujson/python/ujson.c	2024-05-14 02:00:06.000000000 +0000
+@@ -0,0 +1,205 @@
++/*
++Developed by ESN, an Electronic Arts Inc. studio.
++Copyright (c) 2014, Electronic Arts Inc.
++All rights reserved.
++
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions are met:
++* Redistributions of source code must retain the above copyright
++notice, this list of conditions and the following disclaimer.
++* Redistributions in binary form must reproduce the above copyright
++notice, this list of conditions and the following disclaimer in the
++documentation and/or other materials provided with the distribution.
++* Neither the name of ESN, Electronic Arts Inc. nor the
++names of its contributors may be used to endorse or promote products
++derived from this software without specific prior written permission.
++
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
++ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
++WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
++DISCLAIMED. IN NO EVENT SHALL ELECTRONIC ARTS INC. BE LIABLE
++FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
++(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
++ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
++SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++
++
++Portions of code from MODP_ASCII - Ascii transformations (upper/lower, etc)
++http://code.google.com/p/stringencoders/
++Copyright (c) 2007  Nick Galbreath -- nickg [at] modp [dot] com. All rights reserved.
++
++Numeric decoder derived from from TCL library
++http://www.opensource.apple.com/source/tcl/tcl-14/tcl/license.terms
++* Copyright (c) 1988-1993 The Regents of the University of California.
++* Copyright (c) 1994 Sun Microsystems, Inc.
++*/
++
++#include <Python.h>
++#include "version.h"
++#include "ujson.h"
++
++/* objToJSON */
++PyObject* objToJSON(PyObject* self, PyObject *args, PyObject *kwargs);
++
++/* JSONToObj */
++PyObject* JSONToObj(PyObject* self, PyObject *args, PyObject *kwargs);
++
++/* objToJSONFile */
++PyObject* objToJSONFile(PyObject* self, PyObject *args, PyObject *kwargs);
++
++/* JSONFileToObj */
++PyObject* JSONFileToObj(PyObject* self, PyObject *args, PyObject *kwargs);
++
++PyObject* JSONDecodeError;
++
++
++#define ENCODER_HELP_TEXT "Use ensure_ascii=false to output UTF-8. " \
++    "Set encode_html_chars=True to encode < > & as unicode escape sequences. "\
++    "Set escape_forward_slashes=False to prevent escaping / characters." \
++    "Set allow_nan=False to raise an exception when NaN or Infinity would be serialized." \
++    "Set reject_bytes=True to raise TypeError on bytes."
++
++static PyMethodDef ujsonMethods[] = {
++  {"encode", (PyCFunction) objToJSON, METH_VARARGS | METH_KEYWORDS, "Converts arbitrary object recursively into JSON. " ENCODER_HELP_TEXT},
++  {"decode", (PyCFunction) JSONToObj, METH_VARARGS | METH_KEYWORDS, "Converts JSON as string to dict object structure."},
++  {"dumps", (PyCFunction) objToJSON, METH_VARARGS | METH_KEYWORDS,  "Converts arbitrary object recursively into JSON. " ENCODER_HELP_TEXT},
++  {"loads", (PyCFunction) JSONToObj, METH_VARARGS | METH_KEYWORDS,  "Converts JSON as string to dict object structure."},
++  {"dump", (PyCFunction) objToJSONFile, METH_VARARGS | METH_KEYWORDS, "Converts arbitrary object recursively into JSON file. " ENCODER_HELP_TEXT},
++  {"load", (PyCFunction) JSONFileToObj, METH_VARARGS | METH_KEYWORDS, "Converts JSON as file to dict object structure."},
++  {NULL, NULL, 0, NULL}       /* Sentinel */
++};
++
++typedef struct {
++  PyObject *type_decimal;
++} modulestate;
++
++static int module_traverse(PyObject *m, visitproc visit, void *arg);
++static int module_clear(PyObject *m);
++static void module_free(void *m);
++
++static struct PyModuleDef moduledef = {
++  PyModuleDef_HEAD_INIT,
++  "ujson",
++  0,                    /* m_doc */
++  sizeof(modulestate),  /* m_size */
++  ujsonMethods,         /* m_methods */
++  NULL,                 /* m_slots */
++  module_traverse,      /* m_traverse */
++  module_clear,         /* m_clear */
++  module_free           /* m_free */
++};
++
++#define modulestate(o) ((modulestate *)PyModule_GetState(o))
++#define modulestate_global modulestate(PyState_FindModule(&moduledef))
++
++#ifndef PYPY_VERSION
++/* Used in objToJSON.c */
++int object_is_decimal_type(PyObject *obj)
++{
++  PyObject *module = PyState_FindModule(&moduledef);
++  if (module == NULL) return 0;
++  modulestate *state = modulestate(module);
++  if (state == NULL) return 0;
++  PyObject *type_decimal = state->type_decimal;
++  if (type_decimal == NULL) {
++    PyErr_Clear();
++    return 0;
++  }
++  int result = PyObject_IsInstance(obj, type_decimal);
++  if (result == -1) {
++    PyErr_Clear();
++    return 0;
++  }
++  return result;
++}
++#else
++/* Used in objToJSON.c */
++int object_is_decimal_type(PyObject *obj)
++{
++  PyObject *module = PyImport_ImportModule("decimal");
++  if (module == NULL) {
++    PyErr_Clear();
++    return 0;
++  }
++  PyObject *type_decimal = PyObject_GetAttrString(module, "Decimal");
++  if (type_decimal == NULL) {
++    Py_DECREF(module);
++    PyErr_Clear();
++    return 0;
++  }
++  int result = PyObject_IsInstance(obj, type_decimal);
++  if (result == -1) {
++    Py_DECREF(module);
++    Py_DECREF(type_decimal);
++    PyErr_Clear();
++    return 0;
++  }
++  return result;
++}
++#endif
++
++static int module_traverse(PyObject *m, visitproc visit, void *arg)
++{
++  Py_VISIT(modulestate(m)->type_decimal);
++  return 0;
++}
++
++static int module_clear(PyObject *m)
++{
++  Py_CLEAR(modulestate(m)->type_decimal);
++  return 0;
++}
++
++static void module_free(void *m)
++{
++  module_clear((PyObject *)m);
++}
++
++PyMODINIT_FUNC PyInit_ujson(void)
++{
++  PyObject* module;
++
++#ifndef PYPY_VERSION
++  // This function is not supported in PyPy.
++  if ((module = PyState_FindModule(&moduledef)) != NULL)
++  {
++    Py_INCREF(module);
++    return module;
++  }
++#endif
++
++  module = PyModule_Create(&moduledef);
++  if (module == NULL)
++  {
++    return NULL;
++  }
++
++  PyModule_AddStringConstant(module, "__version__", UJSON_VERSION);
++
++#ifndef PYPY_VERSION
++  PyObject *mod_decimal = PyImport_ImportModule("decimal");
++  if (mod_decimal)
++  {
++    PyObject* type_decimal = PyObject_GetAttrString(mod_decimal, "Decimal");
++    assert(type_decimal != NULL);
++    modulestate(module)->type_decimal = type_decimal;
++    Py_DECREF(mod_decimal);
++  }
++  else
++    PyErr_Clear();
++#endif
++
++  JSONDecodeError = PyErr_NewException("ujson.JSONDecodeError", PyExc_ValueError, NULL);
++  Py_XINCREF(JSONDecodeError);
++  if (PyModule_AddObject(module, "JSONDecodeError", JSONDecodeError) < 0)
++  {
++    Py_XDECREF(JSONDecodeError);
++    Py_CLEAR(JSONDecodeError);
++    Py_DECREF(module);
++    return NULL;
++  }
++
++  return module;
++}
+diff '--color=auto' -Nurp Python-3.12.9/Modules/ujson/python/ujson.h Python-3.12.9.new/Modules/ujson/python/ujson.h
+--- a/Modules/ujson/python/ujson.h	1970-01-01 00:00:00.000000000 +0000
++++ b/Modules/ujson/python/ujson.h	2024-05-14 02:00:06.000000000 +0000
+@@ -0,0 +1 @@
++extern PyObject* JSONDecodeError;
+diff '--color=auto' -Nurp Python-3.12.9/Modules/ujson/python/version.h Python-3.12.9.new/Modules/ujson/python/version.h
+--- a/Modules/ujson/python/version.h	1970-01-01 00:00:00.000000000 +0000
++++ b/Modules/ujson/python/version.h	2025-06-16 15:33:14.000000000 +0000
+@@ -0,0 +1,39 @@
++/*
++Developed by ESN, an Electronic Arts Inc. studio.
++Copyright (c) 2014, Electronic Arts Inc.
++All rights reserved.
++
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions are met:
++* Redistributions of source code must retain the above copyright
++notice, this list of conditions and the following disclaimer.
++* Redistributions in binary form must reproduce the above copyright
++notice, this list of conditions and the following disclaimer in the
++documentation and/or other materials provided with the distribution.
++* Neither the name of ESN, Electronic Arts Inc. nor the
++names of its contributors may be used to endorse or promote products
++derived from this software without specific prior written permission.
++
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
++ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
++WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
++DISCLAIMED. IN NO EVENT SHALL ELECTRONIC ARTS INC. BE LIABLE
++FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
++(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
++ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
++SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++
++
++Portions of code from MODP_ASCII - Ascii transformations (upper/lower, etc)
++http://code.google.com/p/stringencoders/
++Copyright (c) 2007  Nick Galbreath -- nickg [at] modp [dot] com. All rights reserved.
++
++Numeric decoder derived from from TCL library
++http://www.opensource.apple.com/source/tcl/tcl-14/tcl/license.terms
++ * Copyright (c) 1988-1993 The Regents of the University of California.
++ * Copyright (c) 1994 Sun Microsystems, Inc.
++*/
++
++#define UJSON_VERSION "5.10.0"
+diff '--color=auto' -Nurp Python-3.12.9/Modules/ujson/python/version_template.h Python-3.12.9.new/Modules/ujson/python/version_template.h
+--- a/Modules/ujson/python/version_template.h	1970-01-01 00:00:00.000000000 +0000
++++ b/Modules/ujson/python/version_template.h	2024-05-14 02:00:06.000000000 +0000
+@@ -0,0 +1,39 @@
++/*
++Developed by ESN, an Electronic Arts Inc. studio.
++Copyright (c) 2014, Electronic Arts Inc.
++All rights reserved.
++
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions are met:
++* Redistributions of source code must retain the above copyright
++notice, this list of conditions and the following disclaimer.
++* Redistributions in binary form must reproduce the above copyright
++notice, this list of conditions and the following disclaimer in the
++documentation and/or other materials provided with the distribution.
++* Neither the name of ESN, Electronic Arts Inc. nor the
++names of its contributors may be used to endorse or promote products
++derived from this software without specific prior written permission.
++
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
++ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
++WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
++DISCLAIMED. IN NO EVENT SHALL ELECTRONIC ARTS INC. BE LIABLE
++FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
++(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
++LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
++ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
++SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++
++
++Portions of code from MODP_ASCII - Ascii transformations (upper/lower, etc)
++http://code.google.com/p/stringencoders/
++Copyright (c) 2007  Nick Galbreath -- nickg [at] modp [dot] com. All rights reserved.
++
++Numeric decoder derived from from TCL library
++http://www.opensource.apple.com/source/tcl/tcl-14/tcl/license.terms
++ * Copyright (c) 1988-1993 The Regents of the University of California.
++ * Copyright (c) 1994 Sun Microsystems, Inc.
++*/
++
++#define UJSON_VERSION "{version}"

@@ -1,0 +1,47 @@
+# Copyright 1999-2025 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI=8
+
+inherit autotools
+
+DESCRIPTION="A very basic terminfo library"
+HOMEPAGE="https://github.com/neovim/unibilium/"
+SRC_URI="https://github.com/neovim/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
+
+LICENSE="LGPL-3+ MIT"
+SLOT="0/4"
+KEYWORDS="amd64 arm arm64 ~ppc ~ppc64 ~riscv x86 ~x64-macos"
+IUSE="doc static-libs test"
+BDEPEND="doc? ( dev-lang/perl )"
+
+PATCHES=(
+	"${FILESDIR}/${PN}-2.1.2-no-compress-man.patch"
+)
+
+src_prepare() {
+	default
+
+	if ! use doc; then
+		sed -e '/^all:/s:build-man::' -i Makefile.in || die
+	fi
+
+	if ! use test; then
+		sed -e '/^all:/s:build-test::' -i Makefile.in || die
+	fi
+
+	eautoreconf
+}
+
+src_configure() {
+	local myeconfargs=(
+		$(use_enable static-libs static)
+	)
+
+	econf "${myeconfargs[@]}"
+}
+
+src_install() {
+	default
+	find "${D}" -name '*.la' -type f -delete || die
+}

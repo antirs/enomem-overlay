@@ -1,0 +1,1167 @@
+diff '--color=auto' -Nurp a/src/basic/parse-util.c b/src/basic/parse-util.c
+--- a/src/basic/parse-util.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/basic/parse-util.c	2025-06-30 19:09:21.000000000 +0000
+@@ -126,7 +126,7 @@ int parse_mtu(int family, const char *s,
+         uint64_t u, m;
+         int r;
+ 
+-        r = parse_size(s, 1024, &u);
++        r = sd_parse_size(s, 1024, &u);
+         if (r < 0)
+                 return r;
+ 
+@@ -151,7 +151,7 @@ int parse_mtu(int family, const char *s,
+         return 0;
+ }
+ 
+-int parse_size(const char *t, uint64_t base, uint64_t *size) {
++int sd_parse_size(const char *t, uint64_t base, uint64_t *size) {
+ 
+         /* Soo, sometimes we want to parse IEC binary suffixes, and
+          * sometimes SI decimal suffixes. This function can parse
+@@ -299,7 +299,7 @@ int parse_sector_size(const char *t, uin
+         return 0;
+ }
+ 
+-int parse_range(const char *t, unsigned *lower, unsigned *upper) {
++int sd_parse_range(const char *t, unsigned *lower, unsigned *upper) {
+         _cleanup_free_ char *word = NULL;
+         unsigned l, u;
+         int r;
+@@ -695,7 +695,7 @@ int parse_ip_port_range(const char *s, u
+         unsigned l, h;
+         int r;
+ 
+-        r = parse_range(s, &l, &h);
++        r = sd_parse_range(s, &l, &h);
+         if (r < 0)
+                 return r;
+ 
+diff '--color=auto' -Nurp a/src/basic/parse-util.h b/src/basic/parse-util.h
+--- a/src/basic/parse-util.h	2025-03-06 14:40:12.000000000 +0000
++++ b/src/basic/parse-util.h	2025-06-30 19:09:21.000000000 +0000
+@@ -21,9 +21,9 @@ int parse_mode(const char *s, mode_t *re
+ int parse_ifindex(const char *s);
+ int parse_mtu(int family, const char *s, uint32_t *ret);
+ 
+-int parse_size(const char *t, uint64_t base, uint64_t *size);
++int sd_parse_size(const char *t, uint64_t base, uint64_t *size);
+ int parse_sector_size(const char *t, uint64_t *ret);
+-int parse_range(const char *t, unsigned *lower, unsigned *upper);
++int sd_parse_range(const char *t, unsigned *lower, unsigned *upper);
+ int parse_errno(const char *t);
+ int parse_fd(const char *t);
+ 
+diff '--color=auto' -Nurp a/src/basic/rlimit-util.c b/src/basic/rlimit-util.c
+--- a/src/basic/rlimit-util.c	2025-06-30 19:12:14.091138323 +0000
++++ b/src/basic/rlimit-util.c	2025-06-30 19:09:07.000000000 +0000
+@@ -103,7 +103,7 @@ static int rlimit_parse_u64(const char *
+         return 0;
+ }
+ 
+-static int rlimit_parse_size(const char *val, rlim_t *ret) {
++static int rlimit_sd_parse_size(const char *val, rlim_t *ret) {
+         uint64_t u;
+         int r;
+ 
+@@ -115,7 +115,7 @@ static int rlimit_parse_size(const char
+                 return 0;
+         }
+ 
+-        r = parse_size(val, 1024, &u);
++        r = sd_parse_size(val, 1024, &u);
+         if (r < 0)
+                 return r;
+         if (u >= (uint64_t) RLIM_INFINITY)
+@@ -230,18 +230,18 @@ static int rlimit_parse_nice(const char
+ 
+ static int (*const rlimit_parse_table[_RLIMIT_MAX])(const char *val, rlim_t *ret) = {
+         [RLIMIT_CPU] = rlimit_parse_sec,
+-        [RLIMIT_FSIZE] = rlimit_parse_size,
+-        [RLIMIT_DATA] = rlimit_parse_size,
+-        [RLIMIT_STACK] = rlimit_parse_size,
+-        [RLIMIT_CORE] = rlimit_parse_size,
+-        [RLIMIT_RSS] = rlimit_parse_size,
++        [RLIMIT_FSIZE] = rlimit_sd_parse_size,
++        [RLIMIT_DATA] = rlimit_sd_parse_size,
++        [RLIMIT_STACK] = rlimit_sd_parse_size,
++        [RLIMIT_CORE] = rlimit_sd_parse_size,
++        [RLIMIT_RSS] = rlimit_sd_parse_size,
+         [RLIMIT_NOFILE] = rlimit_parse_u64,
+-        [RLIMIT_AS] = rlimit_parse_size,
++        [RLIMIT_AS] = rlimit_sd_parse_size,
+         [RLIMIT_NPROC] = rlimit_parse_u64,
+-        [RLIMIT_MEMLOCK] = rlimit_parse_size,
++        [RLIMIT_MEMLOCK] = rlimit_sd_parse_size,
+         [RLIMIT_LOCKS] = rlimit_parse_u64,
+         [RLIMIT_SIGPENDING] = rlimit_parse_u64,
+-        [RLIMIT_MSGQUEUE] = rlimit_parse_size,
++        [RLIMIT_MSGQUEUE] = rlimit_sd_parse_size,
+         [RLIMIT_NICE] = rlimit_parse_nice,
+         [RLIMIT_RTPRIO] = rlimit_parse_u64,
+         [RLIMIT_RTTIME] = rlimit_parse_usec,
+diff '--color=auto' -Nurp a/src/busctl/busctl.c b/src/busctl/busctl.c
+--- a/src/busctl/busctl.c	2025-06-30 19:12:14.103138323 +0000
++++ b/src/busctl/busctl.c	2025-06-30 19:09:07.000000000 +0000
+@@ -2470,7 +2470,7 @@ static int parse_argv(int argc, char *ar
+                 case ARG_SIZE: {
+                         uint64_t sz;
+ 
+-                        r = parse_size(optarg, 1024, &sz);
++                        r = sd_parse_size(optarg, 1024, &sz);
+                         if (r < 0)
+                                 return log_error_errno(r, "Failed to parse size '%s': %m", optarg);
+ 
+diff '--color=auto' -Nurp a/src/core/load-fragment.c b/src/core/load-fragment.c
+--- a/src/core/load-fragment.c	2025-06-30 19:12:14.127138323 +0000
++++ b/src/core/load-fragment.c	2025-06-30 19:09:07.000000000 +0000
+@@ -3828,7 +3828,7 @@ int config_parse_memory_limit(
+ 
+                 r = parse_permyriad(rvalue);
+                 if (r < 0) {
+-                        r = parse_size(rvalue, 1024, &bytes);
++                        r = sd_parse_size(rvalue, 1024, &bytes);
+                         if (r < 0) {
+                                 log_syntax(unit, LOG_WARNING, filename, line, r, "Invalid memory limit '%s', ignoring: %m", rvalue);
+                                 return 0;
+@@ -4401,7 +4401,7 @@ int config_parse_io_limit(
+         if (streq("infinity", p))
+                 num = CGROUP_LIMIT_MAX;
+         else {
+-                r = parse_size(p, 1000, &num);
++                r = sd_parse_size(p, 1000, &num);
+                 if (r < 0 || num <= 0) {
+                         log_syntax(unit, LOG_WARNING, filename, line, 0, "Invalid IO limit '%s', ignoring.", p);
+                         return 0;
+@@ -4570,7 +4570,7 @@ int config_parse_blockio_bandwidth(
+         if (r < 0)
+                 return 0;
+ 
+-        r = parse_size(p, 1000, &bytes);
++        r = sd_parse_size(p, 1000, &bytes);
+         if (r < 0 || bytes <= 0) {
+                 log_syntax(unit, LOG_WARNING, filename, line, r, "Invalid Block IO Bandwidth '%s', ignoring.", p);
+                 return 0;
+diff '--color=auto' -Nurp a/src/home/homectl.c b/src/home/homectl.c
+--- a/src/home/homectl.c	2025-06-30 19:12:14.159138322 +0000
++++ b/src/home/homectl.c	2025-06-30 19:09:07.000000000 +0000
+@@ -1982,7 +1982,7 @@ static int parse_disk_size(const char *t
+         else {
+                 uint64_t ds;
+ 
+-                r = parse_size(t, 1024, &ds);
++                r = sd_parse_size(t, 1024, &ds);
+                 if (r < 0)
+                         return log_error_errno(r, "Failed to parse disk size parameter: %s", t);
+ 
+@@ -3893,7 +3893,7 @@ static int parse_argv(int argc, char *ar
+                                 break;
+                         }
+ 
+-                        r = parse_size(optarg, 1024, &u);
++                        r = sd_parse_size(optarg, 1024, &u);
+                         if (r < 0)
+                                 return log_error_errno(r, "Failed to parse %s parameter: %s", field, optarg);
+ 
+diff '--color=auto' -Nurp a/src/import/import.c b/src/import/import.c
+--- a/src/import/import.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/import/import.c	2025-06-30 19:09:07.000000000 +0000
+@@ -411,7 +411,7 @@ static int parse_argv(int argc, char *ar
+                 case ARG_SIZE_MAX: {
+                         uint64_t u;
+ 
+-                        r = parse_size(optarg, 1024, &u);
++                        r = sd_parse_size(optarg, 1024, &u);
+                         if (r < 0)
+                                 return log_error_errno(r, "Failed to parse --size-max= argument: %s", optarg);
+                         if (!FILE_SIZE_VALID(u))
+diff '--color=auto' -Nurp a/src/import/pull.c b/src/import/pull.c
+--- a/src/import/pull.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/import/pull.c	2025-06-30 19:09:07.000000000 +0000
+@@ -479,7 +479,7 @@ static int parse_argv(int argc, char *ar
+                 case ARG_SIZE_MAX: {
+                         uint64_t u;
+ 
+-                        r = parse_size(optarg, 1024, &u);
++                        r = sd_parse_size(optarg, 1024, &u);
+                         if (r < 0)
+                                 return log_error_errno(r, "Failed to parse --size-max= argument: %s", optarg);
+                         if (!FILE_SIZE_VALID(u))
+diff '--color=auto' -Nurp a/src/journal/journalctl.c b/src/journal/journalctl.c
+--- a/src/journal/journalctl.c	2025-06-30 19:12:14.175138321 +0000
++++ b/src/journal/journalctl.c	2025-06-30 19:09:07.000000000 +0000
+@@ -642,7 +642,7 @@ static int parse_argv(int argc, char *ar
+                         break;
+ 
+                 case ARG_VACUUM_SIZE:
+-                        r = parse_size(optarg, 1024, &arg_vacuum_size);
++                        r = sd_parse_size(optarg, 1024, &arg_vacuum_size);
+                         if (r < 0)
+                                 return log_error_errno(r, "Failed to parse vacuum size: %s", optarg);
+ 
+diff '--color=auto' -Nurp a/src/journal/journald-server.c b/src/journal/journald-server.c
+--- a/src/journal/journald-server.c	2025-06-30 19:12:14.179138321 +0000
++++ b/src/journal/journald-server.c	2025-06-30 19:09:07.000000000 +0000
+@@ -2991,7 +2991,7 @@ int config_parse_line_max(
+         else {
+                 uint64_t v;
+ 
+-                r = parse_size(rvalue, 1024, &v);
++                r = sd_parse_size(rvalue, 1024, &v);
+                 if (r < 0) {
+                         log_syntax(unit, LOG_WARNING, filename, line, r, "Failed to parse LineMax= value, ignoring: %s", rvalue);
+                         return 0;
+@@ -3049,7 +3049,7 @@ int config_parse_compress(
+         } else {
+                 r = parse_boolean(rvalue);
+                 if (r < 0) {
+-                        r = parse_size(rvalue, 1024, &compress->threshold_bytes);
++                        r = sd_parse_size(rvalue, 1024, &compress->threshold_bytes);
+                         if (r < 0)
+                                 log_syntax(unit, LOG_WARNING, filename, line, r,
+                                            "Failed to parse Compress= value, ignoring: %s", rvalue);
+diff '--color=auto' -Nurp a/src/journal-remote/journal-gatewayd.c b/src/journal-remote/journal-gatewayd.c
+--- a/src/journal-remote/journal-gatewayd.c	2025-06-30 19:12:14.179138321 +0000
++++ b/src/journal-remote/journal-gatewayd.c	2025-06-30 19:09:21.000000000 +0000
+@@ -308,7 +308,7 @@ static int request_parse_accept(
+         return 0;
+ }
+ 
+-static int request_parse_range_skip_and_n_entries(
++static int request_sd_parse_range_skip_and_n_entries(
+                 RequestMeta *m,
+                 const char *colon) {
+ 
+@@ -341,7 +341,7 @@ static int request_parse_range_skip_and_
+         return 0;
+ }
+ 
+-static int request_parse_range_entries(
++static int request_sd_parse_range_entries(
+                 RequestMeta *m,
+                 const char *entries_request) {
+ 
+@@ -355,7 +355,7 @@ static int request_parse_range_entries(
+         if (!colon)
+                 m->cursor = strdup(entries_request);
+         else {
+-                r = request_parse_range_skip_and_n_entries(m, colon);
++                r = request_sd_parse_range_skip_and_n_entries(m, colon);
+                 if (r < 0)
+                         return r;
+ 
+@@ -371,7 +371,7 @@ static int request_parse_range_entries(
+         return 0;
+ }
+ 
+-static int request_parse_range_time(
++static int request_sd_parse_range_time(
+                 RequestMeta *m,
+                 const char *time_request) {
+ 
+@@ -405,7 +405,7 @@ static int request_parse_range_time(
+         if (!colon)
+                 until = strdup(time_request);
+         else {
+-                r = request_parse_range_skip_and_n_entries(m, colon);
++                r = request_sd_parse_range_skip_and_n_entries(m, colon);
+                 if (r < 0)
+                         return r;
+ 
+@@ -427,7 +427,7 @@ static int request_parse_range_time(
+         return 0;
+ }
+ 
+-static int request_parse_range(
++static int request_sd_parse_range(
+                 RequestMeta *m,
+                 struct MHD_Connection *connection) {
+ 
+@@ -449,11 +449,11 @@ static int request_parse_range(
+ 
+         range_after_eq = startswith(range, "entries=");
+         if (range_after_eq)
+-                return request_parse_range_entries(m, skip_leading_chars(range_after_eq, /* bad = */ NULL));
++                return request_sd_parse_range_entries(m, skip_leading_chars(range_after_eq, /* bad = */ NULL));
+ 
+         range_after_eq = startswith(range, "realtime=");
+         if (range_after_eq)
+-                return request_parse_range_time(m, skip_leading_chars(range_after_eq, /* bad = */ NULL));
++                return request_sd_parse_range_time(m, skip_leading_chars(range_after_eq, /* bad = */ NULL));
+ 
+         return 0;
+ }
+@@ -565,7 +565,7 @@ static int request_handler_entries(
+         if (request_parse_accept(m, connection) < 0)
+                 return mhd_respond(connection, MHD_HTTP_BAD_REQUEST, "Failed to parse Accept header.");
+ 
+-        if (request_parse_range(m, connection) < 0)
++        if (request_sd_parse_range(m, connection) < 0)
+                 return mhd_respond(connection, MHD_HTTP_BAD_REQUEST, "Failed to parse Range header.");
+ 
+         if (request_parse_arguments(m, connection) < 0)
+diff '--color=auto' -Nurp a/src/login/logind-user.c b/src/login/logind-user.c
+--- a/src/login/logind-user.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/login/logind-user.c	2025-06-30 19:09:07.000000000 +0000
+@@ -1018,7 +1018,7 @@ int config_parse_tmpfs_size(
+ 
+                 /* If the passed argument was not a percentage, or out of range, parse as byte size */
+ 
+-                r = parse_size(rvalue, 1024, &k);
++                r = sd_parse_size(rvalue, 1024, &k);
+                 if (r >= 0 && (k <= 0 || (uint64_t) (size_t) k != k))
+                         r = -ERANGE;
+                 if (r < 0) {
+diff '--color=auto' -Nurp a/src/login/pam_systemd.c b/src/login/pam_systemd.c
+--- a/src/login/pam_systemd.c	2025-06-30 19:12:14.223138320 +0000
++++ b/src/login/pam_systemd.c	2025-06-30 19:09:07.000000000 +0000
+@@ -412,7 +412,7 @@ static int append_session_memory_max(pam
+                 return PAM_SUCCESS;
+         }
+ 
+-        r = parse_size(limit, 1024, &val);
++        r = sd_parse_size(limit, 1024, &val);
+         if (r >= 0) {
+                 r = sd_bus_message_append(m, "(sv)", "MemoryMax", "t", val);
+                 if (r < 0)
+diff '--color=auto' -Nurp a/src/machine/machinectl.c b/src/machine/machinectl.c
+--- a/src/machine/machinectl.c	2025-06-30 19:12:14.227138320 +0000
++++ b/src/machine/machinectl.c	2025-06-30 19:09:07.000000000 +0000
+@@ -1882,7 +1882,7 @@ static int set_limit(int argc, char *arg
+         if (STR_IN_SET(argv[argc-1], "-", "none", "infinity"))
+                 limit = UINT64_MAX;
+         else {
+-                r = parse_size(argv[argc-1], 1024, &limit);
++                r = sd_parse_size(argv[argc-1], 1024, &limit);
+                 if (r < 0)
+                         return log_error_errno(r, "Failed to parse size: %s", argv[argc-1]);
+         }
+diff '--color=auto' -Nurp a/src/network/netdev/batadv.c b/src/network/netdev/batadv.c
+--- a/src/network/netdev/batadv.c	2025-06-30 19:12:13.619138334 +0000
++++ b/src/network/netdev/batadv.c	2025-06-30 19:09:07.000000000 +0000
+@@ -76,7 +76,7 @@ int config_parse_badadv_bandwidth (
+         assert(lvalue);
+         assert(rvalue);
+ 
+-        r = parse_size(rvalue, 1000, &k);
++        r = sd_parse_size(rvalue, 1000, &k);
+         if (r < 0) {
+                 log_syntax(unit, LOG_WARNING, filename, line, r,
+                            "Failed to parse '%s=', ignoring assignment: %s",
+diff '--color=auto' -Nurp a/src/network/netdev/vlan.c b/src/network/netdev/vlan.c
+--- a/src/network/netdev/vlan.c	2025-06-30 19:12:13.627138333 +0000
++++ b/src/network/netdev/vlan.c	2025-06-30 19:09:21.000000000 +0000
+@@ -152,7 +152,7 @@ int config_parse_vlan_qos_maps(
+                 if (r == 0)
+                         return 0;
+ 
+-                r = parse_range(w, &from, &to);
++                r = sd_parse_range(w, &from, &to);
+                 if (r < 0) {
+                         log_syntax(unit, LOG_WARNING, filename, line, r, "Failed to parse %s, ignoring: %s", lvalue, w);
+                         continue;
+diff '--color=auto' -Nurp a/src/network/networkd-can.c b/src/network/networkd-can.c
+--- a/src/network/networkd-can.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/network/networkd-can.c	2025-06-30 19:09:07.000000000 +0000
+@@ -158,7 +158,7 @@ int config_parse_can_bitrate(
+         assert(lvalue);
+         assert(rvalue);
+ 
+-        r = parse_size(rvalue, 1000, &sz);
++        r = sd_parse_size(rvalue, 1000, &sz);
+         if (r < 0) {
+                 log_syntax(unit, LOG_WARNING, filename, line, r,
+                            "Failed to parse can bitrate '%s', ignoring: %m", rvalue);
+diff '--color=auto' -Nurp a/src/network/networkd-route-metric.c b/src/network/networkd-route-metric.c
+--- a/src/network/networkd-route-metric.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/network/networkd-route-metric.c	2025-06-30 19:09:07.000000000 +0000
+@@ -235,7 +235,7 @@ static int config_parse_route_metric_adv
+ 
+         assert(rvalue);
+ 
+-        r = parse_size(rvalue, 1024, &u);
++        r = sd_parse_size(rvalue, 1024, &u);
+         if (r < 0) {
+                 log_syntax(unit, LOG_WARNING, filename, line, r,
+                            "Could not parse %s=, ignoring assignment: %s", lvalue, rvalue);
+diff '--color=auto' -Nurp a/src/network/tc/cake.c b/src/network/tc/cake.c
+--- a/src/network/tc/cake.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/network/tc/cake.c	2025-06-30 19:09:07.000000000 +0000
+@@ -178,7 +178,7 @@ int config_parse_cake_bandwidth(
+                 return 0;
+         }
+ 
+-        r = parse_size(rvalue, 1000, &k);
++        r = sd_parse_size(rvalue, 1000, &k);
+         if (r < 0) {
+                 log_syntax(unit, LOG_WARNING, filename, line, r,
+                            "Failed to parse '%s=', ignoring assignment: %s",
+diff '--color=auto' -Nurp a/src/network/tc/drr.c b/src/network/tc/drr.c
+--- a/src/network/tc/drr.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/network/tc/drr.c	2025-06-30 19:09:07.000000000 +0000
+@@ -82,7 +82,7 @@ int config_parse_drr_size(
+                 return 0;
+         }
+ 
+-        r = parse_size(rvalue, 1024, &u);
++        r = sd_parse_size(rvalue, 1024, &u);
+         if (r < 0) {
+                 log_syntax(unit, LOG_WARNING, filename, line, r,
+                            "Failed to parse '%s=', ignoring assignment: %s",
+diff '--color=auto' -Nurp a/src/network/tc/ets.c b/src/network/tc/ets.c
+--- a/src/network/tc/ets.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/network/tc/ets.c	2025-06-30 19:09:07.000000000 +0000
+@@ -197,7 +197,7 @@ int config_parse_ets_quanta(
+                 if (r == 0)
+                         break;
+ 
+-                r = parse_size(word, 1024, &v);
++                r = sd_parse_size(word, 1024, &v);
+                 if (r < 0) {
+                         log_syntax(unit, LOG_WARNING, filename, line, r,
+                                    "Failed to parse '%s=', ignoring assignment: %s",
+diff '--color=auto' -Nurp a/src/network/tc/fifo.c b/src/network/tc/fifo.c
+--- a/src/network/tc/fifo.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/network/tc/fifo.c	2025-06-30 19:09:07.000000000 +0000
+@@ -140,7 +140,7 @@ int config_parse_bfifo_size(
+                 return 0;
+         }
+ 
+-        r = parse_size(rvalue, 1024, &u);
++        r = sd_parse_size(rvalue, 1024, &u);
+         if (r < 0) {
+                 log_syntax(unit, LOG_WARNING, filename, line, r,
+                            "Failed to parse '%s=', ignoring assignment: %s",
+diff '--color=auto' -Nurp a/src/network/tc/fq-codel.c b/src/network/tc/fq-codel.c
+--- a/src/network/tc/fq-codel.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/network/tc/fq-codel.c	2025-06-30 19:09:07.000000000 +0000
+@@ -315,7 +315,7 @@ int config_parse_fair_queueing_controlle
+                 return 0;
+         }
+ 
+-        r = parse_size(rvalue, 1024, &sz);
++        r = sd_parse_size(rvalue, 1024, &sz);
+         if (r < 0) {
+                 log_syntax(unit, LOG_WARNING, filename, line, r,
+                            "Failed to parse '%s=', ignoring assignment: %s",
+diff '--color=auto' -Nurp a/src/network/tc/fq.c b/src/network/tc/fq.c
+--- a/src/network/tc/fq.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/network/tc/fq.c	2025-06-30 19:09:07.000000000 +0000
+@@ -215,7 +215,7 @@ int config_parse_fair_queueing_size(
+                 return 0;
+         }
+ 
+-        r = parse_size(rvalue, 1024, &sz);
++        r = sd_parse_size(rvalue, 1024, &sz);
+         if (r < 0) {
+                 log_syntax(unit, LOG_WARNING, filename, line, r,
+                            "Failed to parse '%s=', ignoring assignment: %s",
+@@ -381,7 +381,7 @@ int config_parse_fair_queueing_max_rate(
+                 return 0;
+         }
+ 
+-        r = parse_size(rvalue, 1000, &sz);
++        r = sd_parse_size(rvalue, 1000, &sz);
+         if (r < 0) {
+                 log_syntax(unit, LOG_WARNING, filename, line, r,
+                            "Failed to parse '%s=', ignoring assignment: %s",
+diff '--color=auto' -Nurp a/src/network/tc/htb.c b/src/network/tc/htb.c
+--- a/src/network/tc/htb.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/network/tc/htb.c	2025-06-30 19:09:07.000000000 +0000
+@@ -343,7 +343,7 @@ int config_parse_hierarchy_token_bucket_
+                 return 0;
+         }
+ 
+-        r = parse_size(rvalue, 1024, &v);
++        r = sd_parse_size(rvalue, 1024, &v);
+         if (r < 0) {
+                 log_syntax(unit, LOG_WARNING, filename, line, r,
+                            "Failed to parse '%s=', ignoring assignment: %s",
+@@ -421,7 +421,7 @@ int config_parse_hierarchy_token_bucket_
+                 return 0;
+         }
+ 
+-        r = parse_size(rvalue, 1000, v);
++        r = sd_parse_size(rvalue, 1000, v);
+         if (r < 0) {
+                 log_syntax(unit, LOG_WARNING, filename, line, r,
+                            "Failed to parse '%s=', ignoring assignment: %s",
+diff '--color=auto' -Nurp a/src/network/tc/qfq.c b/src/network/tc/qfq.c
+--- a/src/network/tc/qfq.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/network/tc/qfq.c	2025-06-30 19:09:07.000000000 +0000
+@@ -149,7 +149,7 @@ int config_parse_quick_fair_queueing_max
+                 return 0;
+         }
+ 
+-        r = parse_size(rvalue, 1024, &v);
++        r = sd_parse_size(rvalue, 1024, &v);
+         if (r < 0) {
+                 log_syntax(unit, LOG_WARNING, filename, line, r,
+                            "Failed to parse '%s=', ignoring assignment: %s",
+diff '--color=auto' -Nurp a/src/network/tc/tbf.c b/src/network/tc/tbf.c
+--- a/src/network/tc/tbf.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/network/tc/tbf.c	2025-06-30 19:09:07.000000000 +0000
+@@ -159,7 +159,7 @@ int config_parse_token_bucket_filter_siz
+                 return 0;
+         }
+ 
+-        r = parse_size(rvalue, 1024, &k);
++        r = sd_parse_size(rvalue, 1024, &k);
+         if (r < 0) {
+                 log_syntax(unit, LOG_WARNING, filename, line, r,
+                            "Failed to parse '%s=', ignoring assignment: %s",
+@@ -229,7 +229,7 @@ int config_parse_token_bucket_filter_rat
+                 return 0;
+         }
+ 
+-        r = parse_size(rvalue, 1000, &k);
++        r = sd_parse_size(rvalue, 1000, &k);
+         if (r < 0) {
+                 log_syntax(unit, LOG_WARNING, filename, line, r,
+                            "Failed to parse '%s=', ignoring assignment: %s",
+diff '--color=auto' -Nurp a/src/partition/repart.c b/src/partition/repart.c
+--- a/src/partition/repart.c	2025-06-30 19:12:14.255138320 +0000
++++ b/src/partition/repart.c	2025-06-30 19:09:07.000000000 +0000
+@@ -1417,7 +1417,7 @@ static int config_parse_weight(
+         return 0;
+ }
+ 
+-static int config_parse_size4096(
++static int config_sd_parse_size4096(
+                 const char *unit,
+                 const char *filename,
+                 unsigned line,
+@@ -1435,7 +1435,7 @@ static int config_parse_size4096(
+         assert(rvalue);
+         assert(data);
+ 
+-        r = parse_size(rvalue, 1024, &parsed);
++        r = sd_parse_size(rvalue, 1024, &parsed);
+         if (r < 0)
+                 return log_syntax(unit, LOG_ERR, filename, line, r,
+                                   "Failed to parse size value: %s", rvalue);
+@@ -1471,7 +1471,7 @@ static int config_parse_block_size(
+ 
+         assert(rvalue);
+ 
+-        r = parse_size(rvalue, 1024, &parsed);
++        r = sd_parse_size(rvalue, 1024, &parsed);
+         if (r < 0)
+                 return log_syntax(unit, LOG_ERR, filename, line, r,
+                                   "Failed to parse size value: %s", rvalue);
+@@ -1980,10 +1980,10 @@ static int partition_read_definition(Par
+                 { "Partition", "Priority",                 config_parse_int32,             0, &p->priority                },
+                 { "Partition", "Weight",                   config_parse_weight,            0, &p->weight                  },
+                 { "Partition", "PaddingWeight",            config_parse_weight,            0, &p->padding_weight          },
+-                { "Partition", "SizeMinBytes",             config_parse_size4096,         -1, &p->size_min                },
+-                { "Partition", "SizeMaxBytes",             config_parse_size4096,          1, &p->size_max                },
+-                { "Partition", "PaddingMinBytes",          config_parse_size4096,         -1, &p->padding_min             },
+-                { "Partition", "PaddingMaxBytes",          config_parse_size4096,          1, &p->padding_max             },
++                { "Partition", "SizeMinBytes",             config_sd_parse_size4096,         -1, &p->size_min                },
++                { "Partition", "SizeMaxBytes",             config_sd_parse_size4096,          1, &p->size_max                },
++                { "Partition", "PaddingMinBytes",          config_sd_parse_size4096,         -1, &p->padding_min             },
++                { "Partition", "PaddingMaxBytes",          config_sd_parse_size4096,          1, &p->padding_max             },
+                 { "Partition", "FactoryReset",             config_parse_bool,              0, &p->factory_reset           },
+                 { "Partition", "CopyBlocks",               config_parse_copy_blocks,       0, p                           },
+                 { "Partition", "Format",                   config_parse_fstype,            0, &p->format                  },
+@@ -7382,7 +7382,7 @@ static int parse_argv(int argc, char *ar
+                                 break;
+                         }
+ 
+-                        r = parse_size(optarg, 1024, &parsed);
++                        r = sd_parse_size(optarg, 1024, &parsed);
+                         if (r < 0)
+                                 return log_error_errno(r, "Failed to parse --size= parameter: %s", optarg);
+ 
+diff '--color=auto' -Nurp a/src/portable/portablectl.c b/src/portable/portablectl.c
+--- a/src/portable/portablectl.c	2025-06-30 19:12:14.263138320 +0000
++++ b/src/portable/portablectl.c	2025-06-30 19:09:07.000000000 +0000
+@@ -1166,7 +1166,7 @@ static int set_limit(int argc, char *arg
+         if (STR_IN_SET(argv[argc-1], "-", "none", "infinity"))
+                 limit = UINT64_MAX;
+         else {
+-                r = parse_size(argv[argc-1], 1024, &limit);
++                r = sd_parse_size(argv[argc-1], 1024, &limit);
+                 if (r < 0)
+                         return log_error_errno(r, "Failed to parse size: %s", argv[argc-1]);
+         }
+diff '--color=auto' -Nurp a/src/shared/bus-unit-util.c b/src/shared/bus-unit-util.c
+--- a/src/shared/bus-unit-util.c	2025-06-30 19:12:14.279138319 +0000
++++ b/src/shared/bus-unit-util.c	2025-06-30 19:09:07.000000000 +0000
+@@ -250,11 +250,11 @@ static int bus_append_parse_sec_rename(s
+         return 1;
+ }
+ 
+-static int bus_append_parse_size(sd_bus_message *m, const char *field, const char *eq, uint64_t base) {
++static int bus_append_sd_parse_size(sd_bus_message *m, const char *field, const char *eq, uint64_t base) {
+         uint64_t v;
+         int r;
+ 
+-        r = parse_size(eq, base, &v);
++        r = sd_parse_size(eq, base, &v);
+         if (r < 0)
+                 return log_error_errno(r, "Failed to parse %s=%s: %m", field, eq);
+ 
+@@ -671,7 +671,7 @@ static int bus_append_cgroup_property(sd
+                 if (streq(field, "TasksMax"))
+                         return bus_append_safe_atou64(m, field, eq);
+ 
+-                return bus_append_parse_size(m, field, eq, 1024);
++                return bus_append_sd_parse_size(m, field, eq, 1024);
+         }
+ 
+         if (streq(field, "CPUQuota")) {
+@@ -747,7 +747,7 @@ static int bus_append_cgroup_property(sd
+                         if (streq(bandwidth, "infinity"))
+                                 bytes = CGROUP_LIMIT_MAX;
+                         else {
+-                                r = parse_size(bandwidth, 1000, &bytes);
++                                r = sd_parse_size(bandwidth, 1000, &bytes);
+                                 if (r < 0)
+                                         return log_error_errno(r, "Failed to parse byte value %s: %m", bandwidth);
+                         }
+@@ -2493,7 +2493,7 @@ static int bus_append_socket_property(sd
+         if (STR_IN_SET(field, "ReceiveBuffer",
+                               "SendBuffer",
+                               "PipeSize"))
+-                return bus_append_parse_size(m, field, eq, 1024);
++                return bus_append_sd_parse_size(m, field, eq, 1024);
+ 
+         if (STR_IN_SET(field, "ExecStartPre",
+                               "ExecStartPost",
+diff '--color=auto' -Nurp a/src/shared/condition.c b/src/shared/condition.c
+--- a/src/shared/condition.c	2025-06-30 19:12:14.279138319 +0000
++++ b/src/shared/condition.c	2025-06-30 19:09:07.000000000 +0000
+@@ -302,7 +302,7 @@ static int condition_test_memory(Conditi
+         if (operator < 0)
+                 operator = COMPARE_GREATER_OR_EQUAL; /* default to >= check, if nothing is specified. */
+ 
+-        r = parse_size(p, 1024, &k);
++        r = sd_parse_size(p, 1024, &k);
+         if (r < 0)
+                 return log_debug_errno(r, "Failed to parse size '%s': %m", p);
+ 
+diff '--color=auto' -Nurp a/src/shared/conf-parser.c b/src/shared/conf-parser.c
+--- a/src/shared/conf-parser.c	2025-06-30 19:12:14.283138319 +0000
++++ b/src/shared/conf-parser.c	2025-06-30 19:09:07.000000000 +0000
+@@ -891,7 +891,7 @@ int config_parse_iec_size(
+         assert(lvalue);
+         assert(rvalue);
+ 
+-        r = parse_size(rvalue, 1024, &v);
++        r = sd_parse_size(rvalue, 1024, &v);
+         if (r >= 0 && (uint64_t) (size_t) v != v)
+                 r = -ERANGE;
+         if (r < 0) {
+@@ -922,7 +922,7 @@ int config_parse_si_uint64(
+         assert(lvalue);
+         assert(rvalue);
+ 
+-        r = parse_size(rvalue, 1000, sz);
++        r = sd_parse_size(rvalue, 1000, sz);
+         if (r < 0)
+                 log_syntax(unit, LOG_WARNING, filename, line, r, "Failed to parse size value '%s', ignoring: %m", rvalue);
+ 
+@@ -948,7 +948,7 @@ int config_parse_iec_uint64(
+         assert(lvalue);
+         assert(rvalue);
+ 
+-        r = parse_size(rvalue, 1024, bytes);
++        r = sd_parse_size(rvalue, 1024, bytes);
+         if (r < 0)
+                 log_syntax(unit, LOG_WARNING, filename, line, r, "Failed to parse size value, ignoring: %s", rvalue);
+ 
+diff '--color=auto' -Nurp a/src/shared/cpu-set-util.c b/src/shared/cpu-set-util.c
+--- a/src/shared/cpu-set-util.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/shared/cpu-set-util.c	2025-06-30 19:09:21.000000000 +0000
+@@ -218,7 +218,7 @@ int parse_cpu_set_full(
+                 if (r == 0)
+                         break;
+ 
+-                r = parse_range(word, &cpu_lower, &cpu_upper);
++                r = sd_parse_range(word, &cpu_lower, &cpu_upper);
+                 if (r < 0)
+                         return warn ? log_syntax(unit, LOG_ERR, filename, line, r, "Failed to parse CPU affinity '%s'", word) : r;
+ 
+diff '--color=auto' -Nurp a/src/shared/vlan-util.c b/src/shared/vlan-util.c
+--- a/src/shared/vlan-util.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/shared/vlan-util.c	2025-06-30 19:09:21.000000000 +0000
+@@ -26,7 +26,7 @@ int parse_vid_range(const char *p, uint1
+         unsigned lower, upper;
+         int r;
+ 
+-        r = parse_range(p, &lower, &upper);
++        r = sd_parse_range(p, &lower, &upper);
+         if (r < 0)
+                 return r;
+ 
+diff '--color=auto' -Nurp a/src/test/test-parse-util.c b/src/test/test-parse-util.c
+--- a/src/test/test-parse-util.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/test/test-parse-util.c	2025-06-30 19:09:21.000000000 +0000
+@@ -94,325 +94,325 @@ TEST(parse_mode) {
+         assert_se(parse_mode(" 1", &m) >= 0 && m == 1);
+ }
+ 
+-TEST(parse_size_iec) {
++TEST(sd_parse_size_iec) {
+         uint64_t bytes;
+ 
+-        assert_se(parse_size("", 1024, &bytes) == -EINVAL);
++        assert_se(sd_parse_size("", 1024, &bytes) == -EINVAL);
+ 
+-        assert_se(parse_size("111", 1024, &bytes) == 0);
++        assert_se(sd_parse_size("111", 1024, &bytes) == 0);
+         assert_se(bytes == 111);
+ 
+-        assert_se(parse_size("111.4", 1024, &bytes) == 0);
++        assert_se(sd_parse_size("111.4", 1024, &bytes) == 0);
+         assert_se(bytes == 111);
+ 
+-        assert_se(parse_size(" 112 B", 1024, &bytes) == 0);
++        assert_se(sd_parse_size(" 112 B", 1024, &bytes) == 0);
+         assert_se(bytes == 112);
+ 
+-        assert_se(parse_size(" 112.6 B", 1024, &bytes) == 0);
++        assert_se(sd_parse_size(" 112.6 B", 1024, &bytes) == 0);
+         assert_se(bytes == 112);
+ 
+-        assert_se(parse_size("3.5 K", 1024, &bytes) == 0);
++        assert_se(sd_parse_size("3.5 K", 1024, &bytes) == 0);
+         assert_se(bytes == 3*1024 + 512);
+ 
+-        assert_se(parse_size("3. K", 1024, &bytes) == 0);
++        assert_se(sd_parse_size("3. K", 1024, &bytes) == 0);
+         assert_se(bytes == 3*1024);
+ 
+-        assert_se(parse_size("3.0 K", 1024, &bytes) == 0);
++        assert_se(sd_parse_size("3.0 K", 1024, &bytes) == 0);
+         assert_se(bytes == 3*1024);
+ 
+-        assert_se(parse_size("3. 0 K", 1024, &bytes) == -EINVAL);
++        assert_se(sd_parse_size("3. 0 K", 1024, &bytes) == -EINVAL);
+ 
+-        assert_se(parse_size(" 4 M 11.5K", 1024, &bytes) == 0);
++        assert_se(sd_parse_size(" 4 M 11.5K", 1024, &bytes) == 0);
+         assert_se(bytes == 4*1024*1024 + 11 * 1024 + 512);
+ 
+-        assert_se(parse_size("3B3.5G", 1024, &bytes) == -EINVAL);
++        assert_se(sd_parse_size("3B3.5G", 1024, &bytes) == -EINVAL);
+ 
+-        assert_se(parse_size("3.5G3B", 1024, &bytes) == 0);
++        assert_se(sd_parse_size("3.5G3B", 1024, &bytes) == 0);
+         assert_se(bytes == 3ULL*1024*1024*1024 + 512*1024*1024 + 3);
+ 
+-        assert_se(parse_size("3.5G 4B", 1024, &bytes) == 0);
++        assert_se(sd_parse_size("3.5G 4B", 1024, &bytes) == 0);
+         assert_se(bytes == 3ULL*1024*1024*1024 + 512*1024*1024 + 4);
+ 
+-        assert_se(parse_size("3B3G4T", 1024, &bytes) == -EINVAL);
++        assert_se(sd_parse_size("3B3G4T", 1024, &bytes) == -EINVAL);
+ 
+-        assert_se(parse_size("4T3G3B", 1024, &bytes) == 0);
++        assert_se(sd_parse_size("4T3G3B", 1024, &bytes) == 0);
+         assert_se(bytes == (4ULL*1024 + 3)*1024*1024*1024 + 3);
+ 
+-        assert_se(parse_size(" 4 T 3 G 3 B", 1024, &bytes) == 0);
++        assert_se(sd_parse_size(" 4 T 3 G 3 B", 1024, &bytes) == 0);
+         assert_se(bytes == (4ULL*1024 + 3)*1024*1024*1024 + 3);
+ 
+-        assert_se(parse_size("12P", 1024, &bytes) == 0);
++        assert_se(sd_parse_size("12P", 1024, &bytes) == 0);
+         assert_se(bytes == 12ULL * 1024*1024*1024*1024*1024);
+ 
+-        assert_se(parse_size("12P12P", 1024, &bytes) == -EINVAL);
++        assert_se(sd_parse_size("12P12P", 1024, &bytes) == -EINVAL);
+ 
+-        assert_se(parse_size("3E 2P", 1024, &bytes) == 0);
++        assert_se(sd_parse_size("3E 2P", 1024, &bytes) == 0);
+         assert_se(bytes == (3 * 1024 + 2ULL) * 1024*1024*1024*1024*1024);
+ 
+-        assert_se(parse_size("12X", 1024, &bytes) == -EINVAL);
++        assert_se(sd_parse_size("12X", 1024, &bytes) == -EINVAL);
+ 
+-        assert_se(parse_size("12.5X", 1024, &bytes) == -EINVAL);
++        assert_se(sd_parse_size("12.5X", 1024, &bytes) == -EINVAL);
+ 
+-        assert_se(parse_size("12.5e3", 1024, &bytes) == -EINVAL);
++        assert_se(sd_parse_size("12.5e3", 1024, &bytes) == -EINVAL);
+ 
+-        assert_se(parse_size("1024E", 1024, &bytes) == -ERANGE);
+-        assert_se(parse_size("-1", 1024, &bytes) == -ERANGE);
+-        assert_se(parse_size("-1024E", 1024, &bytes) == -ERANGE);
++        assert_se(sd_parse_size("1024E", 1024, &bytes) == -ERANGE);
++        assert_se(sd_parse_size("-1", 1024, &bytes) == -ERANGE);
++        assert_se(sd_parse_size("-1024E", 1024, &bytes) == -ERANGE);
+ 
+-        assert_se(parse_size("-1024P", 1024, &bytes) == -ERANGE);
++        assert_se(sd_parse_size("-1024P", 1024, &bytes) == -ERANGE);
+ 
+-        assert_se(parse_size("-10B 20K", 1024, &bytes) == -ERANGE);
++        assert_se(sd_parse_size("-10B 20K", 1024, &bytes) == -ERANGE);
+ }
+ 
+-TEST(parse_size_si) {
++TEST(sd_parse_size_si) {
+         uint64_t bytes;
+ 
+-        assert_se(parse_size("", 1000, &bytes) == -EINVAL);
++        assert_se(sd_parse_size("", 1000, &bytes) == -EINVAL);
+ 
+-        assert_se(parse_size("111", 1000, &bytes) == 0);
++        assert_se(sd_parse_size("111", 1000, &bytes) == 0);
+         assert_se(bytes == 111);
+ 
+-        assert_se(parse_size("111.4", 1000, &bytes) == 0);
++        assert_se(sd_parse_size("111.4", 1000, &bytes) == 0);
+         assert_se(bytes == 111);
+ 
+-        assert_se(parse_size(" 112 B", 1000, &bytes) == 0);
++        assert_se(sd_parse_size(" 112 B", 1000, &bytes) == 0);
+         assert_se(bytes == 112);
+ 
+-        assert_se(parse_size(" 112.6 B", 1000, &bytes) == 0);
++        assert_se(sd_parse_size(" 112.6 B", 1000, &bytes) == 0);
+         assert_se(bytes == 112);
+ 
+-        assert_se(parse_size("3.5 K", 1000, &bytes) == 0);
++        assert_se(sd_parse_size("3.5 K", 1000, &bytes) == 0);
+         assert_se(bytes == 3*1000 + 500);
+ 
+-        assert_se(parse_size("3. K", 1000, &bytes) == 0);
++        assert_se(sd_parse_size("3. K", 1000, &bytes) == 0);
+         assert_se(bytes == 3*1000);
+ 
+-        assert_se(parse_size("3.0 K", 1000, &bytes) == 0);
++        assert_se(sd_parse_size("3.0 K", 1000, &bytes) == 0);
+         assert_se(bytes == 3*1000);
+ 
+-        assert_se(parse_size("3. 0 K", 1000, &bytes) == -EINVAL);
++        assert_se(sd_parse_size("3. 0 K", 1000, &bytes) == -EINVAL);
+ 
+-        assert_se(parse_size(" 4 M 11.5K", 1000, &bytes) == 0);
++        assert_se(sd_parse_size(" 4 M 11.5K", 1000, &bytes) == 0);
+         assert_se(bytes == 4*1000*1000 + 11 * 1000 + 500);
+ 
+-        assert_se(parse_size("3B3.5G", 1000, &bytes) == -EINVAL);
++        assert_se(sd_parse_size("3B3.5G", 1000, &bytes) == -EINVAL);
+ 
+-        assert_se(parse_size("3.5G3B", 1000, &bytes) == 0);
++        assert_se(sd_parse_size("3.5G3B", 1000, &bytes) == 0);
+         assert_se(bytes == 3ULL*1000*1000*1000 + 500*1000*1000 + 3);
+ 
+-        assert_se(parse_size("3.5G 4B", 1000, &bytes) == 0);
++        assert_se(sd_parse_size("3.5G 4B", 1000, &bytes) == 0);
+         assert_se(bytes == 3ULL*1000*1000*1000 + 500*1000*1000 + 4);
+ 
+-        assert_se(parse_size("3B3G4T", 1000, &bytes) == -EINVAL);
++        assert_se(sd_parse_size("3B3G4T", 1000, &bytes) == -EINVAL);
+ 
+-        assert_se(parse_size("4T3G3B", 1000, &bytes) == 0);
++        assert_se(sd_parse_size("4T3G3B", 1000, &bytes) == 0);
+         assert_se(bytes == (4ULL*1000 + 3)*1000*1000*1000 + 3);
+ 
+-        assert_se(parse_size(" 4 T 3 G 3 B", 1000, &bytes) == 0);
++        assert_se(sd_parse_size(" 4 T 3 G 3 B", 1000, &bytes) == 0);
+         assert_se(bytes == (4ULL*1000 + 3)*1000*1000*1000 + 3);
+ 
+-        assert_se(parse_size("12P", 1000, &bytes) == 0);
++        assert_se(sd_parse_size("12P", 1000, &bytes) == 0);
+         assert_se(bytes == 12ULL * 1000*1000*1000*1000*1000);
+ 
+-        assert_se(parse_size("12P12P", 1000, &bytes) == -EINVAL);
++        assert_se(sd_parse_size("12P12P", 1000, &bytes) == -EINVAL);
+ 
+-        assert_se(parse_size("3E 2P", 1000, &bytes) == 0);
++        assert_se(sd_parse_size("3E 2P", 1000, &bytes) == 0);
+         assert_se(bytes == (3 * 1000 + 2ULL) * 1000*1000*1000*1000*1000);
+ 
+-        assert_se(parse_size("12X", 1000, &bytes) == -EINVAL);
++        assert_se(sd_parse_size("12X", 1000, &bytes) == -EINVAL);
+ 
+-        assert_se(parse_size("12.5X", 1000, &bytes) == -EINVAL);
++        assert_se(sd_parse_size("12.5X", 1000, &bytes) == -EINVAL);
+ 
+-        assert_se(parse_size("12.5e3", 1000, &bytes) == -EINVAL);
++        assert_se(sd_parse_size("12.5e3", 1000, &bytes) == -EINVAL);
+ 
+-        assert_se(parse_size("1000E", 1000, &bytes) == -ERANGE);
+-        assert_se(parse_size("-1", 1000, &bytes) == -ERANGE);
+-        assert_se(parse_size("-1000E", 1000, &bytes) == -ERANGE);
++        assert_se(sd_parse_size("1000E", 1000, &bytes) == -ERANGE);
++        assert_se(sd_parse_size("-1", 1000, &bytes) == -ERANGE);
++        assert_se(sd_parse_size("-1000E", 1000, &bytes) == -ERANGE);
+ 
+-        assert_se(parse_size("-1000P", 1000, &bytes) == -ERANGE);
++        assert_se(sd_parse_size("-1000P", 1000, &bytes) == -ERANGE);
+ 
+-        assert_se(parse_size("-10B 20K", 1000, &bytes) == -ERANGE);
++        assert_se(sd_parse_size("-10B 20K", 1000, &bytes) == -ERANGE);
+ }
+ 
+-TEST(parse_range) {
++TEST(sd_parse_range) {
+         unsigned lower, upper;
+ 
+         /* Successful cases */
+-        assert_se(parse_range("111", &lower, &upper) == 0);
++        assert_se(sd_parse_range("111", &lower, &upper) == 0);
+         assert_se(lower == 111);
+         assert_se(upper == 111);
+ 
+-        assert_se(parse_range("111-123", &lower, &upper) == 0);
++        assert_se(sd_parse_range("111-123", &lower, &upper) == 0);
+         assert_se(lower == 111);
+         assert_se(upper == 123);
+ 
+-        assert_se(parse_range("123-111", &lower, &upper) == 0);
++        assert_se(sd_parse_range("123-111", &lower, &upper) == 0);
+         assert_se(lower == 123);
+         assert_se(upper == 111);
+ 
+-        assert_se(parse_range("123-123", &lower, &upper) == 0);
++        assert_se(sd_parse_range("123-123", &lower, &upper) == 0);
+         assert_se(lower == 123);
+         assert_se(upper == 123);
+ 
+-        assert_se(parse_range("0", &lower, &upper) == 0);
++        assert_se(sd_parse_range("0", &lower, &upper) == 0);
+         assert_se(lower == 0);
+         assert_se(upper == 0);
+ 
+-        assert_se(parse_range("0-15", &lower, &upper) == 0);
++        assert_se(sd_parse_range("0-15", &lower, &upper) == 0);
+         assert_se(lower == 0);
+         assert_se(upper == 15);
+ 
+-        assert_se(parse_range("15-0", &lower, &upper) == 0);
++        assert_se(sd_parse_range("15-0", &lower, &upper) == 0);
+         assert_se(lower == 15);
+         assert_se(upper == 0);
+ 
+-        assert_se(parse_range("128-65535", &lower, &upper) == 0);
++        assert_se(sd_parse_range("128-65535", &lower, &upper) == 0);
+         assert_se(lower == 128);
+         assert_se(upper == 65535);
+ 
+-        assert_se(parse_range("1024-4294967295", &lower, &upper) == 0);
++        assert_se(sd_parse_range("1024-4294967295", &lower, &upper) == 0);
+         assert_se(lower == 1024);
+         assert_se(upper == 4294967295);
+ 
+         /* Leading whitespace is acceptable */
+-        assert_se(parse_range(" 111", &lower, &upper) == 0);
++        assert_se(sd_parse_range(" 111", &lower, &upper) == 0);
+         assert_se(lower == 111);
+         assert_se(upper == 111);
+ 
+-        assert_se(parse_range(" 111-123", &lower, &upper) == 0);
++        assert_se(sd_parse_range(" 111-123", &lower, &upper) == 0);
+         assert_se(lower == 111);
+         assert_se(upper == 123);
+ 
+-        assert_se(parse_range("111- 123", &lower, &upper) == 0);
++        assert_se(sd_parse_range("111- 123", &lower, &upper) == 0);
+         assert_se(lower == 111);
+         assert_se(upper == 123);
+ 
+-        assert_se(parse_range("\t111-\t123", &lower, &upper) == 0);
++        assert_se(sd_parse_range("\t111-\t123", &lower, &upper) == 0);
+         assert_se(lower == 111);
+         assert_se(upper == 123);
+ 
+-        assert_se(parse_range(" \t 111- \t 123", &lower, &upper) == 0);
++        assert_se(sd_parse_range(" \t 111- \t 123", &lower, &upper) == 0);
+         assert_se(lower == 111);
+         assert_se(upper == 123);
+ 
+         /* Error cases, make sure they fail as expected */
+         lower = upper = 9999;
+-        assert_se(parse_range("111garbage", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111garbage", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("garbage111", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("garbage111", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("garbage", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("garbage", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111-123garbage", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111-123garbage", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111garbage-123", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111garbage-123", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+         /* Empty string */
+         lower = upper = 9999;
+-        assert_se(parse_range("", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+         /* 111--123 will pass -123 to safe_atou which returns -ERANGE for negative */
+-        assert_se(parse_range("111--123", &lower, &upper) == -ERANGE);
++        assert_se(sd_parse_range("111--123", &lower, &upper) == -ERANGE);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("-123", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("-123", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("-111-123", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("-111-123", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111-123-", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111-123-", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111.4-123", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111.4-123", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111-123.4", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111-123.4", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111,4-123", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111,4-123", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111-123,4", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111-123,4", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+         /* Error on trailing dash */
+-        assert_se(parse_range("111-", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111-", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111-123-", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111-123-", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111--", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111--", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111- ", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111- ", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+         /* Whitespace is not a separator */
+-        assert_se(parse_range("111 123", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111 123", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111\t123", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111\t123", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111 \t 123", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111 \t 123", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+         /* Trailing whitespace is invalid (from safe_atou) */
+-        assert_se(parse_range("111 ", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111 ", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111-123 ", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111-123 ", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111 -123", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111 -123", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111 -123 ", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111 -123 ", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111\t-123\t", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111\t-123\t", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+-        assert_se(parse_range("111 \t -123 \t ", &lower, &upper) == -EINVAL);
++        assert_se(sd_parse_range("111 \t -123 \t ", &lower, &upper) == -EINVAL);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ 
+         /* Out of the "unsigned" range, this is 1<<64 */
+-        assert_se(parse_range("0-18446744073709551616", &lower, &upper) == -ERANGE);
++        assert_se(sd_parse_range("0-18446744073709551616", &lower, &upper) == -ERANGE);
+         assert_se(lower == 9999);
+         assert_se(upper == 9999);
+ }
+diff '--color=auto' -Nurp a/src/veritysetup/veritysetup.c b/src/veritysetup/veritysetup.c
+--- a/src/veritysetup/veritysetup.c	2025-03-06 14:40:12.000000000 +0000
++++ b/src/veritysetup/veritysetup.c	2025-06-30 19:09:07.000000000 +0000
+@@ -85,7 +85,7 @@ static int parse_block_size(const char *
+         uint64_t u;
+         int r;
+ 
+-        r = parse_size(t, 1024, &u);
++        r = sd_parse_size(t, 1024, &u);
+         if (r < 0)
+                 return r;
+ 
+@@ -183,7 +183,7 @@ static int parse_options(const char *opt
+                 } else if ((val = startswith(word, "hash-offset="))) {
+                         uint64_t off;
+ 
+-                        r = parse_size(val, 1024, &off);
++                        r = sd_parse_size(val, 1024, &off);
+                         if (r < 0)
+                                 return log_error_errno(r, "Failed to parse offset '%s': %m", word);
+                         if (off % 512 != 0)
+@@ -245,7 +245,7 @@ static int parse_options(const char *opt
+                 } else if ((val = startswith(word, "fec-offset="))) {
+                         uint64_t off;
+ 
+-                        r = parse_size(val, 1024, &off);
++                        r = sd_parse_size(val, 1024, &off);
+                         if (r < 0)
+                                 return log_error_errno(r, "Failed to parse offset '%s': %m", word);
+                         if (off % 512 != 0)
+diff '--color=auto' -Nurp a/src/vmspawn/vmspawn.c b/src/vmspawn/vmspawn.c
+--- a/src/vmspawn/vmspawn.c	2025-06-30 19:12:14.407138316 +0000
++++ b/src/vmspawn/vmspawn.c	2025-06-30 19:09:07.000000000 +0000
+@@ -352,7 +352,7 @@ static int parse_argv(int argc, char *ar
+                         break;
+ 
+                 case ARG_RAM:
+-                        r = parse_size(optarg, 1024, &arg_ram);
++                        r = sd_parse_size(optarg, 1024, &arg_ram);
+                         if (r < 0)
+                                 return log_error_errno(r, "Failed to parse --ram=%s: %m", optarg);
+                         break;

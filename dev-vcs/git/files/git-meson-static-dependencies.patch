@@ -1,0 +1,47 @@
+--- a/meson.build	2025-06-16 09:32:49.384903679 +0000
++++ b/meson.build	2025-06-16 09:33:29.112902811 +0000
+@@ -826,7 +826,7 @@ if zlib_backend in ['auto', 'zlib-ng']
+   endif
+ endif
+ if zlib_backend in ['auto', 'zlib']
+-  zlib = dependency('zlib', default_options: ['default_library=static', 'tests=disabled'])
++  zlib = dependency('zlib', default_options: ['default_library=static', 'tests=disabled'], static: true,)
+   if zlib.version().version_compare('<1.2.0')
+     libgit_c_args += '-DNO_DEFLATE_BOUND'
+   endif
+@@ -946,7 +946,7 @@ else
+   build_options_config.set('NO_ICONV', '1')
+ endif
+ 
+-pcre2 = dependency('libpcre2-8', required: get_option('pcre2'), default_options: ['default_library=static', 'test=false'])
++pcre2 = dependency('libpcre2-8', required: get_option('pcre2'), default_options: ['default_library=static', 'test=false'], static: true,)
+ if pcre2.found()
+   libgit_dependencies += pcre2
+   libgit_c_args += '-DUSE_LIBPCRE2'
+@@ -955,7 +955,7 @@ else
+   build_options_config.set('USE_LIBPCRE2', '')
+ endif
+ 
+-curl = dependency('libcurl', version: '>=7.21.3', required: get_option('curl'), default_options: ['default_library=static', 'tests=disabled', 'tool=disabled'])
++curl = dependency('libcurl', version: '>=7.21.3', required: get_option('curl'), default_options: ['default_library=static', 'tests=disabled', 'tool=disabled'], static: true,)
+ use_curl_for_imap_send = false
+ if curl.found()
+   if curl.version().version_compare('>=7.34.0')
+@@ -973,7 +973,7 @@ else
+   build_options_config.set('NO_CURL', '1')
+ endif
+ 
+-expat = dependency('expat', required: get_option('expat'), default_options: ['default_library=static', 'build_tests=false'])
++expat = dependency('expat', required: get_option('expat'), default_options: ['default_library=static', 'build_tests=false'], static: true,)
+ if expat.found()
+   libgit_dependencies += expat
+ 
+@@ -1395,7 +1395,7 @@ openssl_required = 'openssl' in [csprng_
+ openssl = dependency('openssl',
+   required: openssl_required,
+   allow_fallback: openssl_required or https_backend == 'auto',
+-  default_options: ['default_library=static'],
++  default_options: ['default_library=static'], static: true,
+ )
+ if https_backend == 'auto' and openssl.found()
+   https_backend = 'openssl'

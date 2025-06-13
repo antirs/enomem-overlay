@@ -1,0 +1,11 @@
+--- a/Lib/ctypes/__init__.py	2025-02-04 14:38:38.000000000 +0000
++++ b/Lib/ctypes/__init__.py	2025-06-22 19:55:48.763085608 +0000
+@@ -469,7 +469,7 @@ if _os.name == "nt":
+ elif _sys.platform == "cygwin":
+     pythonapi = PyDLL("libpython%d.%d.dll" % _sys.version_info[:2])
+ else:
+-    pythonapi = PyDLL(None)
++    pythonapi = None
+ 
+ 
+ if _os.name == "nt":

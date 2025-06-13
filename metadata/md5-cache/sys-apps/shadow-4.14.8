@@ -1,0 +1,16 @@
+BDEPEND=app-arch/xz-utils sys-devel/gettext verify-sig? ( sec-keys/openpgp-keys-alejandro-colomar ) >=app-portage/elt-patches-20250306 verify-sig? ( app-crypt/gnupg >=app-portage/gemato-20 )
+DEFINED_PHASES=configure install postinst preinst prepare unpack
+DEPEND=virtual/libcrypt:=[static-libs?] acl? ( sys-apps/acl:=[static-libs?] ) audit? ( >=sys-process/audit-2.6:=[static-libs?] ) cracklib? ( >=sys-libs/cracklib-2.7-r3:=[static-libs?] ) nls? ( virtual/libintl[static-libs?] ) pam? ( sys-libs/pam:= ) skey? ( sys-auth/skey:= ) selinux? ( >=sys-libs/libselinux-1.28:=[static-libs?] sys-libs/libsemanage:= ) su? ( !sys-apps/util-linux[su(-)] ) systemd? ( sys-apps/systemd:= ) xattr? ( sys-apps/attr:=[static-libs?] ) !<sys-libs/glibc-2.38 >=sys-kernel/linux-headers-4.14
+DESCRIPTION=Utilities to deal with user accounts
+EAPI=8
+HOMEPAGE=https://github.com/shadow-maint/shadow
+INHERIT=libtool pam verify-sig
+IUSE=acl audit cracklib nls pam selinux skey split-usr noshared nostatic static static-libs su systemd xattr verify-sig
+KEYWORDS=~alpha amd64 arm arm64 hppa ~loong ~m68k ~mips ppc ppc64 ~riscv ~s390 sparc x86
+LICENSE=BSD GPL-2
+RDEPEND=!static? ( virtual/libcrypt:=[static-libs?] acl? ( sys-apps/acl:=[static-libs?] ) audit? ( >=sys-process/audit-2.6:=[static-libs?] ) cracklib? ( >=sys-libs/cracklib-2.7-r3:=[static-libs?] ) nls? ( virtual/libintl[static-libs?] ) pam? ( sys-libs/pam:= ) skey? ( sys-auth/skey:= ) selinux? ( >=sys-libs/libselinux-1.28:=[static-libs?] sys-libs/libsemanage:= ) su? ( !sys-apps/util-linux[su(-)] ) systemd? ( sys-apps/systemd:= ) xattr? ( sys-apps/attr:=[static-libs?] ) !<sys-libs/glibc-2.38 pam? ( >=sys-auth/pambase-20150213 ) )
+REQUIRED_USE=?? ( cracklib pam )
+SLOT=0/4
+SRC_URI=https://github.com/shadow-maint/shadow/releases/download/4.14.8/shadow-4.14.8.tar.xz verify-sig? ( https://github.com/shadow-maint/shadow/releases/download/4.14.8/shadow-4.14.8.tar.xz.asc )
+_eclasses_=toolchain-funcs	6afdb6107430c1832ca7e16aacbf8fa1	multilib	b2a329026f2e404e9e371097dda47f96	libtool	c81bd096be5f4c82f4e8f156ef112402	flag-o-matic	16d3941ed2dc39f4819368ae51bc0b72	pam	b56d0c9c20fc5b553f13c8ae165a10a5	eapi9-pipestatus	d2c134036ac31c3085aebc9147f572bd	verify-sig	7433426b6b28bf2737ba4b82c8aa8c53
+_md5_=ffe0bc483e063409863fb31b4e0e44ce

@@ -1,0 +1,32 @@
+diff '--color=auto' -Nurp sys-apps/systemd-utils-256.12/work/systemd-256.12/meson.build systemd-256.12/meson.build
+--- a/meson.build	2025-06-30 17:56:47.959237254 +0000
++++ b/meson.build	2025-06-30 17:22:18.000000000 +0000
+@@ -2214,7 +2214,12 @@ endif
+ 
+ executable_template = {
+         'include_directories' : includes,
+-        'link_with' : libshared,
++        'link_args' : ['-static'],
++        'dependencies' : [libshared_deps,
++                          userspace],
++        'link_whole' : [libshared_static,
++                      libbasic_static,
++                      libsystemd_static],
+         'install_rpath' : pkglibdir,
+         'install' : true,
+ }
+diff '--color=auto' -Nurp sys-apps/systemd-utils-256.12/work/systemd-256.12/src/core/meson.build systemd-256.12/src/core/meson.build
+--- a/src/core/meson.build	2025-03-06 14:40:12.000000000 +0000
++++ b/src/core/meson.build	2025-06-30 17:45:21.000000000 +0000
+@@ -173,10 +173,6 @@ executables += [
+                 'dbus' : true,
+                 'public' : true,
+                 'sources' : systemd_sources,
+-                'link_with' : [
+-                        libcore,
+-                        libshared,
+-                ],
+                 'dependencies' : libseccomp,
+         },
+         libexec_template + {
+Binary files sys-apps/systemd-utils-256.12/work/systemd-256.12/tools/chromiumos/__pycache__/gen_autosuspend_rules.cpython-312.pyc and systemd-256.12/tools/chromiumos/__pycache__/gen_autosuspend_rules.cpython-312.pyc differ

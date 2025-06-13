@@ -1,0 +1,12 @@
+DEFINED_PHASES=configure
+DESCRIPTION=Tool to guess CPU_FLAGS_* flags for the host
+EAPI=8
+HOMEPAGE=https://github.com/projg2/cpuid2cpuflags/
+INHERIT=flag-o-matic
+IUSE=static
+KEYWORDS=amd64 arm arm64 ppc ppc64 x86 ~x64-macos ~x64-solaris
+LICENSE=BSD-2
+SLOT=0
+SRC_URI=https://github.com/projg2/cpuid2cpuflags/releases/download/v15/cpuid2cpuflags-15.tar.bz2
+_eclasses_=toolchain-funcs	6afdb6107430c1832ca7e16aacbf8fa1	multilib	b2a329026f2e404e9e371097dda47f96	flag-o-matic	16d3941ed2dc39f4819368ae51bc0b72
+_md5_=7bd395d2a7a5d82e82f0be39b57520ac
