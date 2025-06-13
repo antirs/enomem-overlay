@@ -1,9 +1,7 @@
-# Copyright 1999-2025 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
-
-inherit flag-o-matic
 
 #GAWK_IS_BETA=yes
 
@@ -39,24 +37,18 @@ SLOT="0"
 # While tempting to enable mpfr by default as e.g. Fedora do, as of 5.2.x,
 # MPFR support is "on parole" and may be removed:
 # https://www.gnu.org/software/gawk/manual/html_node/MPFR-On-Parole.html.
-IUSE="mpfr pma nls readline static"
+IUSE="mpfr pma nls readline"
 
 RDEPEND="
-	!static? ( mpfr? (
+	mpfr? (
 		dev-libs/gmp:=
 		dev-libs/mpfr:=
-	) )
-	!static? ( readline? ( sys-libs/readline:= ) )
+	)
+	readline? ( sys-libs/readline:= )
 "
-DEPEND="${RDEPEND}
-	static? ( mpfr? (
-		dev-libs/gmp:=[static-libs]
-		dev-libs/mpfr:=[static-libs]
-	) )
-	static? ( readline? ( sys-libs/readline:=[static-libs] ) )
-"
+DEPEND="${RDEPEND}"
 BDEPEND="
-	>=sys-apps/texinfo-7.1
+	>=sys-apps/texinfo-6.7
 	>=sys-devel/bison-3.5.4
 	nls? ( sys-devel/gettext )
 "
@@ -103,8 +95,6 @@ src_configure() {
 		$(use_enable pma)
 		$(use_with readline)
 	)
-
-	use static && append-ldflags -static --static
 
 	econf "${myeconfargs[@]}"
 }
