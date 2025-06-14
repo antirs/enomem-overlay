@@ -4,3 +4,4 @@
 ../portage/sets/minimal
 ../portage/sets/toolchain/cproc
 ../portage/uses/cproc
+../portage/uses/enomem/cproc
