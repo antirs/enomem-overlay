@@ -26,6 +26,7 @@ app-admin/setools  -X -debug -test
 app-alternatives/awk  gawk -busybox -mawk -nawk -split-usr
 app-alternatives/bc  gnu -gh
 app-alternatives/bzip2  reference -lbzip2 -pbzip2 -split-usr
+app-alternatives/cpio  gnu -libarchive
 app-alternatives/gzip  reference -pigz -split-usr
 app-alternatives/lex  flex -reflex
 app-alternatives/ninja  reference -samurai
@@ -117,6 +118,7 @@ dev-libs/npth  -test
 dev-libs/openssl  asm verify-sig -fips -ktls -quic -rfc3779 -sctp -static-libs -test -tls-compression -vanilla -weak-ssl-ciphers
 dev-libs/popt  nls -static-libs
 dev-libs/tre  agrep alloca approx nls -debug -profile -python -static-libs
+dev-libs/tree-sitter-bash  python
 dev-libs/unibilium  -doc -static-libs -test
 dev-perl/Capture-Tiny  -examples -test
 dev-perl/Class-Inspector  -test
@@ -323,6 +325,7 @@ sys-devel/gnuconfig
 sys-devel/m4  nls verify-sig -examples
 sys-devel/patch  verify-sig xattr -static -test
 sys-fs/e2fsprogs  nls tools -archive -cron -fuse -static-libs -test
+sys-fs/squashfs-tools-ng  tools
 sys-fs/udev-init-scripts
 sys-kernel/linux-headers  -headers-only
 sys-libs/db  -cxx -doc -examples -tcl -test

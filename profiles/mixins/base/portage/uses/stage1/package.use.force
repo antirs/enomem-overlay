@@ -26,6 +26,7 @@ app-admin/setools
 app-alternatives/awk  gawk
 app-alternatives/bc  gnu
 app-alternatives/bzip2  reference
+app-alternatives/cpio  gnu
 app-alternatives/gzip  reference
 app-alternatives/lex  flex
 app-alternatives/ninja  reference
@@ -117,6 +118,7 @@ dev-libs/npth
 dev-libs/openssl  asm verify-sig
 dev-libs/popt  nls
 dev-libs/tre  agrep alloca approx nls
+dev-libs/tree-sitter-bash  python
 dev-libs/unibilium
 dev-perl/Capture-Tiny
 dev-perl/Class-Inspector

@@ -1,26 +1,65 @@
+app-admin/sudo  static
 app-arch/bzip2  noshared static
+app-arch/dpkg  static
 app-arch/gzip  static
+app-arch/libarchive  noshared static
+app-arch/lz4  noshared static
+app-arch/rpm  static
+app-arch/rpm2targz  static
 app-arch/tar  static
-app-arch/xz-utils  noshared nostatic static
+app-arch/xz-utils  noshared static
 app-arch/zstd  noshared static
+app-crypt/gnupg  static
+app-crypt/gpgme  noshared static
+app-crypt/libb2  noshared
+app-crypt/libmd  noshared
+app-crypt/pinentry  static
+app-editors/emacs  static -ssl
+app-editors/nano  static
+app-editors/vim  static
+app-editors/vim-core  static
 app-editors/vis  static
 app-misc/pax-utils  static
 app-misc/tmux  static
+app-portage/portage-utils  static
 app-shells/bash  static
 app-shells/dash  static
 app-shells/loksh  static
 app-shells/rc  static
 app-shells/zsh  static
+dev-build/cmake  static -ncurses
 dev-build/make  static
+dev-build/ninja  static
 dev-build/samurai  static
+dev-db/sqlite  noshared static
+dev-debug/gdb  static -python
+dev-debug/strace  static
 dev-embedded/sdcc  static -ucsim
+dev-lang/lua  static
+dev-lang/luajit  static
 dev-lang/nasm  static
-dev-lang/python  static static-libs
+dev-lang/perl  static
+dev-lang/python  extra static
 dev-lang/python-exec  static
+dev-lang/ruby  noshared static
 dev-libs/boehm-gc  noshared
+dev-libs/double-conversion  noshared
+dev-libs/elfutils  noshared static
+dev-libs/icu  noshared static
+dev-libs/jsoncpp  noshared
+dev-libs/libassuan  noshared
 dev-libs/libatomic_ops  noshared
-net-libs/gnutls  -zstd
+dev-libs/libgcrypt  noshared
+dev-libs/libgpg-error  noshared static
+dev-libs/libpipeline  noshared
+dev-libs/libuv  noshared
+dev-libs/libxml2  noshared
+dev-libs/popt  noshared
+dev-python/ujson  noshared
+dev-vcs/git  static
+net-libs/gnutls  noshared -zstd
 net-misc/wget  static
+sys-apps/acl  noshared
 sys-apps/attr  noshared static
 sys-apps/busybox  static
 sys-apps/coreutils  static
@@ -33,16 +72,24 @@ sys-apps/grep  static
 sys-apps/groff  static -uchardet
 sys-apps/install-xattr  static
 sys-apps/less  static
+sys-apps/man-db  static
 sys-apps/portage  static -native-extensions
 sys-apps/sed  static
+sys-apps/shadow  noshared static
+sys-apps/systemd-utils  static
 sys-apps/util-linux  noshared static -python -readline
 sys-apps/which  static
 sys-devel/bc  static
-sys-devel/binutils  static static-libs -cet -debuginfod -doc -gprofng -hardened -multitarget -nls -pgo -plugins -test -vanilla -xxhash -zstd
+sys-devel/binutils  static -cet -debuginfod -doc -gprofng -hardened -multitarget -nls -pgo -plugins -test -vanilla -xxhash -zstd
 sys-devel/cpp  static
 sys-devel/cproc  static
+sys-devel/distcc  static
+sys-devel/gettext  noshared static
+sys-devel/m4  static
 sys-devel/patch  static
 sys-devel/qbe  static
 sys-libs/libxcrypt  noshared
 sys-libs/musl  static
 sys-libs/ncurses  noshared static
+sys-libs/readline  noshared
+sys-libs/zlib  noshared

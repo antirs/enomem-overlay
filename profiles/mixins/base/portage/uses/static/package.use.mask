@@ -1,5 +1,6 @@
 app-admin/clsync  -static-libs
 app-admin/fam  -static-libs
+app-admin/sudo  -static-libs
 app-arch/brotli  -static-libs
 app-arch/bzip2  -static-libs
 app-arch/dpkg  -static-libs
@@ -7,6 +8,7 @@ app-arch/libarchive  -static-libs
 app-arch/lrzip  -static-libs
 app-arch/lrzip-next  -static-libs
 app-arch/lz4  -static-libs
+app-arch/rpm  -static-libs
 app-arch/xz-utils  -static-libs
 app-arch/zstd  -static-libs
 app-containers/crun  -static-libs
@@ -16,11 +18,14 @@ app-crypt/gpgme  -static-libs
 app-crypt/heimdal  -static-libs
 app-crypt/jitterentropy  -static-libs
 app-crypt/libb2  -static-libs
+app-crypt/libmd  -static-libs
 app-crypt/libu2f-server  -static-libs
 app-crypt/mhash  -static-libs
 app-crypt/rhash  -static-libs
 app-crypt/tpm2-abrmd  -static-libs
 app-crypt/tpm2-tss  -static-libs
+app-editors/vim  -static-libs
+app-editors/vim-core  -static-libs
 app-emulation/libcacard  -static-libs
 app-emulation/libguestfs  -static-libs
 app-emulation/spice  -static-libs
@@ -106,6 +111,7 @@ dev-lang/luajit  -static-libs
 dev-lang/luau  -static-libs
 dev-lang/moarvm  -static-libs
 dev-lang/orc  -static-libs
+dev-lang/python  -static-libs
 dev-lang/ruby  -static-libs
 dev-lang/squirrel  -static-libs
 dev-libs/OpenNI2  -static-libs
@@ -128,6 +134,7 @@ dev-libs/confuse  -static-libs
 dev-libs/crypto++  -static-libs
 dev-libs/cyrus-sasl  -static-libs
 dev-libs/dbus-glib  -static-libs
+dev-libs/double-conversion  -static-libs
 dev-libs/eekboard  -static-libs
 dev-libs/elfutils  -static-libs
 dev-libs/eventlog  -static-libs
@@ -147,9 +154,11 @@ dev-libs/isl  -static-libs
 dev-libs/ivykis  -static-libs
 dev-libs/jansson  -static-libs
 dev-libs/json-c  -static-libs
+dev-libs/jsoncpp  -static-libs
 dev-libs/kpathsea  -static-libs
 dev-libs/leatherman  -static-libs
 dev-libs/libaio  -static-libs
+dev-libs/libassuan  -static-libs
 dev-libs/libatasmart  -static-libs
 dev-libs/libatomic_ops  -static-libs
 dev-libs/libax25  -static-libs
@@ -196,6 +205,7 @@ dev-libs/libp11  -static-libs
 dev-libs/libpcre  -static-libs
 dev-libs/libpcre2  -static-libs
 dev-libs/libpfm  -static-libs
+dev-libs/libpipeline  -static-libs
 dev-libs/libpqxx  -static-libs
 dev-libs/libpwquality  -static-libs
 dev-libs/librdkafka  -static-libs
@@ -213,6 +223,7 @@ dev-libs/libunibreak  -static-libs
 dev-libs/libunistring  -static-libs
 dev-libs/libusb  -static-libs
 dev-libs/libutf8proc  -static-libs
+dev-libs/libuv  -static-libs
 dev-libs/libxml2  -static-libs
 dev-libs/libxslt  -static-libs
 dev-libs/libyaml  -static-libs
@@ -225,6 +236,7 @@ dev-libs/mpdecimal  -static-libs
 dev-libs/mpfr  -static-libs
 dev-libs/mxml  -static-libs
 dev-libs/nettle  -static-libs
+dev-libs/npth  -static-libs
 dev-libs/oneDNN  -static-libs
 dev-libs/oniguruma  -static-libs
 dev-libs/openssl  -static-libs
@@ -560,6 +572,7 @@ sys-apps/lm-sensors  -static-libs
 sys-apps/man-db  -static-libs
 sys-apps/pciutils  -static-libs
 sys-apps/sg3_utils  -static-libs
+sys-apps/systemd-utils  -static-libs
 sys-apps/usbguard  -static-libs
 sys-apps/util-linux  -static-libs
 sys-auth/munge  -static-libs
@@ -596,6 +609,7 @@ sys-libs/argp-standalone  -static-libs
 sys-libs/binutils-libs  -static-libs
 sys-libs/blocksruntime  -static-libs
 sys-libs/cracklib  -static-libs
+sys-libs/db  -static-libs
 sys-libs/error-standalone  -static-libs
 sys-libs/fts-standalone  -static-libs
 sys-libs/gdbm  -static-libs
@@ -615,6 +629,7 @@ sys-libs/libunwind  -static-libs
 sys-libs/liburing  -static-libs
 sys-libs/libutempter  -static-libs
 sys-libs/libxcrypt  -static-libs
+sys-libs/musl  -static-libs
 sys-libs/ncurses  -static-libs
 sys-libs/obstack-standalone  -static-libs
 sys-libs/openipmi  -static-libs
@@ -630,6 +645,8 @@ sys-process/procps  -static-libs
 virtual/acl  -static-libs
 virtual/jpeg  -static-libs
 virtual/libcrypt  -static-libs
+virtual/libiconv  -static-libs
+virtual/libintl  -static-libs
 www-client/httrack  -static-libs
 www-servers/varnish  -static-libs
 x11-drivers/nvidia-drivers  -static-libs

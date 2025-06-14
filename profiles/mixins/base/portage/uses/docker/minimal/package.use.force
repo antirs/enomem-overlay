@@ -36,11 +36,11 @@ app-alternatives/tar  gnu
 app-alternatives/yacc  bison
 app-arch/alien  bzip2
 app-arch/bzip2  verify-sig
-app-arch/dpkg  bzip2 lzma nls update-alternatives zlib zstd
+app-arch/dpkg  bzip2 lzma update-alternatives zlib zstd
 app-arch/gzip  verify-sig
 app-arch/libarchive  acl bzip2 e2fsprogs iconv lz4 lzma lzo verify-sig xattr zstd
 app-arch/lz4
-app-arch/rpm  acl bzip2 iconv nls openmp readline sqlite zstd
+app-arch/rpm  acl bzip2 iconv lzma readline sqlite zstd
 app-arch/tar  acl nls verify-sig xattr
 app-arch/unzip  bzip2
 app-arch/xz-utils  extra-filters nls verify-sig

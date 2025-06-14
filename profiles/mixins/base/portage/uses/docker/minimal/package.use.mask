@@ -36,11 +36,11 @@ app-alternatives/tar  libarchive -gnu
 app-alternatives/yacc  byacc -bison
 app-arch/alien  test -bzip2
 app-arch/bzip2  static static-libs -verify-sig
-app-arch/dpkg  selinux static-libs test -bzip2 -lzma -nls -update-alternatives -zlib -zstd
+app-arch/dpkg  nls selinux static-libs test -bzip2 -lzma -update-alternatives -zlib -zstd
 app-arch/gzip  pic static -verify-sig
 app-arch/libarchive  blake2 expat nettle static-libs test -acl -bzip2 -e2fsprogs -iconv -lz4 -lzma -lzo -verify-sig -xattr -zstd
 app-arch/lz4  static-libs test
-app-arch/rpm  audit berkdb caps dbus doc lzma python selinux sequoia -acl -bzip2 -iconv -nls -openmp -readline -sqlite -zstd
+app-arch/rpm  audit berkdb caps dbus doc nls openmp python selinux sequoia -acl -bzip2 -iconv -lzma -readline -sqlite -zstd
 app-arch/tar  minimal selinux -acl -nls -verify-sig -xattr
 app-arch/unzip  -bzip2
 app-arch/xz-utils  doc pgo static-libs -extra-filters -nls -verify-sig

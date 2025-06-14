@@ -26,6 +26,7 @@ app-admin/setools  X debug test
 app-alternatives/awk  busybox mawk nawk split-usr -gawk
 app-alternatives/bc  gh -gnu
 app-alternatives/bzip2  lbzip2 pbzip2 split-usr -reference
+app-alternatives/cpio  libarchive -gnu
 app-alternatives/gzip  pigz split-usr -reference
 app-alternatives/lex  reflex -flex
 app-alternatives/ninja  samurai -reference
@@ -117,6 +118,7 @@ dev-libs/npth  test
 dev-libs/openssl  fips ktls quic rfc3779 sctp static-libs test tls-compression vanilla weak-ssl-ciphers -asm -verify-sig
 dev-libs/popt  static-libs -nls
 dev-libs/tre  debug profile python static-libs -agrep -alloca -approx -nls
+dev-libs/tree-sitter-bash  -python
 dev-libs/unibilium  doc static-libs test
 dev-perl/Capture-Tiny  examples test
 dev-perl/Class-Inspector  test
