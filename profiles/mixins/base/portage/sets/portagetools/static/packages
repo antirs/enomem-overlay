@@ -1,0 +1,13 @@
+*app-eselect/eselect-python
+*app-eselect/eselect-repository
+*app-portage/cpuid2cpuflags
+*app-portage/eix
+*app-portage/elogv
+*app-portage/genlop
+*app-portage/gentoolkit
+*app-portage/mgorny-dev-scripts
+*app-portage/portage-utils
+*app-portage/repoman
+*dev-util/catalyst
+*dev-util/pkgcheck
+*dev-util/pkgdev
