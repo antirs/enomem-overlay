@@ -1,2 +1,3 @@
 dev-lang/lua
+dev-lang/luajit
 dev-lua/luarocks
