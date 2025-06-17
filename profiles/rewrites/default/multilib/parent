@@ -1,2 +1,2 @@
-../../../../mixins/base/multilib
-../../../../mixins/base/compile/multilib
+../../../mixins/base/multilib
+../../../mixins/base/compile/multilib
