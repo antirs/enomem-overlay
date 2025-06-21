@@ -87,6 +87,7 @@ dev-lang/perl  berkdb gdbm
 dev-lang/python  build ensurepip gdbm ncurses readline sqlite ssl verify-sig
 dev-lang/python-exec  native-symlinks
 dev-lang/python-exec-conf
+dev-lang/ruby  gdbm ssl
 dev-lang/swig  pcre
 dev-lang/tcl  threads
 dev-libs/expat  unicode
