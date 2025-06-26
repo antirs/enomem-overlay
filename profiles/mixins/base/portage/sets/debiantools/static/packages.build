@@ -1,6 +1,4 @@
-app-arch/alien
 app-arch/dpkg
-app-arch/rpm
 app-arch/rpm2targz
 dev-util/debhelper
 sys-apps/debianutils
