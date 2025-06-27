@@ -9,11 +9,13 @@ app-arch/lrzip  static-libs
 app-arch/lrzip-next  static-libs
 app-arch/lz4  static-libs
 app-arch/rpm  static-libs
+app-arch/tar  static-libs
 app-arch/xz-utils  static-libs
 app-arch/zstd  static-libs
 app-containers/crun  static-libs
 app-crypt/argon2  static-libs
 app-crypt/bsign  static-libs
+app-crypt/gnupg  static-libs
 app-crypt/gpgme  static-libs
 app-crypt/heimdal  static-libs
 app-crypt/jitterentropy  static-libs
@@ -21,11 +23,15 @@ app-crypt/libb2  static-libs
 app-crypt/libmd  static-libs
 app-crypt/libu2f-server  static-libs
 app-crypt/mhash  static-libs
+app-crypt/pinentry  static-libs
 app-crypt/rhash  static-libs
 app-crypt/tpm2-abrmd  static-libs
 app-crypt/tpm2-tss  static-libs
+app-editors/emacs  static-libs
+app-editors/nano  static-libs
 app-editors/vim  static-libs
 app-editors/vim-core  static-libs
+app-editors/vis  static-libs
 app-emulation/libcacard  static-libs
 app-emulation/libguestfs  static-libs
 app-emulation/spice  static-libs
@@ -45,8 +51,16 @@ app-metrics/collectd  static-libs
 app-misc/g15daemon  static-libs
 app-misc/jq  static-libs
 app-misc/lirc  static-libs
+app-misc/pax-utils  static-libs
+app-misc/tmux  static-libs
 app-pda/dynamite  static-libs
 app-pda/libimobiledevice  static-libs
+app-portage/portage-utils  static-libs
+app-shells/bash  static-libs
+app-shells/dash  static-libs
+app-shells/loksh  static-libs
+app-shells/rc  static-libs
+app-shells/zsh  static-libs
 app-text/a2ps  static-libs
 app-text/chasen  static-libs
 app-text/crengine-ng  static-libs
@@ -77,6 +91,7 @@ dev-ada/libgpr  static-libs
 dev-ada/spawn  static-libs
 dev-ada/templates-parser  static-libs
 dev-ada/xmlada  static-libs
+dev-build/cmake  static-libs
 dev-cpp/clucene  static-libs
 dev-cpp/ctemplate  static-libs
 dev-cpp/gflags  static-libs
@@ -97,7 +112,9 @@ dev-db/qdbm  static-libs
 dev-db/sqlite  static-libs -icu
 dev-db/tinycdb  static-libs
 dev-db/unixODBC  static-libs
+dev-debug/gdb  static-libs
 dev-embedded/libftdi  static-libs
+dev-embedded/sdcc  static-libs
 dev-embedded/srecord  static-libs
 dev-games/clanlib  static-libs
 dev-games/flatzebra  static-libs
@@ -107,10 +124,12 @@ dev-games/physfs  static-libs
 dev-java/tomcat-native  static-libs
 dev-lang/janet  static-libs
 dev-lang/jimtcl  static-libs
+dev-lang/lua  static-libs
 dev-lang/luajit  static-libs
 dev-lang/luau  static-libs
 dev-lang/moarvm  static-libs
 dev-lang/orc  static-libs
+dev-lang/perl  static-libs
 dev-lang/python  static-libs
 dev-lang/ruby  static-libs
 dev-lang/squirrel  static-libs
@@ -279,6 +298,7 @@ dev-util/ply  static-libs
 dev-util/scanmem  static-libs
 dev-util/source-highlight  static-libs
 dev-util/unicorn  static-libs
+dev-vcs/git  static-libs
 gnome-base/libglade  static-libs
 llvm-runtimes/libcxx  static-libs
 llvm-runtimes/libcxxabi  static-libs
@@ -559,19 +579,25 @@ sci-physics/thepeg  static-libs
 sci-visualization/quickplot  static-libs
 sys-apps/acl  static-libs
 sys-apps/attr  static-libs
+sys-apps/coreutils  static-libs
 sys-apps/dbus  static-libs
 sys-apps/dtc  static-libs
 sys-apps/file  static-libs
+sys-apps/gawk  static-libs
+sys-apps/grep  static-libs
 sys-apps/haveged  static-libs
 sys-apps/hwloc  static-libs
 sys-apps/ipmiutil  static-libs
 sys-apps/keyutils  static-libs
 sys-apps/kmod  static-libs
+sys-apps/less  static-libs
 sys-apps/linux-misc-apps  static-libs
 sys-apps/lm-sensors  static-libs
 sys-apps/man-db  static-libs
-sys-apps/pciutils  static-libs
+sys-apps/pciutils  static-libs -udev
+sys-apps/sed  static-libs
 sys-apps/sg3_utils  static-libs
+sys-apps/shadow  static-libs
 sys-apps/systemd-utils  static-libs
 sys-apps/usbguard  static-libs
 sys-apps/util-linux  static-libs
@@ -588,8 +614,11 @@ sys-cluster/libquo  static-libs
 sys-cluster/rdma-core  static-libs
 sys-cluster/slurm  static-libs
 sys-devel/autogen  static-libs
+sys-devel/bc  static-libs
 sys-devel/binutils  static-libs
 sys-devel/binutils-hppa64  static-libs
+sys-devel/cpp  static-libs
+sys-devel/distcc  static-libs
 sys-devel/gettext  static-libs
 sys-fs/btrfs-progs  static-libs
 sys-fs/cryptsetup  static-libs
@@ -597,7 +626,7 @@ sys-fs/e2fsprogs  static-libs
 sys-fs/erofs-utils  static-libs
 sys-fs/fswatch  static-libs
 sys-fs/fuse  static-libs
-sys-fs/lvm2  static-libs
+sys-fs/lvm2  static static-libs -udev
 sys-fs/nilfs-utils  static-libs
 sys-fs/ntfs3g  static-libs
 sys-fs/progsreiserfs  static-libs
@@ -647,6 +676,7 @@ virtual/jpeg  static-libs
 virtual/libcrypt  static-libs
 virtual/libiconv  static-libs
 virtual/libintl  static-libs
+virtual/libudev  static-libs
 www-client/httrack  static-libs
 www-servers/varnish  static-libs
 x11-drivers/nvidia-drivers  static-libs

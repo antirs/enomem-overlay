@@ -37,6 +37,7 @@ app-arch/bzip2  static static-libs -verify-sig
 app-arch/gzip  pic static -verify-sig
 app-arch/libarchive  blake2 expat nettle static-libs test -acl -bzip2 -e2fsprogs -iconv -lz4 -lzma -lzo -verify-sig -xattr -zstd
 app-arch/lz4  static-libs test
+app-arch/rpm  audit berkdb caps dbus doc lzma nls openmp python selinux sequoia -acl -bzip2 -iconv -readline -sqlite -zstd
 app-arch/tar  minimal selinux -acl -nls -verify-sig -xattr
 app-arch/unzip  natspec -bzip2 -unicode
 app-arch/xz-utils  doc pgo static-libs -extra-filters -nls -verify-sig
@@ -49,6 +50,7 @@ app-crypt/pinentry  X efl emacs gtk keyring qt5 qt6 wayland -caps -ncurses -veri
 app-crypt/rhash  debug static-libs -nls -ssl
 app-editors/nano  debug justify magic minimal -ncurses -nls -spell -unicode
 app-editors/vis  lua selinux static test -acl -ncurses -tre
+app-eselect/eselect-guile
 app-eselect/eselect-iptables
 app-eselect/eselect-lib-bin-symlink
 app-eselect/eselect-pinentry
@@ -71,6 +73,7 @@ app-text/manpager
 app-text/opensp  doc static-libs test -nls
 app-text/po4a  test
 app-text/sgml-common
+app-text/xmlto  latex -text
 dev-build/autoconf  emacs -verify-sig
 dev-build/autoconf-archive
 dev-build/autoconf-wrapper
@@ -89,8 +92,10 @@ dev-lang/python  bluetooth debug examples libedit pgo test tk valgrind -build -e
 dev-lang/python-exec  test -native-symlinks
 dev-lang/python-exec-conf
 dev-lang/ruby  berkdb debug doc examples jemalloc jit socks5 static-libs systemtap tk valgrind xemacs -gdbm -ssl
+dev-lang/rust  llvm_targets_AMDGPU llvm_targets_ARC llvm_targets_CSKY llvm_targets_DirectX llvm_targets_Hexagon llvm_targets_Lanai llvm_targets_LoongArch llvm_targets_MSP430 llvm_targets_NVPTX llvm_targets_PowerPC llvm_targets_SPIRV llvm_targets_SystemZ llvm_targets_VE llvm_targets_XCore -llvm_targets_AArch64 -llvm_targets_ARM -llvm_targets_AVR -llvm_targets_BPF -llvm_targets_M68k -llvm_targets_Mips -llvm_targets_RISCV -llvm_targets_Sparc -llvm_targets_Spirv -llvm_targets_WebAssembly -llvm_targets_X86 -llvm_targets_Xtensa
 dev-lang/swig  ccache doc test -pcre
 dev-lang/tcl  debug -threads
+dev-libs/boehm-gc  cxx static-libs -large -threads
 dev-libs/expat  examples static-libs test -unicode
 dev-libs/gmp  doc pic static-libs -asm -cpudetection -cxx
 dev-libs/icu  debug doc examples static-libs test -verify-sig
@@ -198,10 +203,27 @@ dev-python/typing-extensions  test
 dev-python/uc-micro-py  test
 dev-python/urllib3  brotli test zstd -http2
 dev-python/wheel  test
+dev-scheme/guile  debug debug-malloc -deprecated -jit -networking -nls -regex -threads
 dev-util/gperf
 dev-util/patchelf
 dev-util/pkgconf  test -native-symlinks
 dev-util/re2c  debug test
+llvm-core/clang  debug doc ieee-long-double test xml -extra -pie -static-analyzer -verify-sig
+llvm-core/clang  llvm_targets_AMDGPU llvm_targets_ARC llvm_targets_CSKY llvm_targets_DirectX llvm_targets_Hexagon llvm_targets_Lanai llvm_targets_LoongArch llvm_targets_MSP430 llvm_targets_NVPTX llvm_targets_PowerPC llvm_targets_SPIRV llvm_targets_SystemZ llvm_targets_VE llvm_targets_XCore -llvm_targets_AArch64 -llvm_targets_ARM -llvm_targets_AVR -llvm_targets_BPF -llvm_targets_M68k -llvm_targets_Mips -llvm_targets_RISCV -llvm_targets_Sparc -llvm_targets_Spirv -llvm_targets_WebAssembly -llvm_targets_X86 -llvm_targets_Xtensa
+llvm-core/clang-common  bootstrap-prefix default-compiler-rt default-libcxx default-lld hardened -cet -llvm-libunwind -verify-sig
+llvm-core/clang-runtime  default-compiler-rt default-lld default-libcxx offload polly -compiler-rt -libcxx -llvm-libunwind -openmp -sanitize
+llvm-core/clang-toolchain-symlinks  gcc-symlinks multilib-symlinks -native-symlinks
+llvm-core/lld  debug test -verify-sig -zstd
+llvm-core/lld-toolchain-symlinks  multilib-symlinks -native-symlinks
+llvm-core/llvm  binutils-plugin bootstrap-gcc debug debuginfod doc exegesis libedit test xml z3 -libffi -verify-sig -zstd
+llvm-core/llvm  llvm_targets_AMDGPU llvm_targets_ARC llvm_targets_CSKY llvm_targets_DirectX llvm_targets_Hexagon llvm_targets_Lanai llvm_targets_LoongArch llvm_targets_MSP430 llvm_targets_NVPTX llvm_targets_PowerPC llvm_targets_SPIRV llvm_targets_SystemZ llvm_targets_VE llvm_targets_XCore -llvm_targets_AArch64 -llvm_targets_ARM -llvm_targets_AVR -llvm_targets_BPF -llvm_targets_M68k -llvm_targets_Mips -llvm_targets_RISCV -llvm_targets_Sparc -llvm_targets_Spirv -llvm_targets_WebAssembly -llvm_targets_X86 -llvm_targets_Xtensa
+llvm-core/llvm-common  emacs -verify-sig
+llvm-core/llvm-toolchain-symlinks  multilib-symlinks -native-symlinks
+llvm-runtimes/compiler-rt  debug test -atomic-builtins -clang -verify-sig
+llvm-runtimes/compiler-rt-sanitizers  debug gwp-asan shadowcallstack test -asan -cfi -clang -ctx-profile -dfsan -hwasan -libfuzzer -lsan -memprof -msan -orc -profile -safestack -scudo -tsan -ubsan -verify-sig -xray
+llvm-runtimes/libcxx  static-libs test -clang -libcxxabi -verify-sig
+llvm-runtimes/libcxxabi  static-libs test -clang -verify-sig
+llvm-runtimes/openmp  debug gdb-plugin hwloc ompt test -verify-sig
 net-dns/libidn2  static-libs -nls -verify-sig
 net-firewall/iptables  conntrack netlink nftables pcap static-libs test
 net-libs/gnutls  brotli dane doc examples openssl pkcs11 sslv2 sslv3 static-libs test test-full tls-heartbeat zstd -cxx -idn -nls -tools -verify-sig -zlib
@@ -325,6 +347,7 @@ sys-devel/gnuconfig
 sys-devel/m4  examples -nls -verify-sig
 sys-devel/patch  static test -verify-sig -xattr
 sys-fs/e2fsprogs  archive cron fuse static-libs test -nls -tools
+sys-fs/squashfs-tools-ng  lz4 lzo zstd -lzma -selinux -tools
 sys-fs/udev-init-scripts
 sys-kernel/linux-headers  headers-only
 sys-libs/db  cxx doc examples tcl test

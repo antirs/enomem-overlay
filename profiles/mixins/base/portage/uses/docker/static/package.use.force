@@ -1,5 +1,6 @@
-app-admin/sudo  static
+app-admin/sudo  noshared static
 app-arch/bzip2  noshared static
+app-arch/cpio  static
 app-arch/dpkg  static
 app-arch/gzip  static
 app-arch/libarchive  noshared static
@@ -21,12 +22,16 @@ app-editors/vim-core  static
 app-editors/vis  static
 app-misc/pax-utils  static
 app-misc/tmux  static
+app-portage/cpuid2cpuflags  static
+app-portage/eix  static
 app-portage/portage-utils  static
 app-shells/bash  static
 app-shells/dash  static
 app-shells/loksh  static
+app-shells/quoter  static
 app-shells/rc  static
 app-shells/zsh  static
+app-text/manpager  static
 dev-build/cmake  static
 dev-build/make  static
 dev-build/ninja  static
@@ -56,27 +61,30 @@ dev-libs/libuv  noshared
 dev-libs/libxml2  noshared
 dev-libs/popt  noshared
 dev-python/ujson  noshared
+dev-util/gperf  static
 dev-vcs/git  static
 net-libs/gnutls  noshared
 net-misc/wget  static
-sys-apps/acl  noshared
+sys-apps/acl  noshared static
 sys-apps/attr  noshared static
 sys-apps/busybox  static
-sys-apps/coreutils  static
+sys-apps/coreutils  noshared static
+sys-apps/debianutils  static
 sys-apps/diffutils  static
 sys-apps/file  noshared static
 sys-apps/findutils  static
-sys-apps/gawk  static
+sys-apps/gawk  noshared static
 sys-apps/gentoo-functions  static
 sys-apps/grep  static
 sys-apps/groff  static
 sys-apps/install-xattr  static
+sys-apps/kmod  noshared static
 sys-apps/less  static
-sys-apps/man-db  static
+sys-apps/man-db  noshared static
 sys-apps/portage  static
 sys-apps/sed  static
 sys-apps/shadow  noshared static
-sys-apps/systemd-utils  static
+sys-apps/systemd-utils  noshared static
 sys-apps/util-linux  noshared static
 sys-apps/which  static
 sys-devel/bc  static
@@ -88,6 +96,8 @@ sys-devel/gettext  noshared static
 sys-devel/m4  static
 sys-devel/patch  static
 sys-devel/qbe  static
+sys-libs/gdbm  noshared static
+sys-libs/libcap  noshared static
 sys-libs/libxcrypt  noshared
 sys-libs/musl  static
 sys-libs/ncurses  noshared static

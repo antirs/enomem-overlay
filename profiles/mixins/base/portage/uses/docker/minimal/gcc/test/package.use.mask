@@ -1,1 +1,2 @@
+dev-scheme/guile  -deprecated -regex
 sys-devel/gcc  -test

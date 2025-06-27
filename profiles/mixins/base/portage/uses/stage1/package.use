@@ -37,6 +37,7 @@ app-arch/bzip2  verify-sig -static -static-libs
 app-arch/gzip  verify-sig -pic -static
 app-arch/libarchive  acl bzip2 e2fsprogs iconv lz4 lzma lzo verify-sig xattr zstd -blake2 -expat -nettle -static-libs -test
 app-arch/lz4  -static-libs -test
+app-arch/rpm  acl bzip2 iconv readline sqlite zstd -audit -berkdb -caps -dbus -doc -lzma -nls -openmp -python -selinux -sequoia
 app-arch/tar  acl nls verify-sig xattr -minimal -selinux
 app-arch/unzip  bzip2 unicode -natspec
 app-arch/xz-utils  extra-filters nls verify-sig -doc -pgo -static-libs
@@ -49,6 +50,7 @@ app-crypt/pinentry  caps ncurses verify-sig -X -efl -emacs -gtk -keyring -qt5 -q
 app-crypt/rhash  nls ssl -debug -static-libs
 app-editors/nano  ncurses nls spell unicode -debug -justify -magic -minimal
 app-editors/vis  acl ncurses tre -lua -selinux -static -test
+app-eselect/eselect-guile
 app-eselect/eselect-iptables
 app-eselect/eselect-lib-bin-symlink
 app-eselect/eselect-pinentry
@@ -71,6 +73,7 @@ app-text/manpager
 app-text/opensp  nls -doc -static-libs -test
 app-text/po4a  -test
 app-text/sgml-common
+app-text/xmlto  text -latex
 dev-build/autoconf  verify-sig -emacs
 dev-build/autoconf-archive
 dev-build/autoconf-wrapper
@@ -89,8 +92,10 @@ dev-lang/python  build ensurepip gdbm ncurses readline sqlite ssl verify-sig -bl
 dev-lang/python-exec  native-symlinks -test
 dev-lang/python-exec-conf
 dev-lang/ruby  gdbm ssl -berkdb -debug -doc -examples -jemalloc -jit -socks5 -static-libs -systemtap -tk -valgrind -xemacs
+dev-lang/rust  llvm_targets_AArch64 llvm_targets_ARM llvm_targets_AVR llvm_targets_BPF llvm_targets_M68k llvm_targets_Mips llvm_targets_RISCV llvm_targets_Sparc llvm_targets_Spirv llvm_targets_WebAssembly llvm_targets_X86 llvm_targets_Xtensa -llvm_targets_AMDGPU -llvm_targets_ARC -llvm_targets_CSKY -llvm_targets_DirectX -llvm_targets_Hexagon -llvm_targets_Lanai -llvm_targets_LoongArch -llvm_targets_MSP430 -llvm_targets_NVPTX -llvm_targets_PowerPC -llvm_targets_SPIRV -llvm_targets_SystemZ -llvm_targets_VE -llvm_targets_XCore
 dev-lang/swig  pcre -ccache -doc -test
 dev-lang/tcl  threads -debug
+dev-libs/boehm-gc  large threads -cxx -static-libs
 dev-libs/expat  unicode -examples -static-libs -test
 dev-libs/gmp  asm cpudetection cxx -doc -pic -static-libs
 dev-libs/icu  verify-sig -debug -doc -examples -static-libs -test
@@ -198,10 +203,27 @@ dev-python/typing-extensions  -test
 dev-python/uc-micro-py  -test
 dev-python/urllib3  http2 -brotli -test -zstd
 dev-python/wheel  -test
+dev-scheme/guile  deprecated jit networking nls regex threads -debug -debug-malloc
 dev-util/gperf
 dev-util/patchelf
 dev-util/pkgconf  native-symlinks -test
 dev-util/re2c  -debug -test
+llvm-core/clang  extra pie static-analyzer verify-sig -debug -doc -ieee-long-double -test -xml
+llvm-core/clang  llvm_targets_AArch64 llvm_targets_ARM llvm_targets_AVR llvm_targets_BPF llvm_targets_M68k llvm_targets_Mips llvm_targets_RISCV llvm_targets_Sparc llvm_targets_Spirv llvm_targets_WebAssembly llvm_targets_X86 llvm_targets_Xtensa -llvm_targets_AMDGPU -llvm_targets_ARC -llvm_targets_CSKY -llvm_targets_DirectX -llvm_targets_Hexagon -llvm_targets_Lanai -llvm_targets_LoongArch -llvm_targets_MSP430 -llvm_targets_NVPTX -llvm_targets_PowerPC -llvm_targets_SPIRV -llvm_targets_SystemZ -llvm_targets_VE -llvm_targets_XCore
+llvm-core/clang-common  cet llvm-libunwind verify-sig -bootstrap-prefix -default-compiler-rt -default-libcxx -default-lld -hardened
+llvm-core/clang-runtime  compiler-rt libcxx llvm-libunwind openmp sanitize -default-compiler-rt -default-lld -default-libcxx -offload -polly
+llvm-core/clang-toolchain-symlinks  native-symlinks -gcc-symlinks -multilib-symlinks
+llvm-core/lld  verify-sig zstd -debug -test
+llvm-core/lld-toolchain-symlinks  native-symlinks -multilib-symlinks
+llvm-core/llvm  libffi verify-sig zstd -binutils-plugin -bootstrap-gcc -debug -debuginfod -doc -exegesis -libedit -test -xml -z3
+llvm-core/llvm  llvm_targets_AArch64 llvm_targets_ARM llvm_targets_AVR llvm_targets_BPF llvm_targets_M68k llvm_targets_Mips llvm_targets_RISCV llvm_targets_Sparc llvm_targets_Spirv llvm_targets_WebAssembly llvm_targets_X86 llvm_targets_Xtensa -llvm_targets_AMDGPU -llvm_targets_ARC -llvm_targets_CSKY -llvm_targets_DirectX -llvm_targets_Hexagon -llvm_targets_Lanai -llvm_targets_LoongArch -llvm_targets_MSP430 -llvm_targets_NVPTX -llvm_targets_PowerPC -llvm_targets_SPIRV -llvm_targets_SystemZ -llvm_targets_VE -llvm_targets_XCore
+llvm-core/llvm-common  verify-sig -emacs
+llvm-core/llvm-toolchain-symlinks  native-symlinks -multilib-symlinks
+llvm-runtimes/compiler-rt  atomic-builtins clang verify-sig -debug -test
+llvm-runtimes/compiler-rt-sanitizers  asan cfi clang ctx-profile dfsan hwasan libfuzzer lsan memprof msan orc profile safestack scudo tsan ubsan verify-sig xray -debug -gwp-asan -shadowcallstack -test
+llvm-runtimes/libcxx  clang libcxxabi verify-sig -static-libs -test
+llvm-runtimes/libcxxabi  clang verify-sig -static-libs -test
+llvm-runtimes/openmp  verify-sig -debug -gdb-plugin -hwloc -ompt -test
 net-dns/libidn2  nls verify-sig -static-libs
 net-firewall/iptables  -conntrack -netlink -nftables -pcap -static-libs -test
 net-libs/gnutls  cxx idn nls tools verify-sig zlib -brotli -dane -doc -examples -openssl -pkcs11 -sslv2 -sslv3 -static-libs -test -test-full -tls-heartbeat -zstd
@@ -325,6 +347,7 @@ sys-devel/gnuconfig
 sys-devel/m4  nls verify-sig -examples
 sys-devel/patch  verify-sig xattr -static -test
 sys-fs/e2fsprogs  nls tools -archive -cron -fuse -static-libs -test
+sys-fs/squashfs-tools-ng  lzma selinux tools -lz4 -lzo -zstd
 sys-fs/udev-init-scripts
 sys-kernel/linux-headers  -headers-only
 sys-libs/db  -cxx -doc -examples -tcl -test

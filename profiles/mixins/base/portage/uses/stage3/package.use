@@ -36,6 +36,7 @@ app-arch/bzip2  verify-sig -static -static-libs
 app-arch/gzip  verify-sig -pic -static
 app-arch/libarchive  acl bzip2 e2fsprogs iconv lz4 lzma lzo verify-sig xattr zstd -blake2 -expat -nettle -static-libs -test
 app-arch/lz4  -static-libs -test
+app-arch/rpm  acl bzip2 iconv readline sqlite zstd -audit -berkdb -caps -dbus -doc -lzma -nls -openmp -python -selinux -sequoia
 app-arch/tar  acl nls selinux verify-sig xattr -minimal
 app-arch/unzip  bzip2 unicode -natspec
 app-arch/xz-utils  extra-filters nls verify-sig -doc -pgo -static-libs
@@ -50,6 +51,7 @@ app-editors/nano  ncurses nls spell unicode -debug -justify -magic -minimal
 app-eselect/eselect-iptables
 app-eselect/eselect-lib-bin-symlink
 app-eselect/eselect-pinentry
+app-eselect/eselect-rust
 app-i18n/gnulib-l10n
 app-i18n/man-pages-l10n
 app-misc/ca-certificates  -cacert
@@ -86,6 +88,10 @@ dev-lang/perl  berkdb gdbm -doc -minimal
 dev-lang/python  ensurepip gdbm ncurses readline sqlite ssl verify-sig -bluetooth -build -debug -examples -libedit -pgo -test -tk -valgrind
 dev-lang/python-exec  native-symlinks -test
 dev-lang/python-exec-conf
+dev-lang/rust  llvm-libunwind rust-analyzer rust-src rustfmt system-llvm verify-sig wasm -big-endian -clippy -debug -dist -doc -llvm-libunwind -lto -test
+dev-lang/rust  llvm_targets_AArch64 llvm_targets_ARM llvm_targets_AVR llvm_targets_BPF llvm_targets_M68k llvm_targets_Mips llvm_targets_RISCV llvm_targets_Sparc llvm_targets_Spirv llvm_targets_WebAssembly llvm_targets_X86 llvm_targets_Xtensa -llvm_targets_AMDGPU -llvm_targets_ARC -llvm_targets_CSKY -llvm_targets_DirectX -llvm_targets_Hexagon -llvm_targets_Lanai -llvm_targets_LoongArch -llvm_targets_MSP430 -llvm_targets_NVPTX -llvm_targets_PowerPC -llvm_targets_SPIRV -llvm_targets_SystemZ -llvm_targets_VE -llvm_targets_XCore
+dev-lang/rust-bin  rust-analyzer rust-src rustfmt verify-sig -big-endian -clippy -doc -prefix
+dev-lang/rust-common  verify-sig
 dev-lang/swig  pcre -ccache -doc -test
 dev-lang/tcl  threads -debug
 dev-libs/expat  unicode -examples -static-libs -test
@@ -195,13 +201,29 @@ dev-util/gperf
 dev-util/patchelf
 dev-util/pkgconf  native-symlinks -test
 dev-util/re2c  -debug -test
+llvm-core/clang  extra pie static-analyzer verify-sig -debug -doc -ieee-long-double -test -xml
+llvm-core/clang  llvm_targets_AArch64 llvm_targets_ARM llvm_targets_AVR llvm_targets_BPF llvm_targets_M68k llvm_targets_Mips llvm_targets_RISCV llvm_targets_Sparc llvm_targets_Spirv llvm_targets_WebAssembly llvm_targets_X86 llvm_targets_Xtensa -llvm_targets_AMDGPU -llvm_targets_ARC -llvm_targets_CSKY -llvm_targets_DirectX -llvm_targets_Hexagon -llvm_targets_Lanai -llvm_targets_LoongArch -llvm_targets_MSP430 -llvm_targets_NVPTX -llvm_targets_PowerPC -llvm_targets_SPIRV -llvm_targets_SystemZ -llvm_targets_VE -llvm_targets_XCore
+llvm-core/clang-common  cet llvm-libunwind verify-sig -bootstrap-prefix -default-compiler-rt -default-libcxx -default-lld -hardened
+llvm-core/clang-runtime  compiler-rt libcxx llvm-libunwind openmp sanitize -default-compiler-rt -default-lld -default-libcxx -offload -polly
+llvm-core/clang-toolchain-symlinks  native-symlinks -gcc-symlinks -multilib-symlinks
+llvm-core/lld  verify-sig zstd -debug -test
+llvm-core/lld-toolchain-symlinks  native-symlinks -multilib-symlinks
+llvm-core/llvm  libffi verify-sig zstd -binutils-plugin -bootstrap-gcc -debug -debuginfod -doc -exegesis -libedit -test -xml -z3
+llvm-core/llvm  llvm_targets_AArch64 llvm_targets_ARM llvm_targets_AVR llvm_targets_BPF llvm_targets_M68k llvm_targets_Mips llvm_targets_RISCV llvm_targets_Sparc llvm_targets_Spirv llvm_targets_WebAssembly llvm_targets_X86 llvm_targets_Xtensa -llvm_targets_AMDGPU -llvm_targets_ARC -llvm_targets_CSKY -llvm_targets_DirectX -llvm_targets_Hexagon -llvm_targets_Lanai -llvm_targets_LoongArch -llvm_targets_MSP430 -llvm_targets_NVPTX -llvm_targets_PowerPC -llvm_targets_SPIRV -llvm_targets_SystemZ -llvm_targets_VE -llvm_targets_XCore
+llvm-core/llvm-common  verify-sig -emacs
+llvm-core/llvm-toolchain-symlinks  native-symlinks -multilib-symlinks
+llvm-runtimes/compiler-rt  atomic-builtins clang verify-sig -debug -test
+llvm-runtimes/compiler-rt-sanitizers  asan cfi clang ctx-profile dfsan hwasan libfuzzer lsan memprof msan orc profile safestack scudo tsan ubsan verify-sig xray -debug -gwp-asan -shadowcallstack -test
+llvm-runtimes/libcxx  clang libcxxabi verify-sig -static-libs -test
+llvm-runtimes/libcxxabi  clang verify-sig -static-libs -test
+llvm-runtimes/openmp  verify-sig -debug -gdb-plugin -hwloc -ompt -test
 net-dns/libidn2  nls verify-sig -static-libs
 net-firewall/iptables  -conntrack -netlink -nftables -pcap -static-libs -test
 net-libs/gnutls  cxx idn nls tools verify-sig zlib -brotli -dane -doc -examples -openssl -pkcs11 -sslv2 -sslv3 -static-libs -test -test-full -tls-heartbeat -zstd
 net-libs/libmnl  verify-sig -examples
 net-libs/libnsl  -static-libs
 net-libs/libtirpc  -kerberos -static-libs
-net-libs/nghttp2  -debug -hpack-tools -jemalloc -static-libs  -test -utils -xml
+net-libs/nghttp2  -debug -hpack-tools -jemalloc -static-libs -systemd -test -utils -xml
 net-misc/curl  ftp gnutls hsts http2 imap pop3 progress-meter smtp ssl tftp verify-sig websockets -adns -alt-svc -brotli -debug -gopher -http3 -httpsrr -idn -kerberos -ldap -mbedtls -openssl -psl -quic -rtmp -rustls -samba -ssh  -static-libs -telnet -test -zstd
 net-misc/dhcpcd  embedded ipv6 udev -debug -privsep
 net-misc/iputils  arping caps filecaps nls -clockdiff -doc -idn -test -tracepath
@@ -241,6 +263,7 @@ sec-keys/openpgp-keys-libarchive
 sec-keys/openpgp-keys-libidn
 sec-keys/openpgp-keys-libtasn1
 sec-keys/openpgp-keys-libuv
+sec-keys/openpgp-keys-llvm
 sec-keys/openpgp-keys-m4
 sec-keys/openpgp-keys-madler
 sec-keys/openpgp-keys-make
@@ -252,6 +275,7 @@ sec-keys/openpgp-keys-openssl
 sec-keys/openpgp-keys-patch
 sec-keys/openpgp-keys-philiphazel
 sec-keys/openpgp-keys-python
+sec-keys/openpgp-keys-rust
 sec-keys/openpgp-keys-sed
 sec-keys/openpgp-keys-sysvinit
 sec-keys/openpgp-keys-tar
@@ -288,6 +312,7 @@ sys-apps/kbd  nls pam selinux -test
 sys-apps/kmod  lzma tools zlib zstd -debug -doc -pkcs7 -static-libs
 sys-apps/less  pcre -test
 sys-apps/locale-gen
+sys-apps/lsb-release
 sys-apps/man-db  manpager nls seccomp selinux zlib -static-libs
 sys-apps/man-pages  verify-sig
 sys-apps/net-tools  arp hostname ipv6 nls selinux -nis -plipconfig -slattach -static
