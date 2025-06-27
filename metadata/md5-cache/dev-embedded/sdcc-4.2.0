@@ -1,16 +1,16 @@
 BDEPEND=dev-libs/boost:= sys-devel/gnuconfig >=app-portage/elt-patches-20250306 || ( >=dev-build/automake-1.17-r1:1.17 >=dev-build/automake-1.16.5:1.16 ) || ( >=dev-build/autoconf-2.72-r1:2.72 ) >=dev-build/libtool-2.4.7-r3
 DEFINED_PHASES=compile configure install prepare
-DEPEND=!static? ( sys-libs/zlib:= ) !static? ( pic14? ( >=dev-embedded/gputils-0.13.7 ) ) !static? ( pic16? ( >=dev-embedded/gputils-0.13.7 ) ) !static? ( boehm-gc? ( dev-libs/boehm-gc:= ) ) !static? ( sdcdb? ( sys-libs/readline:0= ) ) !static? ( ucsim? ( sys-libs/ncurses:= ) ) dev-util/gperf static? ( sys-libs/zlib:=[static-libs] ) boehm-gc? ( static? ( dev-libs/boehm-gc:=[static-libs] ) ) sdcdb? ( static? ( sys-libs/readline:0=[static-libs] ) ) ucsim? ( static? ( sys-libs/ncurses:=[static-libs] ) )
+DEPEND=sys-libs/zlib:=[static-libs?] pic14? ( >=dev-embedded/gputils-0.13.7 ) pic16? ( >=dev-embedded/gputils-0.13.7 ) boehm-gc? ( dev-libs/boehm-gc:=[static-libs?] ) sdcdb? ( sys-libs/readline:0=[static-libs?] ) ucsim? ( sys-libs/ncurses:=[static-libs?] ) dev-util/gperf
 DESCRIPTION=Small device C compiler (for various microprocessors)
 EAPI=8
 HOMEPAGE=https://sdcc.sourceforge.net/
 INHERIT=autotools flag-o-matic
-IUSE=mcs51 z80 z180 r2k r2ka r3ka sm83 tlcs90 ez80-z80 z80n ds390 ds400 pic14 pic16 hc08 s08 stm8 pdk13 pdk14 pdk15 pdk16 mos6502 mos65c02 +boehm-gc device-lib doc non-free packihx sdcdb +sdcpp static ucsim
+IUSE=mcs51 z80 z180 r2k r2ka r3ka sm83 tlcs90 ez80-z80 z80n ds390 ds400 pic14 pic16 hc08 s08 stm8 pdk13 pdk14 pdk15 pdk16 mos6502 mos65c02 +boehm-gc device-lib doc non-free packihx sdcdb +sdcpp static static-libs ucsim
 KEYWORDS=amd64 x86
 LICENSE=GPL-2 ZLIB non-free? ( MicroChip-SDCC ) packihx? ( public-domain )
-RDEPEND=!static? ( sys-libs/zlib:= ) !static? ( pic14? ( >=dev-embedded/gputils-0.13.7 ) ) !static? ( pic16? ( >=dev-embedded/gputils-0.13.7 ) ) !static? ( boehm-gc? ( dev-libs/boehm-gc:= ) ) !static? ( sdcdb? ( sys-libs/readline:0= ) ) !static? ( ucsim? ( sys-libs/ncurses:= ) )
+RDEPEND=!static? ( sys-libs/zlib:=[static-libs?] pic14? ( >=dev-embedded/gputils-0.13.7 ) pic16? ( >=dev-embedded/gputils-0.13.7 ) boehm-gc? ( dev-libs/boehm-gc:=[static-libs?] ) sdcdb? ( sys-libs/readline:0=[static-libs?] ) ucsim? ( sys-libs/ncurses:=[static-libs?] ) ) !static? ( dev-libs/boost:= ) dev-util/gperf
 REQUIRED_USE=pic14? ( !static ) pic16? ( !static )
 SLOT=0
 SRC_URI=https://downloads.sourceforge.net/project/sdcc/sdcc/4.2.0/sdcc-src-4.2.0.tar.bz2 doc? ( https://downloads.sourceforge.net/project/sdcc/sdcc-doc/4.2.0/sdcc-doc-4.2.0.tar.bz2 )
 _eclasses_=gnuconfig	ddeb9f8caff1b5f71a09c75b7534df79	toolchain-funcs	6afdb6107430c1832ca7e16aacbf8fa1	multilib	b2a329026f2e404e9e371097dda47f96	libtool	c81bd096be5f4c82f4e8f156ef112402	autotools	f20ecf7ab0a7c34e83238b3ed4aaf6d6	flag-o-matic	16d3941ed2dc39f4819368ae51bc0b72
-_md5_=81259f072b7d8787484f48a57120fb2f
+_md5_=19d826c9d6287bb90f150663ed3eba1f

@@ -45,7 +45,7 @@ SDCC_PORTS="
 "
 IUSE="
 	${SDCC_PORTS}
-	+boehm-gc device-lib doc non-free packihx sdcdb +sdcpp static ucsim
+	+boehm-gc device-lib doc non-free packihx sdcdb +sdcpp static static-libs ucsim
 "
 
 REQUIRED_USE="
@@ -55,21 +55,20 @@ REQUIRED_USE="
 BDEPEND="
 	dev-libs/boost:=
 "
-RDEPEND="
-	!static? ( sys-libs/zlib:= )
-	!static? ( pic14? ( >=dev-embedded/gputils-0.13.7 ) )
-	!static? ( pic16? ( >=dev-embedded/gputils-0.13.7 ) )
-	!static? ( boehm-gc? ( dev-libs/boehm-gc:= ) )
-	!static? ( sdcdb? ( sys-libs/readline:0= ) )
-	!static? ( ucsim? ( sys-libs/ncurses:= ) )
+LIB_DEPEND="
+	sys-libs/zlib:=[static-libs?]
+	pic14? ( >=dev-embedded/gputils-0.13.7 )
+	pic16? ( >=dev-embedded/gputils-0.13.7 )
+	boehm-gc? ( dev-libs/boehm-gc:=[static-libs?] )
+	sdcdb? ( sys-libs/readline:0=[static-libs?] )
+	ucsim? ( sys-libs/ncurses:=[static-libs?] )
 "
-DEPEND="
-	${RDEPEND}
+RDEPEND="!static? ( ${LIB_DEPEND} )
+	!static? ( dev-libs/boost:= )
 	dev-util/gperf
-	static? ( sys-libs/zlib:=[static-libs] )
-	boehm-gc? ( static? ( dev-libs/boehm-gc:=[static-libs] ) )
-	sdcdb? ( static? ( sys-libs/readline:0=[static-libs] ) )
-	ucsim? ( static? ( sys-libs/ncurses:=[static-libs] ) )
+"
+DEPEND="${LIB_DEPEND}
+	dev-util/gperf
 "
 PATCHES=(
 	"${FILESDIR}"/sdcc-3.8.0-override-override.patch
