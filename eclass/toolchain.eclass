@@ -391,10 +391,10 @@ if tc_has_feature doc ; then
 fi
 
 DEPEND="${RDEPEND}
-	static? ( sys-libs/zlib[static-libs] )
-	static? ( >=dev-libs/gmp-4.3.2:0=[static-libs] )
-	static? ( >=dev-libs/mpfr-2.4.2:0=[static-libs] )
-	static? ( >=dev-libs/mpc-0.8.1:0=[static-libs] )
+	sys-libs/zlib[static-libs?]
+	>=dev-libs/gmp-4.3.2:0=[static-libs?]
+	>=dev-libs/mpfr-2.4.2:0=[static-libs?]
+	>=dev-libs/mpc-0.8.1:0=[static-libs?]
 "
 
 if [[ ${PN} == gcc && ${PV} == *_p* ]] ; then

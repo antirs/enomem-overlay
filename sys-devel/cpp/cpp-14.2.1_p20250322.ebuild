@@ -56,7 +56,7 @@ src_prepare() {
 	eapply_user
 }
 
-IUSE="+custom-cflags static"
+IUSE="+custom-cflags static static-libs"
 
 src_configure() {
 	EXTRA_ECONF=(--disable-bootstrap
@@ -73,6 +73,14 @@ src_configure() {
 	toolchain_src_configure
 
 	use static && append-ldflags -static
+
+	if [[ -n "${ESYSROOT}" ]]; then
+		append-ldflags -L"${ESYSROOT}"/usr/$(get_libdir)
+		export PKG_CONFIG="$(tc-getPKG_CONFIG) --static"
+		export PKG_CONFIG_SYSROOT_DIR="${ESYSROOT}"
+		export PKG_CONFIG_LIBDIR="${ESYSROOT}"/usr/$(get_libdir)/pkgconfig
+		export PKG_CONFIG_PATH="${ESYSROOT}/usr/$(get_libdir)/pkgconfig"
+	fi
 }
 
 src_compile() {
