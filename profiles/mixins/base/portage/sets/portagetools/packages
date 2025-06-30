@@ -7,7 +7,6 @@
 *app-portage/gentoolkit
 *app-portage/mgorny-dev-scripts
 *app-portage/portage-utils
-*app-portage/repoman
 *dev-util/catalyst
 *dev-util/pkgcheck
 *dev-util/pkgdev
