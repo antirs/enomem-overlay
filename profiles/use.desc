@@ -1,2 +1,3 @@
 noshared - Do not build dynamic libraries or remove them
 nostatic - Do not build static libraries or remove them
+static-libs - Build static libraries or use them in dependencies
