@@ -1,1 +1,2 @@
+sys-apps/gawk  mpfr
 sys-libs/glibc:2.2  test
