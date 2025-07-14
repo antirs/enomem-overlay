@@ -1,5 +1,7 @@
 gentoo:default/linux/amd64/23.0/llvm
-../../../../../../../configs/amd64/docker/minimal
+../../../../../../../configs/amd64
+../../../../../../../rewrites/default/base/stage1
+../../../../../../../rewrites/virtual/docker
 ../../../../../../../rewrites/default/amd64/llvm/libcxx
 ../../../../../../../rewrites/default/amd64/nomultilib
 ../../../../../../../rewrites/virtual/docker/minimal/debugtools
