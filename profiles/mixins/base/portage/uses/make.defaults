@@ -9,7 +9,7 @@ EN_USE_SYSTEM="nptl threads openmp smp acl caps xattr"
 EN_USE_TEST=""
 EN_USE_XORG="xft fontconfig truetype vaapi vdpau"
 
-EN_USE_MINUS="-audit -adns -bluetooth -cups -debug -gcj -gles2 -gstreamer -gtk -gtk3 -http3 -introspection -java -kde -nss -openssl -pam -pulseaudio -qt-static -qt3support -qt4 -qt5 -quic -selinux -split-usr -static -static-libs -systemd -su -suid -test"
+EN_USE_MINUS="-audit -adns -bluetooth -cups -debug -gcj -gles2 -gstreamer -gtk -gtk3 -http3 -introspection -java -kde -nss -openssl -pam -pulseaudio -qt-static -qt3support -qt4 -qt5 -quic -selinux -split-usr -static -static-libs -systemd -su -suid -test -test-full -test-install -test-rust"
 EN_USE_PLUS="${USE_CRYPTO} ${USE_GENTOO} ${USE_LANG} ${USE_NET} ${USE_SYSTEM} ${USE_TEST} ${USE_XORG}"
 
 USE="${EN_USE_MINUS} ${EN_USE_PLUS}"
