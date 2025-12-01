@@ -1,4 +1,4 @@
-PYTHON_TARGETS="python3_12 python2_7"
-PYTHON_SINGLE_TARGET="python3_12"
+PYTHON_TARGETS="python3_13 python2_7"
+PYTHON_SINGLE_TARGET="-python3_10 -python3_11 -python3_12 python3_13 -python3_14"
 
-BOOTSTRAP_USE="${BOOTSTRAP_USE} python_targets_python3_12 python_targets_python2_7 python_single_target_python3_12"
+BOOTSTRAP_USE="${BOOTSTRAP_USE} python_targets_python3_13 python_targets_python2_7 python_single_target_python3_13"
