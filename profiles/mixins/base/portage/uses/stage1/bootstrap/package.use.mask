@@ -7,26 +7,31 @@ acct-group/input
 acct-group/kmem
 acct-group/kvm
 acct-group/lp
+acct-group/mail
 acct-group/man
 acct-group/portage
 acct-group/render
 acct-group/root
 acct-group/sgx
+acct-group/shadow
 acct-group/sshd
 acct-group/tape
 acct-group/tty
 acct-group/usb
 acct-group/video
+acct-user/mail
 acct-user/man
 acct-user/portage
+acct-user/postmaster
 acct-user/sshd
 app-admin/eselect  doc emacs vim-syntax
 app-admin/perl-cleaner  pkgcore
-app-admin/setools  X debug test
+app-admin/setools  debug gui test
 app-alternatives/awk  busybox mawk nawk split-usr -gawk
 app-alternatives/bc  gh -gnu
 app-alternatives/bzip2  lbzip2 pbzip2 split-usr -reference
 app-alternatives/cpio  libarchive -gnu
+app-alternatives/gpg  freepg sequoia -nls -reference -ssl
 app-alternatives/gzip  pigz split-usr -reference
 app-alternatives/lex  reflex -flex
 app-alternatives/ninja  samurai -reference
@@ -42,18 +47,21 @@ app-arch/tar  minimal selinux -acl -nls -verify-sig -xattr
 app-arch/unzip  natspec -bzip2 -unicode
 app-arch/xz-utils  doc pgo static-libs -extra-filters -nls -verify-sig
 app-arch/zstd  static-libs test -lz4 -lzma -zlib
-app-crypt/gnupg  doc ldap selinux test tools tpm usb user-socket wks-server -bzip2 -nls -readline -smartcard -ssl -tofu -verify-sig
-app-crypt/gpgme  common-lisp debug python qt5 qt6 static-libs test -cxx -verify-sig
+app-crypt/gnupg  doc ldap selinux test tools tpm usb user-socket wks-server -alternatives -bzip2 -nls -readline -smartcard -ssl -tofu -verify-sig
+app-crypt/gpgme  common-lisp static-libs test -verify-sig
 app-crypt/libb2  native-cflags static-libs -openmp
 app-crypt/libmd
-app-crypt/pinentry  X efl emacs gtk keyring qt5 qt6 wayland -caps -ncurses -verify-sig
+app-crypt/pinentry  X efl emacs gtk keyring qt6 wayland -caps -ncurses -verify-sig
 app-crypt/rhash  debug static-libs -nls -ssl
+app-doc/info-manual
 app-editors/nano  debug justify magic minimal -ncurses -nls -spell -unicode
 app-editors/vis  lua selinux static test -acl -ncurses -tre
+app-eselect/eselect-fontconfig
 app-eselect/eselect-guile
 app-eselect/eselect-iptables
 app-eselect/eselect-lib-bin-symlink
 app-eselect/eselect-pinentry
+app-eselect/eselect-rust
 app-i18n/gnulib-l10n
 app-i18n/man-pages-l10n
 app-misc/ca-certificates  cacert
@@ -69,17 +77,22 @@ app-text/build-docbook-catalog
 app-text/docbook-xml-dtd
 app-text/docbook-xsl-ns-stylesheets  ruby
 app-text/docbook-xsl-stylesheets  ruby
+app-text/doxygen  clang debug doc dot doxysearch gui test
+app-text/ghostscript-gpl  X cups dbus gtk static-libs -unicode
+app-text/libpaper
 app-text/manpager
 app-text/opensp  doc static-libs test -nls
 app-text/po4a  test
+app-text/poppler-data
+app-text/scdoc
 app-text/sgml-common
 app-text/xmlto  latex -text
-dev-build/autoconf  emacs -verify-sig
+dev-build/autoconf  -verify-sig
 dev-build/autoconf-archive
 dev-build/autoconf-wrapper
 dev-build/automake  test -verify-sig
 dev-build/automake-wrapper
-dev-build/cmake  dap doc gui qt6 test -ncurses -verify-sig
+dev-build/cmake  dap doc gui test -ncurses -verify-sig
 dev-build/gtk-doc-am
 dev-build/libtool  vanilla
 dev-build/make  doc guile static test -nls -verify-sig
@@ -87,12 +100,16 @@ dev-build/meson  test test-full -verify-sig
 dev-build/meson-format-array
 dev-build/ninja  doc test
 dev-db/sqlite  debug doc secure-delete static-libs tcl test tools -icu -readline
+dev-lang/nasm  doc
 dev-lang/perl  doc minimal -berkdb -gdbm
-dev-lang/python  bluetooth debug examples libedit pgo test tk valgrind -build -ensurepip -gdbm -ncurses -readline -sqlite -ssl -verify-sig
+dev-lang/python  bluetooth debug examples jit libedit pgo test tk valgrind -build -ensurepip -gdbm -ncurses -readline -sqlite -ssl -verify-sig
 dev-lang/python-exec  test -native-symlinks
 dev-lang/python-exec-conf
 dev-lang/ruby  berkdb debug doc examples jemalloc jit socks5 static-libs systemtap tk valgrind xemacs -gdbm -ssl
+dev-lang/rust  big-endian clippy debug dist doc lto test -llvm-libunwind -rust-analyzer -rust-src -rustfmt -system-llvm -verify-sig -wasm
 dev-lang/rust  llvm_targets_AMDGPU llvm_targets_ARC llvm_targets_CSKY llvm_targets_DirectX llvm_targets_Hexagon llvm_targets_Lanai llvm_targets_LoongArch llvm_targets_MSP430 llvm_targets_NVPTX llvm_targets_PowerPC llvm_targets_SPIRV llvm_targets_SystemZ llvm_targets_VE llvm_targets_XCore -llvm_targets_AArch64 -llvm_targets_ARM -llvm_targets_AVR -llvm_targets_BPF -llvm_targets_M68k -llvm_targets_Mips -llvm_targets_RISCV -llvm_targets_Sparc -llvm_targets_Spirv -llvm_targets_WebAssembly -llvm_targets_X86 -llvm_targets_Xtensa
+dev-lang/rust-bin  big-endian clippy doc prefix -rust-analyzer -rust-src -rustfmt -verify-sig
+dev-lang/rust-common  -verify-sig
 dev-lang/swig  ccache doc test -pcre
 dev-lang/tcl  debug -threads
 dev-libs/boehm-gc  cxx static-libs -large -threads
@@ -103,6 +120,7 @@ dev-libs/isl  static-libs
 dev-libs/jsoncpp  doc test
 dev-libs/libassuan  -verify-sig
 dev-libs/libffi  debug exec-static-trampoline pax-kernel static-libs test
+dev-libs/libfmt  test
 dev-libs/libgcrypt  doc static-libs -asm -getentropy -verify-sig
 dev-libs/libgpg-error  common-lisp static-libs test -nls -verify-sig
 dev-libs/libksba  static-libs -verify-sig
@@ -112,8 +130,8 @@ dev-libs/libtasn1  static-libs test -verify-sig
 dev-libs/libtermkey  demos static-libs
 dev-libs/libunistring  doc static-libs
 dev-libs/libuv  -verify-sig
-dev-libs/libxml2  debug examples ftp lzma static-libs test -icu -python -readline
-dev-libs/libxslt  debug examples python static-libs -crypt
+dev-libs/libxml2  doc static-libs test -icu -python -readline
+dev-libs/libxslt  debug debugger examples python static-libs -crypt
 dev-libs/lzo  examples split-usr static-libs
 dev-libs/mpc  static-libs
 dev-libs/mpdecimal  cxx test
@@ -122,6 +140,7 @@ dev-libs/nettle  doc static-libs -asm -gmp -verify-sig
 dev-libs/npth  test
 dev-libs/openssl  fips ktls quic rfc3779 sctp static-libs test tls-compression vanilla weak-ssl-ciphers -asm -verify-sig
 dev-libs/popt  static-libs -nls
+dev-libs/spdlog  test
 dev-libs/tre  debug profile python static-libs -agrep -alloca -approx -nls
 dev-libs/tree-sitter-bash  -python
 dev-libs/unibilium  doc static-libs test
@@ -132,7 +151,7 @@ dev-perl/Exporter-Tiny  examples test
 dev-perl/ExtUtils-CChecker  test
 dev-perl/File-ShareDir  minimal test
 dev-perl/File-ShareDir-Install  test
-dev-perl/File-Slurper  examples test
+dev-perl/File-Slurper  examples minimal test
 dev-perl/List-MoreUtils  test -xs
 dev-perl/List-MoreUtils-XS  test
 dev-perl/Locale-gettext  test
@@ -146,18 +165,19 @@ dev-perl/Syntax-Keyword-Try  test
 dev-perl/TermReadKey  examples test
 dev-perl/Text-CharWidth  test
 dev-perl/Text-WrapI18N  test
-dev-perl/Unicode-LineBreak
+dev-perl/Unicode-LineBreak  test
 dev-perl/XS-Parse-Keyword  test
 dev-perl/YAML-Tiny  minimal test
 dev-python/cachecontrol  test
 dev-python/certifi  test
-dev-python/charset-normalizer  test
+dev-python/charset-normalizer  test verify-provenance
 dev-python/colorama  examples test
-dev-python/cython  debug doc test
+dev-python/cython  debug doc test test-full
+dev-python/dependency-groups  test
 dev-python/distlib  test
 dev-python/distro  test
 dev-python/editables  test
-dev-python/ensurepip-pip
+dev-python/ensurepip-pip  test test-rust
 dev-python/fastjsonschema  test
 dev-python/flit-core  test
 dev-python/gentoo-common
@@ -167,7 +187,7 @@ dev-python/hatch-vcs  test
 dev-python/hatchling  test
 dev-python/hpack  test
 dev-python/hyperframe  test
-dev-python/idna  test
+dev-python/idna
 dev-python/installer  test
 dev-python/jaraco-collections  test
 dev-python/jaraco-context  test
@@ -180,24 +200,25 @@ dev-python/lxml  debug doc examples test -threads
 dev-python/markdown-it-py  test
 dev-python/markupsafe  debug test -native-extensions
 dev-python/mdurl  test
-dev-python/more-itertools  doc test
+dev-python/more-itertools  doc
 dev-python/msgpack  debug test -native-extensions
 dev-python/networkx  test
 dev-python/packaging  test
-dev-python/pathspec  test
-dev-python/pip   test
+dev-python/pathspec
+dev-python/pip  test test-rust
 dev-python/platformdirs  test
 dev-python/pluggy  test
 dev-python/poetry-core  test
 dev-python/pygments  test
 dev-python/pyproject-hooks  test
 dev-python/pysocks
-dev-python/requests  socks5 test -test-rust
+dev-python/requests  socks5 test test-rust
 dev-python/resolvelib  test
 dev-python/rich  test
 dev-python/setuptools  test
-dev-python/setuptools-scm  test
-dev-python/trove-classifiers  test
+dev-python/setuptools-scm  test verify-provenance
+dev-python/tomli-w  test
+dev-python/trove-classifiers  test verify-provenance
 dev-python/truststore  test
 dev-python/typing-extensions  test
 dev-python/uc-micro-py  test
@@ -224,20 +245,32 @@ llvm-runtimes/compiler-rt-sanitizers  debug gwp-asan shadowcallstack test -asan 
 llvm-runtimes/libcxx  static-libs test -clang -libcxxabi -verify-sig
 llvm-runtimes/libcxxabi  static-libs test -clang -verify-sig
 llvm-runtimes/openmp  debug gdb-plugin hwloc ompt test -verify-sig
+media-fonts/liberation-fonts  X fontforge
+media-fonts/urw-fonts  X
+media-libs/fontconfig  doc test -nls
+media-libs/freetype  X brotli debug doc fontforge harfbuzz static-libs svg utils -adobe-cff -bzip2 -cleartype-hinting -png
+media-libs/jbig2dec  png static-libs test
+media-libs/lcms  doc jpeg static-libs test tiff
+media-libs/libjpeg-turbo  java static-libs test
+media-libs/libpng  apng static-libs test
+media-libs/openjpeg  doc test
+media-libs/tiff  jbig lerc libdeflate lzma opengl static-libs test webp zstd -cxx -jpeg -verify-sig -zlib
+net-dns/libidn  emacs -nls -verify-sig
 net-dns/libidn2  static-libs -nls -verify-sig
 net-firewall/iptables  conntrack netlink nftables pcap static-libs test
 net-libs/gnutls  brotli dane doc examples openssl pkcs11 sslv2 sslv3 static-libs test test-full tls-heartbeat zstd -cxx -idn -nls -tools -verify-sig -zlib
 net-libs/libmnl  examples -verify-sig
 net-libs/libnsl  static-libs
 net-libs/libtirpc  kerberos static-libs
-net-libs/nghttp2  debug hpack-tools jemalloc static-libs
-net-misc/curl  adns alt-svc brotli debug gopher http2 http3 httpsrr idn kerberos ldap mbedtls openssl psl quic rtmp rustls samba ssh -ftp -gnutls -hsts -imap -pop3 -progress-meter -smtp -ssl -tftp -verify-sig -websockets
+net-libs/nghttp2  debug hpack-tools jemalloc systemd test utils xml
+net-mail/mailbase  pam
+net-misc/curl  adns alt-svc brotli debug ech gopher http2 http3 httpsrr idn kerberos ldap mbedtls openssl psl quic rtmp rustls samba sasl-scram ssh static-libs telnet test zstd -ftp -gnutls -hsts -imap -pop3 -smtp -ssl -tftp -verify-sig -websockets
 net-misc/dhcpcd  debug privsep -embedded -ipv6 -udev
 net-misc/iputils  clockdiff doc idn test tracepath -arping -caps -filecaps -nls
 net-misc/netifrc  -dhcp
-net-misc/openssh  debug kerberos ldns legacy-ciphers libedit livecd security-key selinux static test xmss -audit -pam -pie -ssl -verify-sig
+net-misc/openssh  debug kerberos ldns libedit livecd security-key selinux static test xmss -audit -pam -ssl -verify-sig
 net-misc/rsync  examples lz4 rrsync stunnel system-zlib xxhash zstd -acl -iconv -ssl -verify-sig -xattr
-net-misc/wget  cookie-check debug idn libproxy metalink ntlm static test uuid -gnutls -ipv6 -nls -pcre -ssl -verify-sig -zlib
+net-misc/wget  cookie-check debug idn libproxy metalink ntlm static test uuid -gnutls -nls -pcre -ssl -verify-sig -zlib
 perl-core/File-Temp
 perl-core/Getopt-Long
 perl-core/Scalar-List-Utils
@@ -245,43 +278,50 @@ perl-core/Test-Harness  test
 sec-keys/openpgp-keys-alejandro-colomar
 sec-keys/openpgp-keys-andrewtridgell
 sec-keys/openpgp-keys-bison
-sec-keys/openpgp-keys-bradking
+sec-keys/openpgp-keys-bradking  test
 sec-keys/openpgp-keys-bzip2
 sec-keys/openpgp-keys-chetramey
-sec-keys/openpgp-keys-coreutils
+sec-keys/openpgp-keys-coreutils  test
 sec-keys/openpgp-keys-danielstenberg
 sec-keys/openpgp-keys-diffutils
+sec-keys/openpgp-keys-eschwartz  test
+sec-keys/openpgp-keys-evenrouault  test
 sec-keys/openpgp-keys-file
 sec-keys/openpgp-keys-findutils
 sec-keys/openpgp-keys-gawk
 sec-keys/openpgp-keys-gdbm
 sec-keys/openpgp-keys-gentoo-release  test
 sec-keys/openpgp-keys-gettext
+sec-keys/openpgp-keys-glibc
 sec-keys/openpgp-keys-gnupg
-sec-keys/openpgp-keys-gnutls
+sec-keys/openpgp-keys-gnutls  test
 sec-keys/openpgp-keys-grep
 sec-keys/openpgp-keys-gzip
 sec-keys/openpgp-keys-icu
 sec-keys/openpgp-keys-jimmeyering
 sec-keys/openpgp-keys-jpakkane
 sec-keys/openpgp-keys-karelzak
-sec-keys/openpgp-keys-lassecollin
+sec-keys/openpgp-keys-karlberry
+sec-keys/openpgp-keys-lassecollin  test
 sec-keys/openpgp-keys-libarchive
 sec-keys/openpgp-keys-libidn
 sec-keys/openpgp-keys-libtasn1
 sec-keys/openpgp-keys-libuv
+sec-keys/openpgp-keys-llvm
 sec-keys/openpgp-keys-m4
 sec-keys/openpgp-keys-madler
 sec-keys/openpgp-keys-make
 sec-keys/openpgp-keys-netfilter
 sec-keys/openpgp-keys-nettle
-sec-keys/openpgp-keys-nicholaswilson
+sec-keys/openpgp-keys-nicholaswilson  test
 sec-keys/openpgp-keys-openssh
 sec-keys/openpgp-keys-openssl
-sec-keys/openpgp-keys-patch
+sec-keys/openpgp-keys-patch  test
 sec-keys/openpgp-keys-philiphazel
 sec-keys/openpgp-keys-python
+sec-keys/openpgp-keys-rust
 sec-keys/openpgp-keys-sed
+sec-keys/openpgp-keys-strace
 sec-keys/openpgp-keys-sysvinit
 sec-keys/openpgp-keys-tar
 sec-keys/openpgp-keys-thomasdickey
@@ -289,8 +329,8 @@ sec-keys/openpgp-keys-vincentlefevre
 sec-keys/openpgp-keys-waynedavison
 sec-keys/openpgp-keys-wget
 sec-keys/openpgp-keys-zackweinberg
-sec-policy/selinux-base  doc -ubac -unconfined -unknown-perms
-sec-policy/selinux-base-policy  -unconfined
+sec-policy/selinux-base  doc systemd -ubac -unconfined -unknown-perms
+sec-policy/selinux-base-policy  systemd -unconfined
 sec-policy/selinux-dirmngr
 sec-policy/selinux-gpg
 sec-policy/selinux-loadkeys
@@ -302,29 +342,30 @@ sys-apps/acl  static-libs -nls
 sys-apps/attr  debug static-libs -nls
 sys-apps/baselayout  split-usr -build
 sys-apps/checkpolicy  debug
-sys-apps/coreutils  gmp hostname kill multicall openssl selinux split-usr static test vanilla -acl -caps -nls -verify-sig -xattr
+sys-apps/coreutils  gmp hostname kill multicall openssl selinux split-usr static test test-full vanilla -acl -caps -nls -verify-sig -xattr
 sys-apps/diffutils  -nls -verify-sig
 sys-apps/file  lzip python static-libs zstd -bzip2 -lzma -seccomp -verify-sig -zlib
-sys-apps/findutils  selinux static test -nls -verify-sig
+sys-apps/findutils  selinux static test test-full -nls -verify-sig
 sys-apps/gawk  mpfr pma -nls -readline -verify-sig
 sys-apps/gentoo-functions  test
-sys-apps/grep  static -egrep-fgrep -nls -pcre -verify-sig
+sys-apps/grep  static test-full -egrep-fgrep -nls -pcre -verify-sig
 sys-apps/groff  X examples uchardet
 sys-apps/help2man  -nls
 sys-apps/install-xattr
 sys-apps/iproute2  atm berkdb bpf elf minimal nfs selinux -caps -iptables
-sys-apps/kbd  selinux test -nls -pam
-sys-apps/kmod  debug doc pkcs7 static-libs -lzma -tools -zlib -zstd
+sys-apps/kbd  lzma selinux test zstd -bzip2 -nls -pam -zlib
+sys-apps/kmod  debug doc pkcs7 -lzma -tools -zlib -zstd
 sys-apps/less  test -pcre
 sys-apps/locale-gen
+sys-apps/lsb-release
 sys-apps/man-db  selinux static-libs -manpager -nls -seccomp -zlib
 sys-apps/man-pages  -verify-sig
 sys-apps/net-tools  nis plipconfig selinux slattach static -arp -hostname -ipv6 -nls
-sys-apps/openrc  bash debug newnet s6 selinux sysv-utils -audit -caps -netifrc -pam -sysvinit -unicode
+sys-apps/openrc  bash debug newnet s6 selinux sysv-utils -audit -netifrc -pam -sysvinit -unicode
 sys-apps/policycoreutils  -audit -pam
 sys-apps/portage  apidoc doc selinux test -build -gentoo-dev -ipc -native-extensions -rsync-verify -xattr
 sys-apps/sandbox  -nnp
-sys-apps/sed  selinux static -acl -nls -verify-sig
+sys-apps/sed  selinux static test-full -acl -nls -verify-sig
 sys-apps/selinux-python  test
 sys-apps/semodule-utils
 sys-apps/shadow  cracklib selinux skey split-usr su systemd -acl -audit -nls -pam -verify-sig -xattr
@@ -336,11 +377,11 @@ sys-apps/which
 sys-auth/pambase  debug elogind gnome-keyring homed minimal mktemp pam_krb5 pam_ssh pwhistory pwquality securetty selinux sssd systemd yescrypt -caps -nullok -passwdqc -sha512
 sys-auth/passwdqc
 sys-devel/bc  libedit static -readline
-sys-devel/binutils  debuginfod doc gold gprofng hardened multitarget pgo static-libs test vanilla xxhash -cet -nls -plugins -zstd
+sys-devel/binutils  debuginfod doc gprofng hardened multitarget pgo static-libs test vanilla xxhash -cet -nls -plugins -zstd
 sys-devel/binutils-config  -native-symlinks
 sys-devel/bison  examples static test -nls -verify-sig
 sys-devel/flex  static test -nls
-sys-devel/gcc  ada custom-cflags d debug default-stack-clash-protection default-znow doc fixed-point go hardened ieee-long-double jit libssp lto modula2 multilib objc objc++ objc-gc pgo pie rust ssp systemtap test time64 valgrind vanilla vtv -cet -cxx -fortran -graphite -nls -openmp -pch -sanitize -zstd
+sys-devel/gcc  ada cobol custom-cflags d debug default-stack-clash-protection default-znow doc fixed-point go hardened ieee-long-double jit libgdiagnostics libssp lto modula2 multilib objc objc++ objc-gc pie pgo rust ssp systemtap test time64 valgrind vanilla vtv -cet -cxx -fortran -graphite -nls -openmp -pch -sanitize -zstd
 sys-devel/gcc-config  -cc-wrappers -native-symlinks
 sys-devel/gettext  doc emacs git java static-libs -acl -cxx -ncurses -nls -openmp -verify-sig -xattr
 sys-devel/gnuconfig
@@ -352,16 +393,16 @@ sys-fs/udev-init-scripts
 sys-kernel/linux-headers  headers-only
 sys-libs/db  cxx doc examples tcl test
 sys-libs/gdbm  static-libs test -berkdb -nls -readline -verify-sig
-sys-libs/glibc  compile-locales custom-cflags doc gd hash-sysv-compat headers-only multilib multilib-bootstrap nscd perl profile selinux suid systemd systemtap test vanilla -audit -caps -cet -multiarch -ssp -stack-realign -static-libs
+sys-libs/glibc  compile-locales custom-cflags doc gd hash-sysv-compat headers-only multilib multilib-bootstrap nscd perl profile selinux sframe stack-realign suid systemd systemtap test vanilla -audit -caps -cet -multiarch -ssp -static-libs -verify-sig
 sys-libs/libcap  static-libs tools -pam
 sys-libs/libcap-ng  python static-libs
-sys-libs/libseccomp  debug experimental-loong python static-libs test
+sys-libs/libseccomp  debug python static-libs test
 sys-libs/libselinux  ruby static-libs -python
 sys-libs/libsemanage
 sys-libs/libsepol  -static-libs
 sys-libs/libxcrypt  headers-only static-libs test -compat -system
-sys-libs/ncurses  ada debug doc gpm minimal profile split-usr static-libs test trace -cxx -stack-realign -tinfo -verify-sig
-sys-libs/pam  berkdb debug elogind examples nis selinux systemd -audit -filecaps -nls
+sys-libs/ncurses  ada debug doc gpm minimal profile split-usr stack-realign static-libs test trace -cxx -tinfo -verify-sig
+sys-libs/pam  berkdb debug elogind examples nis selinux systemd -audit -nls -verify-sig
 sys-libs/readline  static-libs utils -unicode -verify-sig
 sys-libs/timezone-data  leaps-timezone zic-slim -nls
 sys-libs/zlib  minizip static-libs -verify-sig
@@ -411,7 +452,9 @@ virtual/perl-XSLoader
 virtual/perl-podlators
 virtual/perl-version
 virtual/pkgconfig  -native-symlinks
-virtual/service-manager
+virtual/service-manager  systemd
 virtual/ssh  minimal
 virtual/tmpfiles  systemd
+virtual/ttf-fonts
 virtual/udev  systemd
+virtual/zlib  static-libs
