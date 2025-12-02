@@ -1,4 +1,8 @@
 # Marsha Melova <marsha.melova@grrlz.net>
+# failed verification of hashsum in Manifest for bash-5.3.tar.gz.sig
+>=app-shells/bash-5.3
+
+# Marsha Melova <marsha.melova@grrlz.net>
 # sys-libs/glibc-2.40-r7 doesn't compile with endless loop and gawk OOM
 >=sys-apps/gawk-5.3.1
 
