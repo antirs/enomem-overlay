@@ -97,7 +97,7 @@ src_configure() {
 		$(use_with readline)
 	)
 
-	econf "${myeconfargs[@]}"
+	LDFLAGS="-lm" econf "${myeconfargs[@]}"
 }
 
 src_install() {
