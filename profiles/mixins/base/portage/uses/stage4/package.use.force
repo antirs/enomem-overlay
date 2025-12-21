@@ -1,0 +1,181 @@
+acct-group/cron
+acct-group/crontab
+acct-group/distcc
+acct-group/locate
+acct-group/messagebus
+acct-user/cron
+acct-user/distcc
+acct-user/messagebus
+app-admin/logrotate  acl cron selinux verify-sig
+app-admin/rsyslog  gcrypt gnutls ssl uuid
+app-alternatives/cpio  gnu
+app-arch/cpio  nls
+app-arch/lbzip2
+app-arch/pixz
+app-arch/rpm  acl bzip2 iconv readline selinux sqlite zstd
+app-arch/tar  acl nls selinux verify-sig xattr
+app-cdr/cdrtools  acl filecaps nls selinux unicode
+app-crypt/argon2
+app-crypt/gnupg  alternatives bzip2 nls readline selinux smartcard ssl tofu verify-sig
+app-crypt/minisign
+app-editors/vim  acl crypt nls selinux
+app-editors/vim-core  acl nls
+app-editors/vis  acl ncurses selinux tre
+app-eselect/eselect-rust
+app-eselect/eselect-vi
+app-misc/tmux  selinux
+app-portage/eix  nls
+app-portage/gentoolkit
+app-shells/push
+app-shells/quoter
+app-text/asciidoc
+app-text/docbook-xml-dtd
+app-text/mandoc  selinux
+app-text/xmlto
+app-vim/gentoo-syntax
+dev-cpp/eigen  openmp
+dev-lang/rust-bin  verify-sig
+dev-libs/blake3
+dev-libs/elfutils  bzip2 lzma nls utils verify-sig
+dev-libs/glib  elf mime selinux xattr
+dev-libs/json-c
+dev-libs/libaio
+dev-libs/libburn
+dev-libs/libestr
+dev-libs/libevent  clock-gettime ssl verify-sig
+dev-libs/libfastjson
+dev-libs/libisoburn  acl readline xattr zlib
+dev-libs/libisofs  acl xattr zlib
+dev-libs/libsodium  asm urandom
+dev-libs/tree-sitter
+dev-libs/tree-sitter-bash  python
+dev-libs/xxhash
+dev-perl/Authen-SASL
+dev-perl/Crypt-URandom
+dev-perl/Digest-HMAC
+dev-perl/Error
+dev-perl/IO-Socket-SSL
+dev-perl/MailTools
+dev-perl/Net-SSLeay
+dev-perl/TimeDate
+dev-python/chardet
+dev-python/docutils
+dev-python/fasteners
+dev-python/lazy-object-proxy  native-extensions
+dev-python/olefile
+dev-python/pillow  jpeg zlib
+dev-python/pybind11
+dev-python/pydecomp
+dev-python/pyproject-metadata
+dev-python/scikit-build-core
+dev-python/snakeoil
+dev-python/tomli
+dev-python/tree-sitter
+dev-util/catalyst  iso
+dev-util/ccache  static-c++ verify-sig
+dev-util/desktop-file-utils
+dev-util/pkgcheck
+dev-util/pkgdev
+dev-util/shadowman
+dev-util/xxd
+dev-vcs/git  curl gpg iconv nls pcre perl safe-directory selinux webdav
+llvm-core/clang  extra pie static-analyzer verify-sig
+llvm-core/clang-common  cet hardened verify-sig
+llvm-core/clang-linker-config
+llvm-core/clang-toolchain-symlinks  native-symlinks
+llvm-core/llvm  binutils-plugin libffi verify-sig zstd
+llvm-core/llvm-common  verify-sig
+llvm-core/llvm-toolchain-symlinks  native-symlinks
+llvm-core/llvmgold
+llvm-runtimes/clang-rtlib-config
+llvm-runtimes/clang-runtime  compiler-rt openmp sanitize
+llvm-runtimes/clang-stdlib-config
+llvm-runtimes/clang-unwindlib-config
+llvm-runtimes/compiler-rt  atomic-builtins clang verify-sig
+llvm-runtimes/compiler-rt-sanitizers  asan cfi clang ctx-profile dfsan gwp-asan hwasan libfuzzer lsan memprof msan nsan orc profile rtsan safestack scudo tsan ubsan verify-sig xray
+llvm-runtimes/openmp  verify-sig
+net-misc/openssh  audit pam selinux ssl verify-sig
+sec-keys/minisig-keys-ccache
+sec-keys/openpgp-keys-cgzones
+sec-keys/openpgp-keys-elfutils
+sec-keys/openpgp-keys-grub
+sec-keys/openpgp-keys-libevent
+sec-keys/openpgp-keys-llvm
+sec-keys/openpgp-keys-rust
+sec-keys/openpgp-keys-unifont
+sec-policy/selinux-apache
+sec-policy/selinux-base  ubac unconfined unknown-perms
+sec-policy/selinux-base-policy  unconfined
+sec-policy/selinux-cdrecord
+sec-policy/selinux-dbus
+sec-policy/selinux-dirmngr
+sec-policy/selinux-distcc
+sec-policy/selinux-dracut
+sec-policy/selinux-git
+sec-policy/selinux-gpg
+sec-policy/selinux-kerberos
+sec-policy/selinux-loadkeys
+sec-policy/selinux-logrotate
+sec-policy/selinux-makewhatis
+sec-policy/selinux-mandb
+sec-policy/selinux-openrc
+sec-policy/selinux-screen
+sec-policy/selinux-shutdown
+sec-policy/selinux-slocate
+sec-policy/selinux-unconfined
+sys-apps/coreutils  acl caps nls selinux verify-sig xattr
+sys-apps/dbus  selinux
+sys-apps/debianutils
+sys-apps/findutils  nls selinux verify-sig
+sys-apps/hwdata
+sys-apps/iproute2  caps iptables selinux
+sys-apps/kbd  bzip2 nls pam selinux zlib
+sys-apps/lsb-release
+sys-apps/man-db  manpager nls seccomp selinux zlib
+sys-apps/mlocate  nls selinux
+sys-apps/net-tools  arp hostname ipv6 nls selinux
+sys-apps/openrc  audit netifrc pam selinux sysvinit unicode
+sys-apps/pciutils  kmod udev zlib
+sys-apps/pkgcore
+sys-apps/portage  gentoo-dev ipc native-extensions rsync-verify selinux xattr
+sys-apps/sed  acl nls selinux verify-sig
+sys-apps/selinux-python
+sys-apps/shadow  acl audit nls pam selinux verify-sig xattr
+sys-apps/systemd-utils  acl kmod selinux tmpfiles udev
+sys-apps/sysvinit  nls selinux verify-sig
+sys-apps/util-linux  audit caps cramfs hardlink logger ncurses nls pam python readline selinux unicode verify-sig
+sys-auth/pambase  caps nullok passwdqc selinux sha512
+sys-block/thin-provisioning-tools
+sys-boot/efibootmgr
+sys-boot/grub  device-mapper fonts mount nls themes truetype verify-sig
+sys-boot/os-prober
+sys-devel/distcc  hardened ipv6 selinux
+sys-fs/cryptsetup  argon2 gcrypt nls udev urandom
+sys-fs/dosfstools  iconv
+sys-fs/fuse
+sys-fs/fuse-common
+sys-fs/lvm2  lvm readline selinux udev
+sys-fs/mtools
+sys-fs/squashfs-tools-ng  lzma selinux tools
+sys-kernel/dracut  selinux
+sys-kernel/genkernel  firmware
+sys-kernel/gentoo-sources
+sys-kernel/installkernel  grub
+sys-kernel/linux-firmware  bindist initramfs redistributable savedconfig
+sys-libs/binutils-libs  cet nls
+sys-libs/efivar
+sys-libs/glibc  audit caps cet multiarch selinux ssp static-libs verify-sig
+sys-libs/libselinux  python
+sys-libs/pam  audit filecaps nls selinux verify-sig
+sys-process/cronbase
+sys-process/cronie  anacron inotify selinux
+sys-process/procps  kill ncurses nls selinux unicode
+sys-process/psmisc  nls selinux
+virtual/cron
+virtual/libelf
+virtual/libudev
+virtual/perl-Digest-MD5
+virtual/perl-Digest-SHA
+virtual/perl-libnet  ssl
+x11-misc/makedepend
+x11-misc/shared-mime-info

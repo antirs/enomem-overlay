@@ -1,0 +1,181 @@
+acct-group/cron
+acct-group/crontab
+acct-group/distcc
+acct-group/locate
+acct-group/messagebus
+acct-user/cron
+acct-user/distcc
+acct-user/messagebus
+app-admin/logrotate  acl cron selinux verify-sig
+app-admin/rsyslog  gcrypt gnutls ssl uuid -clickhouse -curl -dbi -debug -doc -elasticsearch -imdocker -imhttp -impcap -jemalloc -kafka -kerberos -kubernetes -mdblookup -mongodb -mysql -normalize -omhttp -omhttpfs -omudpspoof -openssl -postgres -rabbitmq -redis -relp -rfc3195 -rfc5424hmac -snmp -systemd -test -usertools -xxhash -zeromq
+app-alternatives/cpio  gnu -libarchive -split-usr
+app-arch/cpio  nls
+app-arch/lbzip2  -debug -static
+app-arch/pixz  -static
+app-arch/rpm  acl bzip2 iconv readline selinux sqlite zstd -audit -berkdb -caps -dbus -doc -lzma -nls -openmp -python -sequoia
+app-arch/tar  acl nls selinux verify-sig xattr -minimal
+app-cdr/cdrtools  acl filecaps nls selinux unicode -caps
+app-crypt/argon2  -static-libs
+app-crypt/gnupg  alternatives bzip2 nls readline selinux smartcard ssl tofu verify-sig -doc -ldap -test -tools -tpm -usb -user-socket -wks-server
+app-crypt/minisign
+app-editors/vim  acl crypt nls selinux -X -cscope -debug -gpm -lua -minimal -perl -python -racket -ruby -sound -tcl -terminal -vim-pager
+app-editors/vim-core  acl nls -minimal
+app-editors/vis  acl ncurses selinux tre -lua -static -test
+app-eselect/eselect-rust
+app-eselect/eselect-vi
+app-misc/tmux  selinux -debug -jemalloc -sixel -systemd -utempter -vim-syntax
+app-portage/eix  nls -debug -doc -sqlite
+app-portage/gentoolkit  -test
+app-shells/push
+app-shells/quoter
+app-text/asciidoc  -test
+app-text/docbook-xml-dtd
+app-text/mandoc  selinux -cgi -system-man -test
+app-text/xmlto  -latex -text
+app-vim/gentoo-syntax  -ignore-glep31
+dev-cpp/eigen  openmp -adolc -boost -cholmod -clang -cuda -debug -doc -fftw -hip -klu -lapack -mathjax -opengl -pastix -sparsehash -spqr -superlu -test -umfpack
+dev-lang/rust-bin  verify-sig -big-endian -clippy -doc -prefix -rust-analyzer -rust-src -rustfmt
+dev-libs/blake3  -test
+dev-libs/elfutils  bzip2 lzma nls utils verify-sig -debuginfod -libarchive -stacktrace -static-libs -test -valgrind -zstd
+dev-libs/glib  elf mime selinux xattr -dbus -debug -doc -introspection -static-libs -sysprof -systemtap -test -utils
+dev-libs/json-c  -doc -static-libs -test -threads
+dev-libs/libaio  -static-libs -test
+dev-libs/libburn  -debug -static-libs
+dev-libs/libestr  -debug -static-libs -test
+dev-libs/libevent  clock-gettime ssl verify-sig -debug -malloc-replacement -static-libs -test -verbose-debug
+dev-libs/libfastjson  -static-libs
+dev-libs/libisoburn  acl readline xattr zlib -debug -external-filters -external-filters-setuid -frontend-optional -launch-frontend -launch-frontend-setuid -libedit -static-libs
+dev-libs/libisofs  acl xattr zlib -debug -static-libs -verbose-debug
+dev-libs/libsodium  asm urandom -static-libs -verify-sig
+dev-libs/tree-sitter
+dev-libs/tree-sitter-bash  python -debug -test
+dev-libs/xxhash
+dev-perl/Authen-SASL  -kerberos -test
+dev-perl/Crypt-URandom  -test
+dev-perl/Digest-HMAC  -test
+dev-perl/Error  -test
+dev-perl/IO-Socket-SSL  -examples -idn -test
+dev-perl/MailTools  -examples -test
+dev-perl/Net-SSLeay  -examples -minimal -test
+dev-perl/TimeDate  -test
+dev-python/chardet  -test
+dev-python/docutils
+dev-python/fasteners  -test
+dev-python/lazy-object-proxy  native-extensions -debug -test
+dev-python/olefile  -doc
+dev-python/pillow  jpeg zlib -avif -debug -examples -imagequant -jpeg2k -lcms -test -tiff -tk -truetype -webp -xcb
+dev-python/pybind11  -test
+dev-python/pydecomp
+dev-python/pyproject-metadata  -test
+dev-python/scikit-build-core  -test
+dev-python/snakeoil  -test
+dev-python/tomli
+dev-python/tree-sitter  -debug -test
+dev-util/catalyst  iso -doc -qcow2
+dev-util/ccache  static-c++ verify-sig -doc -redis -test
+dev-util/desktop-file-utils
+dev-util/pkgcheck  -emacs -test
+dev-util/pkgdev  -doc -test
+dev-util/shadowman
+dev-util/xxd
+dev-vcs/git  curl gpg iconv nls pcre perl safe-directory selinux webdav -cgi -cvs -doc -highlight -keyring -perforce -subversion -test -tk -xinetd
+llvm-core/clang  extra pie static-analyzer verify-sig -debug -doc -ieee-long-double -test -xml
+llvm-core/clang-common  cet hardened verify-sig -bootstrap-prefix -default-compiler-rt -default-libcxx -default-lld -emacs -llvm-libunwind
+llvm-core/clang-linker-config  -default-lld
+llvm-core/clang-toolchain-symlinks  native-symlinks -gcc-symlinks -multilib-symlinks
+llvm-core/llvm  binutils-plugin libffi verify-sig zstd -debug -debuginfod -doc -exegesis -libedit -test -xml -z3
+llvm-core/llvm-common  verify-sig -emacs
+llvm-core/llvm-toolchain-symlinks  native-symlinks -multilib-symlinks
+llvm-core/llvmgold
+llvm-runtimes/clang-rtlib-config  -default-compiler-rt
+llvm-runtimes/clang-runtime  compiler-rt openmp sanitize -default-compiler-rt -default-libcxx -default-lld -libcxx -llvm-libunwind -offload -polly
+llvm-runtimes/clang-stdlib-config  -default-libcxx
+llvm-runtimes/clang-unwindlib-config  -default-compiler-rt -llvm-libunwind
+llvm-runtimes/compiler-rt  atomic-builtins clang verify-sig -debug -test
+llvm-runtimes/compiler-rt-sanitizers  asan cfi clang ctx-profile dfsan gwp-asan hwasan libfuzzer lsan memprof msan nsan orc profile rtsan safestack scudo tsan ubsan verify-sig xray -debug -shadowcallstack -test
+llvm-runtimes/openmp  verify-sig -debug -gdb-plugin -hwloc -ompt -test
+net-misc/openssh  audit pam selinux ssl verify-sig -debug -kerberos -ldns -libedit -livecd -security-key -static -test
+sec-keys/minisig-keys-ccache
+sec-keys/openpgp-keys-cgzones
+sec-keys/openpgp-keys-elfutils
+sec-keys/openpgp-keys-grub  -test
+sec-keys/openpgp-keys-libevent
+sec-keys/openpgp-keys-llvm  -test
+sec-keys/openpgp-keys-rust
+sec-keys/openpgp-keys-unifont  -test
+sec-policy/selinux-apache
+sec-policy/selinux-base  ubac unconfined unknown-perms -doc -systemd
+sec-policy/selinux-base-policy  unconfined -systemd
+sec-policy/selinux-cdrecord
+sec-policy/selinux-dbus
+sec-policy/selinux-dirmngr
+sec-policy/selinux-distcc
+sec-policy/selinux-dracut
+sec-policy/selinux-git
+sec-policy/selinux-gpg
+sec-policy/selinux-kerberos
+sec-policy/selinux-loadkeys
+sec-policy/selinux-logrotate
+sec-policy/selinux-makewhatis
+sec-policy/selinux-mandb
+sec-policy/selinux-openrc
+sec-policy/selinux-screen
+sec-policy/selinux-shutdown
+sec-policy/selinux-slocate
+sec-policy/selinux-unconfined
+sys-apps/coreutils  acl caps nls selinux verify-sig xattr -gmp -hostname -kill -multicall -openssl -split-usr -static -test -test-full -vanilla
+sys-apps/dbus  selinux -X -debug -doc -elogind -static-libs -systemd -test -valgrind
+sys-apps/debianutils  -static
+sys-apps/findutils  nls selinux verify-sig -static -test -test-full
+sys-apps/hwdata
+sys-apps/iproute2  caps iptables selinux -atm -berkdb -bpf -elf -minimal -nfs
+sys-apps/kbd  bzip2 nls pam selinux zlib -lzma -test -zstd
+sys-apps/lsb-release
+sys-apps/man-db  manpager nls seccomp selinux zlib -static-libs
+sys-apps/mlocate  nls selinux
+sys-apps/net-tools  arp hostname ipv6 nls selinux -nis -plipconfig -slattach -static
+sys-apps/openrc  audit netifrc pam selinux sysvinit unicode -bash -debug -newnet -s6 -sysv-utils
+sys-apps/pciutils  kmod udev zlib -dns -static-libs
+sys-apps/pkgcore  -test
+sys-apps/portage  gentoo-dev ipc native-extensions rsync-verify selinux xattr -apidoc -build -doc -test
+sys-apps/sed  acl nls selinux verify-sig -static -test-full
+sys-apps/selinux-python  -test
+sys-apps/shadow  acl audit nls pam selinux verify-sig xattr -cracklib -skey -split-usr -su -systemd
+sys-apps/systemd-utils  acl kmod selinux tmpfiles udev -boot -kernel-install -secureboot -split-usr -sysusers -test -ukify
+sys-apps/sysvinit  nls selinux verify-sig -ibm -static
+sys-apps/util-linux  audit caps cramfs hardlink logger ncurses nls pam python readline selinux unicode verify-sig -build -cryptsetup -fdformat -kill -magic -rtas -slang -static-libs -su -suid -systemd -test -tty-helpers -udev -uuidd
+sys-auth/pambase  caps nullok passwdqc selinux sha512 -debug -elogind -gnome-keyring -homed -minimal -mktemp -pam_krb5 -pam_ssh -pwhistory -pwquality -securetty -sssd -systemd -yescrypt
+sys-block/thin-provisioning-tools  -debug -io-uring
+sys-boot/efibootmgr
+sys-boot/grub  device-mapper fonts mount nls themes truetype verify-sig -doc -efiemu -libzfs -protect -sdl -secureboot -test
+sys-boot/os-prober
+sys-devel/distcc  hardened ipv6 selinux -gssapi -gui -xinetd -zeroconf
+sys-fs/cryptsetup  argon2 gcrypt nls udev urandom -fips -kernel -nettle -openssl -passwdqc -pwquality -ssh -static -static-libs -test
+sys-fs/dosfstools  iconv -compat -test
+sys-fs/fuse  -suid -test
+sys-fs/fuse-common
+sys-fs/lvm2  lvm readline selinux udev -sanlock -static -static-libs -systemd -thin -valgrind
+sys-fs/mtools  -gui
+sys-fs/squashfs-tools-ng  lzma selinux tools -lz4 -lzo -zstd
+sys-kernel/dracut  selinux -debug -dracut-cpio -test
+sys-kernel/genkernel  firmware -ibm -systemd
+sys-kernel/gentoo-sources  -build -experimental -symlink
+sys-kernel/installkernel  grub -dracut -efistub -refind -systemd -systemd-boot -ugrd -uki -ukify
+sys-kernel/linux-firmware  bindist initramfs redistributable savedconfig -compress-xz -compress-zstd -deduplicate -dist-kernel -unknown-license
+sys-libs/binutils-libs  cet nls -64-bit-bfd -multitarget -static-libs -test
+sys-libs/efivar  -test
+sys-libs/glibc  audit caps cet multiarch selinux ssp static-libs verify-sig -compile-locales -custom-cflags -doc -gd -hash-sysv-compat -headers-only -multilib -multilib-bootstrap -nscd -perl -profile -sframe -stack-realign -suid -systemd -systemtap -test -vanilla
+sys-libs/libselinux  python -ruby -static-libs
+sys-libs/pam  audit filecaps nls selinux verify-sig -berkdb -debug -elogind -examples -nis -systemd
+sys-process/cronbase
+sys-process/cronie  anacron inotify selinux -pam
+sys-process/procps  kill ncurses nls selinux unicode -elogind -modern-top -skill -static-libs -systemd -test
+sys-process/psmisc  nls selinux -X -apparmor -test
+virtual/cron
+virtual/libelf
+virtual/libudev  -systemd
+virtual/perl-Digest-MD5
+virtual/perl-Digest-SHA
+virtual/perl-libnet  ssl
+x11-misc/makedepend
+x11-misc/shared-mime-info  -test
