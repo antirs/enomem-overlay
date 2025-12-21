@@ -2,4 +2,5 @@ llvm-core/clang-common  cet hardened
 llvm-core/clang  pie
 net-misc/openssh  pie
 sys-devel/binutils  cet hardened
+sys-devel/distcc  hardened
 sys-devel/gcc  cet default-stack-clash-protection default-znow hardened pie ssp
