@@ -1,0 +1,16 @@
+app-shells/bash  nls readline verify-sig
+net-misc/iputils  arping caps filecaps nls
+net-misc/rsync  acl iconv ssl verify-sig xattr
+net-misc/wget  gnutls nls pcre ssl verify-sig zlib
+sys-apps/coreutils  acl caps nls verify-sig xattr
+sys-apps/file  bzip2 lzma seccomp verify-sig zlib
+sys-apps/findutils  nls verify-sig
+sys-apps/iproute2  caps iptables
+sys-apps/kbd  bzip2 nls pam zlib
+sys-apps/net-tools  arp hostname ipv6 nls
+sys-apps/sed  acl nls verify-sig
+sys-apps/shadow  acl audit nls pam verify-sig xattr
+sys-apps/util-linux  audit caps cramfs hardlink logger ncurses nls pam python readline unicode verify-sig
+sys-devel/gcc  cet cxx fortran graphite nls openmp pch sanitize zstd
+sys-process/procps  kill ncurses nls unicode
+sys-process/psmisc  nls

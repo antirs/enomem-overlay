@@ -1,0 +1,16 @@
+app-shells/bash  afs bashlogger examples mem-scramble net pgo plugins -nls -readline -verify-sig
+net-misc/iputils  clockdiff doc idn test tracepath -arping -caps -filecaps -nls
+net-misc/rsync  examples lz4 rrsync stunnel system-zlib xxhash zstd -acl -iconv -ssl -verify-sig -xattr
+net-misc/wget  cookie-check debug idn libproxy metalink ntlm static test uuid -gnutls -nls -pcre -ssl -verify-sig -zlib
+sys-apps/coreutils  gmp hostname kill multicall openssl split-usr static test test-full vanilla -acl -caps -nls -verify-sig -xattr
+sys-apps/file  lzip python static-libs zstd -bzip2 -lzma -seccomp -verify-sig -zlib
+sys-apps/findutils  static test test-full -nls -verify-sig
+sys-apps/iproute2  atm berkdb bpf elf minimal nfs -caps -iptables
+sys-apps/kbd  lzma test zstd -bzip2 -nls -pam -zlib
+sys-apps/net-tools  nis plipconfig slattach static -arp -hostname -ipv6 -nls
+sys-apps/sed  static test-full -acl -nls -verify-sig
+sys-apps/shadow  cracklib skey split-usr su systemd -acl -audit -nls -pam -verify-sig -xattr
+sys-apps/util-linux  build cryptsetup fdformat kill magic rtas slang static-libs su suid systemd test tty-helpers udev uuidd -audit -caps -cramfs -hardlink -logger -ncurses -nls -pam -python -readline -unicode -verify-sig
+sys-devel/gcc  ada cobol custom-cflags d debug doc fixed-point go hardened ieee-long-double jit libgdiagnostics libssp lto modula2 multilib objc objc++ objc-gc pch pgo rust ssp systemtap test time64 valgrind vanilla vtv -cet -cxx -default-stack-clash-protection -default-znow -fortran -graphite -nls -openmp -pie -sanitize -zstd
+sys-process/procps  elogind modern-top skill static-libs systemd test -kill -ncurses -nls -unicode
+sys-process/psmisc  X apparmor test -nls

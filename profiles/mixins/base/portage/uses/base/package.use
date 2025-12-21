@@ -1,0 +1,16 @@
+app-shells/bash  nls readline verify-sig -afs -bashlogger -examples -mem-scramble -net -pgo -plugins
+net-misc/iputils  arping caps filecaps nls -clockdiff -doc -idn -test -tracepath
+net-misc/rsync  acl iconv ssl verify-sig xattr -examples -lz4 -rrsync -stunnel -system-zlib -xxhash -zstd
+net-misc/wget  gnutls nls pcre ssl verify-sig zlib -cookie-check -debug -idn -libproxy -metalink -ntlm -static -test -uuid
+sys-apps/coreutils  acl caps nls verify-sig xattr -gmp -hostname -kill -multicall -openssl -split-usr -static -test -test-full -vanilla
+sys-apps/file  bzip2 lzma seccomp verify-sig zlib -lzip -python -static-libs -zstd
+sys-apps/findutils  nls verify-sig -static -test -test-full
+sys-apps/iproute2  caps iptables -atm -berkdb -bpf -elf -minimal -nfs
+sys-apps/kbd  bzip2 nls pam zlib -lzma -test -zstd
+sys-apps/net-tools  arp hostname ipv6 nls -nis -plipconfig -slattach -static
+sys-apps/sed  acl nls verify-sig -static -test-full
+sys-apps/shadow  acl audit nls pam verify-sig xattr -cracklib -skey -split-usr -su -systemd
+sys-apps/util-linux  audit caps cramfs hardlink logger ncurses nls pam python readline unicode verify-sig -build -cryptsetup -fdformat -kill -magic -rtas -slang -static-libs -su -suid -systemd -test -tty-helpers -udev -uuidd
+sys-devel/gcc  cet cxx fortran graphite nls openmp pch sanitize zstd -ada -cobol -custom-cflags -d -debug -default-stack-clash-protection -default-znow -doc -fixed-point -go -hardened -ieee-long-double -jit -libgdiagnostics -libssp -lto -modula2 -multilib -objc -objc++ -objc-gc -pgo -pie -rust -ssp -systemtap -test -time64 -valgrind -vanilla -vtv
+sys-process/procps  kill ncurses nls unicode -elogind -modern-top -skill -static-libs -systemd -test
+sys-process/psmisc  nls -X -apparmor -test
