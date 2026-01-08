@@ -232,7 +232,7 @@ dev-util/re2c
 llvm-core/clang  extra pie static-analyzer verify-sig
 llvm-core/clang  llvm_targets_AArch64 llvm_targets_ARM llvm_targets_AVR llvm_targets_BPF llvm_targets_M68k llvm_targets_Mips llvm_targets_RISCV llvm_targets_Sparc llvm_targets_Spirv llvm_targets_WebAssembly llvm_targets_X86 llvm_targets_Xtensa
 llvm-core/clang-common  cet llvm-libunwind verify-sig
-llvm-core/clang-runtime  compiler-rt libcxx llvm-libunwind openmp sanitize
+llvm-runtimes/clang-runtime  compiler-rt libcxx llvm-libunwind openmp sanitize
 llvm-core/clang-toolchain-symlinks  native-symlinks
 llvm-core/lld  verify-sig zstd
 llvm-core/lld-toolchain-symlinks  native-symlinks

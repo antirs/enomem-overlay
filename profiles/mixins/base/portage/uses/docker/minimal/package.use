@@ -269,7 +269,7 @@ dev-util/re2c  -debug -test
 dev-vcs/git  blksha1 curl gpg iconv nls pcre safe-directory -cgi -cvs -doc -highlight -keyring -mediawiki -perforce -perl -selinux -subversion -test -tk -webdav -xinetd
 llvm-core/clang  extra static-analyzer verify-sig -debug -doc -ieee-long-double -pie -test -xml
 llvm-core/clang-common  cet default-compiler-rt default-libcxx default-lld llvm-libunwind verify-sig -bootstrap-prefix -hardened
-llvm-core/clang-runtime  compiler-rt default-compiler-rt default-libcxx default-lld libcxx llvm-libunwind openmp sanitize -offload -polly
+llvm-runtimes/clang-runtime  compiler-rt default-compiler-rt default-libcxx default-lld libcxx llvm-libunwind openmp sanitize -offload -polly
 llvm-core/clang-toolchain-symlinks  native-symlinks -gcc-symlinks -multilib-symlinks
 llvm-core/lld  verify-sig zstd -debug -test
 llvm-core/lld-toolchain-symlinks  native-symlinks -multilib-symlinks

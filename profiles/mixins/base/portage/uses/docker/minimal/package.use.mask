@@ -269,7 +269,7 @@ dev-util/re2c  debug test
 dev-vcs/git  cgi cvs doc highlight keyring mediawiki perforce perl selinux subversion test tk webdav xinetd -blksha1 -curl -gpg -iconv -nls -pcre -safe-directory
 llvm-core/clang  debug doc ieee-long-double pie test xml -extra -static-analyzer -verify-sig
 llvm-core/clang-common  bootstrap-prefix hardened -cet -default-compiler-rt -default-libcxx -default-lld -llvm-libunwind -verify-sig
-llvm-core/clang-runtime  offload polly -compiler-rt -default-compiler-rt -default-libcxx -default-lld -libcxx -llvm-libunwind -openmp -sanitize
+llvm-runtimes/clang-runtime  offload polly -compiler-rt -default-compiler-rt -default-libcxx -default-lld -libcxx -llvm-libunwind -openmp -sanitize
 llvm-core/clang-toolchain-symlinks  gcc-symlinks multilib-symlinks -native-symlinks
 llvm-core/lld  debug test -verify-sig -zstd
 llvm-core/lld-toolchain-symlinks  multilib-symlinks -native-symlinks

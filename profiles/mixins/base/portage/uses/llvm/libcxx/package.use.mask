@@ -1,5 +1,5 @@
 llvm-core/clang-common  -cet -default-compiler-rt -default-libcxx -default-lld -llvm-libunwind -verify-sig bootstrap-prefix hardened
-llvm-core/clang-runtime  -compiler-rt -default-compiler-rt -default-libcxx -default-lld -libcxx -llvm-libunwind -openmp -sanitize offload polly
+llvm-runtimes/clang-runtime  -compiler-rt -default-compiler-rt -default-libcxx -default-lld -libcxx -llvm-libunwind -openmp -sanitize offload polly
 llvm-runtimes/libcxx  -clang -libcxxabi -static-libs -verify-sig test
 llvm-runtimes/libcxxabi  -clang -static-libs -verify-sig test
 sys-devel/gettext  openmp

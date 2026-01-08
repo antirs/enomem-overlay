@@ -1,6 +1,6 @@
 llvm-core/clang  extra static-analyzer verify-sig
 llvm-core/clang-common  cet default-compiler-rt default-lld llvm-libunwind verify-sig
-llvm-core/clang-runtime  compiler-rt default-compiler-rt default-lld libcxx llvm-libunwind openmp sanitize
+llvm-runtimes/clang-runtime  compiler-rt default-compiler-rt default-lld libcxx llvm-libunwind openmp sanitize
 llvm-core/clang-toolchain-symlinks  native-symlinks
 llvm-core/lld  verify-sig zstd
 llvm-core/lld-toolchain-symlinks  native-symlinks
