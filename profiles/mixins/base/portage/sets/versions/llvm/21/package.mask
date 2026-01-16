@@ -1,0 +1,14 @@
+# Marsha Melova <marsha.melova@grrlz.net>
+# pin llvm version to 21
+>llvm-core/clang-21.1.5
+>llvm-core/clang-common-21.1.5
+>llvm-runtimes/clang-runtime-21.1.5
+>llvm-core/lld-21.1.5
+>llvm-core/llvm-21.1.5
+>llvm-core/llvm-common-21.1.5
+>llvm-runtimes/compiler-rt-21.1.5
+>llvm-runtimes/compiler-rt-sanitizers-21.1.5
+>llvm-runtimes/libcxx-21.1.5
+>llvm-runtimes/libcxxabi-21.1.5
+>llvm-runtimes/libunwind-21.1.5
+>llvm-runtimes/openmp-21.1.5
